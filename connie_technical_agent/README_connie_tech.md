@@ -66,3 +66,8 @@ pip install -r requirements.txt
 export OPENAI_API_KEY="YOUR_API_KEY"
 python run_demo.py
 ```
+
+
+cd connie_technical_agent
+source .venv/bin/activate
+python run_demo.py

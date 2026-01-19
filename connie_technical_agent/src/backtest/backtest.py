@@ -7,49 +7,81 @@ from typing import Tuple, Dict
 import numpy as np
 import pandas as pd
 
+
 @dataclass
 class BacktestConfig:
     cost_bps: float = 10.0
     initial_equity: float = 1.0
     annualization: int = 252
 
+
 def _max_drawdown(equity: pd.Series) -> float:
     peak = equity.cummax()
     dd = (equity / peak) - 1.0
     return float(dd.min())
 
+
 def build_position_from_signals(out: pd.DataFrame) -> pd.Series:
+    """
+    Build a position series with t+1 execution.
+
+    If `weight` column exists:
+      - position is continuous in [0,1] (or whatever weight is clipped to)
+      - when state=1, position = weight[t]
+      - when state=0, position = 0
+
+    If no `weight`:
+      - fallback to classic 0/1 position
+    """
     out = out.copy()
-    out["entry_prev"] = out["entry"].shift(1).fillna(False).astype(bool)
-    out["exit_prev"] = out["exit"].shift(1).fillna(False).astype(bool)
+
+    # Use shift with fill_value to avoid FutureWarning/downcasting
+    entry_prev = out["entry"].shift(1, fill_value=False).astype(bool)
+    exit_prev = out["exit"].shift(1, fill_value=False).astype(bool)
+
+    has_weight = "weight" in out.columns
+    if has_weight:
+        w = out["weight"].astype(float).fillna(0.0)
+        # Safety clip: keep within [0,1] by default
+        w = w.clip(lower=0.0, upper=1.0)
+    else:
+        w = pd.Series(1.0, index=out.index)
 
     pos = np.zeros(len(out), dtype=float)
     state = 0
+
     for i in range(len(out)):
-        entry_prev = bool(out["entry_prev"].iloc[i])
-        exit_prev = bool(out["exit_prev"].iloc[i])
-        if state == 0 and entry_prev:
+        if state == 0 and bool(entry_prev.iloc[i]):
             state = 1
-        elif state == 1 and exit_prev:
+        elif state == 1 and bool(exit_prev.iloc[i]):
             state = 0
-        pos[i] = state
+
+        # dynamic sizing: when in position, apply today's weight
+        pos[i] = (float(w.iloc[i]) if state == 1 else 0.0)
 
     return pd.Series(pos, index=out.index, name="position")
 
+
 def extract_trades(out: pd.DataFrame) -> pd.DataFrame:
+    """
+    Extract trades based on crossing from 0 -> >0 and >0 -> 0.
+    Note: with continuous weights, partial scale-in/out isn't treated as separate trades;
+    this keeps trades interpretable.
+    """
     trades = []
     in_trade = False
     entry_date = None
     entry_price = None
 
     for dt, row in out.iterrows():
-        if (not in_trade) and row["position"] == 1:
+        pos = float(row["position"])
+        if (not in_trade) and (pos > 0):
             in_trade = True
             entry_date = dt
-            entry_price = row["Close"]
-        elif in_trade and row["position"] == 0:
+            entry_price = float(row["Close"])
+        elif in_trade and (pos == 0):
             exit_date = dt
-            exit_price = row["Close"]
+            exit_price = float(row["Close"])
             trade_ret = (exit_price / entry_price) - 1.0
             trades.append(
                 dict(
@@ -64,6 +96,7 @@ def extract_trades(out: pd.DataFrame) -> pd.DataFrame:
             entry_date, entry_price = None, None
 
     return pd.DataFrame(trades)
+
 
 def compute_metrics(out: pd.DataFrame, cfg: BacktestConfig) -> Dict:
     daily = out["strategy_ret"].fillna(0.0)
@@ -80,6 +113,8 @@ def compute_metrics(out: pd.DataFrame, cfg: BacktestConfig) -> Dict:
     hit_rate = float((daily > 0).mean())
 
     turnovers = out["turnovers"].fillna(0.0)
+    # With continuous sizing, "number of trades" from turnovers is less meaningful,
+    # but we keep it as a rough approximation.
     num_trades = int((turnovers > 0).sum() / 2)
 
     return dict(
@@ -94,6 +129,7 @@ def compute_metrics(out: pd.DataFrame, cfg: BacktestConfig) -> Dict:
         NumTradesApprox=num_trades,
     )
 
+
 def run_backtest(df: pd.DataFrame, cfg: BacktestConfig = BacktestConfig()) -> Tuple[pd.DataFrame, pd.DataFrame, Dict]:
     out = df.copy()
 
@@ -102,19 +138,29 @@ def run_backtest(df: pd.DataFrame, cfg: BacktestConfig = BacktestConfig()) -> Tu
     if missing:
         raise ValueError(f"Missing required columns for backtest: {missing}")
 
+    # Build position (0/1 or 0..1 if weight exists)
     out["position"] = build_position_from_signals(out)
+
+    # Asset returns
     out["ret"] = out["Close"].pct_change().fillna(0.0)
 
+    # Turnover = abs(change in position). This naturally supports continuous sizing.
     out["turnovers"] = out["position"].diff().abs().fillna(0.0)
+
+    # Costs proportional to turnover
     out["cost"] = (cfg.cost_bps / 10000.0) * out["turnovers"]
 
+    # Strategy return
     out["strategy_ret"] = out["position"] * out["ret"] - out["cost"]
+
+    # Equity curve
     out["equity"] = cfg.initial_equity * (1.0 + out["strategy_ret"]).cumprod()
 
     trades_df = extract_trades(out)
     metrics = compute_metrics(out, cfg)
     metrics["NumTrades"] = int(len(trades_df))
     return out, trades_df, metrics
+
 
 def save_metrics(metrics: Dict, path: str) -> None:
     with open(path, "w") as f:
