@@ -15,7 +15,7 @@ def main():
     df = generate_signal(df)
     df = run_backtest(df)
 
-    # ✅ metrics must be created BEFORE using them
+    # metrics
     metrics = compute_metrics(df)
 
     strategy_desc = (
@@ -24,7 +24,7 @@ def main():
         "position sizing, and transaction costs."
     )
 
-    # ✅ LLM summary AFTER metrics
+    # LLM summary
     try:
         text = generate_llm_summary(metrics, strategy_desc)
         save_llm_summary(text, out_path="outputs/llm_summary.md")
