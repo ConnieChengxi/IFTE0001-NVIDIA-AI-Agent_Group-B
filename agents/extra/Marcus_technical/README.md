@@ -3,9 +3,9 @@
 
 # NVDA Technical Analysis Agent
 
-This project implements a systematic technical trading strategy for NVIDIA (NVDA) using daily price data. The strategy is designed to be transparent, interpretable, and reproducible, and was developed as part of MSc coursework in asset management.
+This project implements a systematic technical trading strategy for NVIDIA (NVDA) using daily price data. The strategy is designed to be transparent, interpretable, and reproducible.
 
-The project combines traditional technical analysis with a lightweight agent-style pipeline and demonstrates the use of external APIs and a large language model (LLM) at a high level.
+The project combines traditional technical analysis with a agent-style pipeline and demonstrates the use of external APIs and a large language model (LLM) at a high level.
 
 ---
 
@@ -80,4 +80,5 @@ If no API key is provided, the LLM step is skipped gracefully and the rest of th
 
 The Jupyter notebook contains the full exploratory analysis and the final risk-managed strategy.
 The run_demo.py script provides a simplified, reproducible entry point for demonstrating the strategy pipeline.
+
 
