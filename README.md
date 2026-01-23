@@ -2,16 +2,16 @@
 # NVIDIA Fundamental Valuation Project
 Qiyun Sheng
 
-This project contains a Python-based fundamental valuation analysis of NVIDIA Corporation (NVDA).  The project is designed to be fully reproducible and automatically executable using GitHub Actions.
+This project contains a Python-based fundamental valuation analysis of NVIDIA Corporation (NVDA). The project is designed to be fully reproducible and automatically executable using GitHub Actions.
 
 
 # Project Overview
-The analysis uses Financial data collection from Yahoo Finance. Fundamental analysis are based on historical financial statements and the estimation of intrinsic firm value used cash flow–based valuation methods.
-The entire workflow is automated to ensure transparency and reproducibility. Project uses GitHub Actions to automatically run the analysis script. The script outputs key valuation metrics of NVIDIA， data analysis, and investment recommendation.
+The analysis uses Financial data collection from Yahoo Finance. Fundamental analysis are based on historical financial statements and the estimation of intrinsic firm value used cash flow–based valuation methods.  
+The entire workflow is automated to ensure transparency and reproducibility. Project uses GitHub Actions to automatically run the analysis script. The script outputs key valuation metrics of NVIDIA， data analysis, and investment recommendation.  
 
 # Environment and dependencies
-python version 3.10
-key libraries: pandas, numpy, and yfinance
+python version 3.10  
+key libraries: pandas, numpy, and yfinance  
 All dependencies are automatically installed during workflow execution. No local setup is required to reproduce the results.
 
 # How to run it manually:
