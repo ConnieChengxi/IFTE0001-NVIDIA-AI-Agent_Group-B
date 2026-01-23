@@ -2,7 +2,9 @@ import json
 from pathlib import Path
 import pandas as pd
 
-
+# =========================
+# Helpers
+# =========================
 def load_reports(path: Path) -> list[dict]:
     data = json.loads(path.read_text(encoding="utf-8"))
     reps = data.get("annualReports", [])
@@ -22,13 +24,18 @@ def to_int(x):
         return pd.NA
 
 
+# =========================
+# Standardize statements
+# =========================
 def standardize_income(path: Path, years: set[int]) -> pd.DataFrame:
     reps = load_reports(path)
     rows = []
+
     for r in reps:
         y = year_from_fiscal_date(r["fiscalDateEnding"])
         if y not in years:
             continue
+
         rows.append({
             "fiscal_year": y,
             "fiscal_date_ending": r["fiscalDateEnding"],
@@ -41,16 +48,19 @@ def standardize_income(path: Path, years: set[int]) -> pd.DataFrame:
             "income_before_tax": to_int(r.get("incomeBeforeTax")),
             "income_tax_expense": to_int(r.get("incomeTaxExpense")),
         })
+
     return pd.DataFrame(rows).sort_values("fiscal_year").reset_index(drop=True)
 
 
 def standardize_balance(path: Path, years: set[int]) -> pd.DataFrame:
     reps = load_reports(path)
     rows = []
+
     for r in reps:
         y = year_from_fiscal_date(r["fiscalDateEnding"])
         if y not in years:
             continue
+
         rows.append({
             "fiscal_year": y,
             "fiscal_date_ending": r["fiscalDateEnding"],
@@ -64,12 +74,14 @@ def standardize_balance(path: Path, years: set[int]) -> pd.DataFrame:
             "short_term_debt": to_int(r.get("shortTermDebt")),
             "short_term_investments": to_int(r.get("shortTermInvestments")),
         })
+
     return pd.DataFrame(rows).sort_values("fiscal_year").reset_index(drop=True)
 
 
 def standardize_cashflow(path: Path, years: set[int]) -> pd.DataFrame:
     reps = load_reports(path)
     rows = []
+
     for r in reps:
         y = year_from_fiscal_date(r["fiscalDateEnding"])
         if y not in years:
@@ -77,7 +89,6 @@ def standardize_cashflow(path: Path, years: set[int]) -> pd.DataFrame:
 
         cfo = to_int(r.get("operatingCashflow"))
         capex = to_int(r.get("capitalExpenditures"))
-
         capex_outflow = abs(capex) if pd.notna(capex) else pd.NA
         da = to_int(r.get("depreciationDepletionAndAmortization"))
         fcf = (cfo - capex_outflow) if (pd.notna(cfo) and pd.notna(capex_outflow)) else pd.NA
@@ -95,15 +106,30 @@ def standardize_cashflow(path: Path, years: set[int]) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values("fiscal_year").reset_index(drop=True)
 
 
+# =========================
+# Post-processing
+# =========================
 def to_billions_inplace(df: pd.DataFrame, cols: list[str]) -> None:
     for c in cols:
         if c in df.columns:
             df[c] = df[c].astype("float64") / 1e9
 
 
-INCOME_ITEMS = ["revenue","cogs","gross_profit","operating_income","net_income","interest_expense","income_before_tax","income_tax_expense"]
-BALANCE_ITEMS = ["total_assets","total_liabilities","total_shareholder_equity","cash_and_cash_equivalents","current_assets","current_liabilities","long_term_debt","short_term_debt","short_term_investments"]
-CASHFLOW_ITEMS = ["operating_cash_flow","capex_outflow","depreciation_and_amortization","free_cash_flow"]
+INCOME_ITEMS = [
+    "revenue","cogs","gross_profit","operating_income","net_income",
+    "interest_expense","income_before_tax","income_tax_expense"
+]
+
+BALANCE_ITEMS = [
+    "total_assets","total_liabilities","total_shareholder_equity",
+    "cash_and_cash_equivalents","current_assets","current_liabilities",
+    "long_term_debt","short_term_debt","short_term_investments"
+]
+
+CASHFLOW_ITEMS = [
+    "operating_cash_flow","capex_outflow",
+    "depreciation_and_amortization","free_cash_flow"
+]
 
 
 def build_annual_dfs(paths: dict, years: set[int]):
@@ -123,4 +149,3 @@ def to_views_in_bn(is_df, bs_df, cf_df):
     cf_view = cf_df.set_index("fiscal_year")[CASHFLOW_ITEMS].T
 
     return is_view, bs_view, cf_view
-
