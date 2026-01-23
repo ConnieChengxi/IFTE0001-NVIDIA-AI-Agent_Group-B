@@ -1,5 +1,5 @@
 # IFTE0001-NVIDIA-AI-Agent_Group-B
-# NVIDIA Fundamental Valuation Project
+NVIDIA Fundamental Valuation Project  
 Qiyun Sheng
 
 This project contains a Python-based fundamental valuation analysis of NVIDIA Corporation (NVDA). The project is designed to be fully reproducible and automatically executable using GitHub Actions.
