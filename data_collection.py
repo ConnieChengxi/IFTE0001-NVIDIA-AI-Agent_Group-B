@@ -5,6 +5,12 @@ import pandas as pd
 def fetch_data(ticker: str = "NVDA", period: str = "10y", save_csv: bool = True) -> pd.DataFrame:
     """Download data with yfinance, basic cleaning, save CSV and return DataFrame."""
     df = yf.download(ticker, period=period, auto_adjust=False)
+    # Flatten MultiIndex columns if yfinance returns grouped columns
+    if isinstance(df.columns, pd.MultiIndex):
+        # keep the first level (Close, High, Low, Open, Volume, etc.)
+        df.columns = df.columns.get_level_values(0)
+        print("flattened MultiIndex columns from yfinance download (kept level 0)")
+
     df = df.dropna()
 
     print("\n--- data preview (first 5 rows) ---")
