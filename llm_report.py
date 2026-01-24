@@ -19,25 +19,40 @@ def generate_report(metrics: dict, latest_row, api_key: str = None, ticker: str 
     client = OpenAI(api_key=api_key)
 
     prompt = f"""
-    You are a Senior Technical Analyst at a top-tier Asset Management firm.
-    Your task is to write a professional "Investment Memo" for {ticker}.
+    *** ROLE & OBJECTIVE ***
+    You are a Senior Quantitative Equity Analyst at a top-tier Asset Management firm. 
+    Your task is to write a sophisticated, data-driven **"Investment Memorandum"** for {ticker} based on the backtesting results of our proprietary "AI Momentum Strategy".
 
-    --- QUANTITATIVE DATA (From our Algorithm) ---
-    1. Strategy: Multi-Factor Momentum (Removed Bollinger Band cap).
-    2. Performance (10-Year Backtest):
-       - Total Return: {metrics['total_return']:.2%} (Alpha Generation).
-       - Sharpe Ratio: {metrics['sharpe']:.2f} (Risk-Adjusted).
-       - Max Drawdown: {metrics['drawdown']:.2%} (Risk Exposure).
-    3. Current Setup (Latest Day):
-       - Price: ${latest_row['Close']:.2f}
-       - RSI (14): {latest_row['RSI']:.2f}
+    *** DATA INPUTS (Real-Time Backtest Results) ***
+    - **Strategy**: Multi-Factor Momentum (MACD + RSI + OBV).
+    - **Total Return (10 Years)**: {metrics['total_return']:.2%} (Note: Compare this implicitly to market beta).
+    - **Sharpe Ratio**: {metrics['sharpe']:.2f} (Evaluate risk-adjusted performance).
+    - **Max Drawdown**: {metrics['drawdown']:.2%} (Address the downside risk).
+    - **Current Price**: ${latest_row['Close']:.2f}
+    - **Current RSI (14)**: {latest_row['RSI']:.2f} (Thresholds: >70 Overbought, <30 Oversold).
 
-    Please write a detailed report (approx. 600-800 words) using the following structure:
-    1. Executive Summary
-    2. Strategy Mechanics & Logic
-    3. Quantitative Performance Analysis
-    4. Current Technical Setup
-    5. Investment Conclusion & Forward Guidance
+    *** REPORT STRUCTURE (Strictly Follow This) ***
+    
+    1. **Executive Summary & Recommendation**
+       - Provide a clear rating: **STRONG BUY**, **BUY**, **HOLD**, or **SELL**.
+       - Summarize the key reason based on the Total Return and Momentum strength.
+
+    2. **Performance Diagnosis**
+       - Analyze the **Total Return**: Is this alpha generation or just riding the sector trend?
+       - Critically assess the **Max Drawdown**: Explain that while volatility is high, the strategy successfully captured the long-term upside.
+       - Comment on the **Sharpe Ratio**: Does the return justify the risk taken?
+
+    3. **Technical Outlook (Short-Term)**
+    - Interpret the current **RSI** ({latest_row['RSI']:.2f}). Is the stock currently overheated (needing a pullback) or is there room to run?
+       - Provide a specific "Watch Level" for the price.
+
+    4. **Forward Guidance**
+       - Conclude with a final strategic advice for the investment committee.
+
+    *** TONE & STYLE ***
+    - Professional, concise, institutional, and objective.
+    - Avoid generic AI phrases like "In conclusion" or "It is important to note".
+    - Focus on financial logic and actionable insights.
     """
 
     print("A deep report is currently being written (GPT is thinking...).")
@@ -57,10 +72,44 @@ def generate_report(metrics: dict, latest_row, api_key: str = None, ticker: str 
         full_report = f"Call failed: {e}"
 
     try:
-        with open("NVDA_ai_Report.txt", "w", encoding="utf-8") as f:
+        # ensure outputs directory exists
+        os.makedirs("outputs", exist_ok=True)
+        out_path = os.path.join("outputs", f"{ticker}_ai_Report.txt")
+        with open(out_path, "w", encoding="utf-8") as f:
             f.write(full_report)
-        print("\nThe report has been saved as 'NVDA_ai_Report.txt'")
-    except Exception:
-        pass
+        print(f"\nThe report has been saved as '{out_path}'")
+    except Exception as e:
+        print(f"Failed to save report: {e}")
 
     return full_report
+
+
+if __name__ == "__main__":
+    # Simple runnable flow: fetch data, compute indicators, backtest, then generate report
+    try:
+        from data_collection import fetch_data
+        from indicators import add_indicators
+        from backtesting import run_backtest
+    except Exception as e:
+        print(f"Failed to import project modules: {e}")
+        raise
+
+    ticker = os.getenv("TICKER", "NVDA")
+    print(f"Preparing report for {ticker}...")
+
+    # Fetch and prepare data
+    df = fetch_data(ticker=ticker, period="10y", save_csv=False)
+    df = add_indicators(df)
+
+    metrics, bt_data = run_backtest(df)
+
+    latest_row = bt_data.iloc[-1].to_dict()
+
+    # Use OPENAI_API_KEY from environment by default
+    report = generate_report(metrics, latest_row, api_key=None, ticker=ticker)
+
+    if report:
+        print("\nReport generated successfully. Preview:\n")
+        print(report[:1000])
+    else:
+        print("No report generated. Ensure OPENAI_API_KEY is set and valid.")
