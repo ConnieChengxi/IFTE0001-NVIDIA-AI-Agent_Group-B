@@ -1,0 +1,6 @@
+pandas
+numpy
+matplotlib
+yfinance
+python-dotenv
+openai
