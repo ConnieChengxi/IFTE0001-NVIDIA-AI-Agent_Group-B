@@ -1,27 +1,14 @@
 """
-Demo script for Zehui Fundamental Agent
-Run from repo root or this directory:
-    python agents/extra/Zehui_fundamental/run_demo.py
+Demo runner for NVDA Fundamental Agent
+One-click execution of full pipeline:
+data → ratios → multiples → DCF → charts → report
 """
 
-from agents.extra.Zehui_fundamental.agent.agent import run
-
-
-def main():
-    symbol = "NVDA"   # 你也可以之后改成参数
-    out = run(symbol)
-
-    print(f"\n=== Fundamental Analysis Demo for {symbol} ===\n")
-
-    print("Income Statement (bn):")
-    print(out["is_view"], "\n")
-
-    print("Balance Sheet (bn):")
-    print(out["bs_view"], "\n")
-
-    print("Cash Flow (bn):")
-    print(out["cf_view"], "\n")
-
+from main import main
 
 if __name__ == "__main__":
+    print("===================================")
+    print("  NVDA Fundamental Agent Demo Run  ")
+    print("===================================\n")
     main()
+    print("\nDemo completed successfully.")
