@@ -62,7 +62,7 @@ See `.env.example` for the format.
 ## Usage
 
 ```bash
-python run_analysis.py NVDA
+python run_demo.py NVDA
 ```
 
 Output appears in `outputs/NVDA_Investment_Memo.html`
