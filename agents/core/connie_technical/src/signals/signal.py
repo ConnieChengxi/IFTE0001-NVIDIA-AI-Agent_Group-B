@@ -17,7 +17,7 @@ class SignalConfig:
       - MACD/RSI/ATR% only reduce/adjust weight (no hard entry gate)
       - Exit event is primarily regime break (Close < MA200) + risk exits (ATR trailing stop)
 
-    Backtest must use `weight` for sizing (your backtest already does).
+    Backtest must use `weight` for sizing (the backtest already does).
     """
 
     # Regime / trend definitions
@@ -31,7 +31,7 @@ class SignalConfig:
     min_weight: float = 0.0
 
     # Route A: exposure floor when regime+trend are ON
-    regime_trend_floor: float = 0.60  # <<< key: minimum weight in bull trend regime
+    regime_trend_floor: float = 0.60  # <<< minimum weight in bull trend regime
 
     # Scaling factors (soft controls)
     weak_trend_scale: float = 0.85           # if Close>MA200 but MA20<=MA50, still hold but reduced

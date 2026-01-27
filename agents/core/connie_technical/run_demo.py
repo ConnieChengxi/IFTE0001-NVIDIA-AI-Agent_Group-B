@@ -12,11 +12,26 @@ from src.signals.signal import build_signals
 from src.backtest.backtest import run_backtest
 from src.viz.plot_backtest import plot_equity_and_drawdown
 from src.viz.visualisation import plot_macd, plot_strategy_rsi, plot_strategy_shortterm
-from src.reporting.llm_report import build_evidence_pack, llm_generate_trade_note
+from src.reporting.llm_report import (
+    build_evidence_pack,
+    llm_generate_trade_note,
+    llm_generate_full_report,
+)
 from src.viz.equity import plot_equity_log, plot_drawdown_compare
+from src.viz.trade_timeline import plot_golden_cross_with_trades
+from src.viz.price_ma_macd import plot_price_ma_macd
+
+
 
 def ensure_dir(path: str) -> None:
     os.makedirs(path, exist_ok=True)
+
+
+def save_json(obj, path: str) -> None:
+    """Safe JSON writer for evidence/config/metrics (no dependency on llm_report.py helpers)."""
+    ensure_dir(os.path.dirname(path) or ".")
+    with open(path, "w", encoding="utf-8") as f:
+        json.dump(obj, f, indent=2, ensure_ascii=False, default=str)
 
 
 def flatten_columns(df: pd.DataFrame) -> pd.DataFrame:
@@ -100,6 +115,9 @@ class DemoConfig:
 def run_pipeline(cfg: DemoConfig):
     ensure_dir(cfg.outdir)
 
+    # Pre-init optional artifact paths to avoid UnboundLocalError
+    log_path, dd_path = None, None
+
     # Step 1: Download data
     df = yf.download(
         cfg.ticker,
@@ -135,8 +153,10 @@ def run_pipeline(cfg: DemoConfig):
     # ---- Step 4.1: Add "equity multiple" + Buy&Hold multiple (both start at 1.0) ----
     equity_col = _infer_equity_column(out)
     if equity_col is None:
-        print("WARN: Could not infer equity column from backtest output. "
-              "Skipping EquityMultiple/BuyHoldMultiple and compare plot.")
+        print(
+            "WARN: Could not infer equity column from backtest output. "
+            "Skipping EquityMultiple/BuyHoldMultiple and compare plot."
+        )
     else:
         equity = out[equity_col].astype(float).dropna()
         close = df["Close"].astype(float).reindex(equity.index).dropna()
@@ -162,11 +182,8 @@ def run_pipeline(cfg: DemoConfig):
     cfg_path = os.path.join(cfg.outdir, f"{cfg.ticker}_run_config_{run_stamp}.json")
     met_path = os.path.join(cfg.outdir, f"{cfg.ticker}_metrics_{run_stamp}.json")
 
-    with open(cfg_path, "w", encoding="utf-8") as f:
-        json.dump(asdict(cfg), f, indent=2)
-
-    with open(met_path, "w", encoding="utf-8") as f:
-        json.dump(metrics, f, indent=2, default=str)
+    save_json(asdict(cfg), cfg_path)
+    save_json(metrics, met_path)
 
     # Step 5: Visualisation
     equity_path = os.path.join(cfg.outdir, f"{cfg.ticker}_equity_drawdown.png")
@@ -197,7 +214,14 @@ def run_pipeline(cfg: DemoConfig):
 
     if cfg.plot:
         # Keep plots lightweight; avoid generating 5+ charts by default
-        plot_macd(out, cfg.ticker)
+        # Some implementations expect df (with MACD columns). If your plot_macd expects out, this will still work.
+        try:
+            plot_macd(df, cfg.ticker)
+        except Exception:
+            try:
+                plot_macd(out, cfg.ticker)
+            except Exception as e:
+                print(f"WARN: plot_macd failed: {e}")
 
     # ---- Step 5.2: Log-scale equity + drawdown compare (more "tech") ----
     if equity_col is not None and equity_col in out.columns:
@@ -209,7 +233,7 @@ def run_pipeline(cfg: DemoConfig):
             equity_bh = close / float(close.iloc[0])
 
             log_path = os.path.join(cfg.outdir, f"{cfg.ticker}_equity_log_compare.png")
-            dd_path  = os.path.join(cfg.outdir, f"{cfg.ticker}_drawdown_compare.png")
+            dd_path = os.path.join(cfg.outdir, f"{cfg.ticker}_drawdown_compare.png")
 
             plot_equity_log(
                 bh=equity_bh,
@@ -225,30 +249,123 @@ def run_pipeline(cfg: DemoConfig):
                 path=dd_path,
             )
 
+    # ---- Step 5.3: Golden Cross + Trade timeline (long-term interpretability) ----
+    gc_path = os.path.join(cfg.outdir, f"{cfg.ticker}_golden_cross_trades.png")
+    try:
+        plot_golden_cross_with_trades(df=df, ticker=cfg.ticker, path=gc_path)
+    except Exception as e:
+        print(f"WARN: Failed to create golden cross + trades plot: {e}")
+        gc_path = None
 
+    # ---- Step 5.4: Price + MAs + MACD (display charts only; backtest unchanged) ----
+    price_macd_path = os.path.join(cfg.outdir, f"{cfg.ticker}_price_ma_macd.png")
+    price_macd_6m_path = os.path.join(cfg.outdir, f"{cfg.ticker}_price_ma_macd_6m.png")
+
+    # 1Y version (report)
+    try:
+        df_plot = df.copy().sort_index()
+        end = df_plot.index.max()
+        start = end - pd.Timedelta(days=365)
+        df_plot = df_plot.loc[(df_plot.index >= start) & (df_plot.index <= end)]
+
+        plot_price_ma_macd(
+            df=df_plot,
+            ticker=cfg.ticker,
+            path=price_macd_path,
+            ma_cols=("MA20", "MA50", "MA200"),
+        )
+    except Exception as e:
+        print(f"WARN: Failed to create 1Y price+MA+MACD plot: {e}")
+        price_macd_path = None
+
+    # 6M version (presentation)
+    try:
+        df_6m = df.copy().sort_index()
+        end = df_6m.index.max()
+        start = end - pd.Timedelta(days=182)
+        df_6m = df_6m.loc[(df_6m.index >= start) & (df_6m.index <= end)]
+
+        plot_price_ma_macd(
+            df=df_6m,
+            ticker=cfg.ticker,
+            path=price_macd_6m_path,
+            ma_cols=("MA20", "MA50", "MA200"),
+        )
+    except Exception as e:
+        print(f"WARN: Failed to create 6M price+MA+MACD plot: {e}")
+        price_macd_6m_path = None
+
+
+
+    # -------------------------
     # LLM reporting (optional)
+    # -------------------------
     md_path = os.path.join(cfg.outdir, f"{cfg.ticker}_trade_note_llm.md")
+    final_md_path = os.path.join(cfg.outdir, f"{cfg.ticker}_final_report_llm.md")
+    evi_path = os.path.join(cfg.outdir, f"{cfg.ticker}_evidence_{run_stamp}.json")
+
     llm_note = None
+    final_report = None
+    evidence = None
 
     if cfg.llm:
         api_key_present = bool(os.getenv("OPENAI_API_KEY"))
         if not api_key_present:
-            print("INFO: OPENAI_API_KEY not set; skipping LLM trade note generation.")
+            print("INFO: OPENAI_API_KEY not set; skipping LLM report generation.")
         else:
-            chart_paths = {"equity_drawdown": equity_path, "strategy_vs_bh": compare_path}
-            evidence = build_evidence_pack(out, trade, metrics, cfg.ticker, chart_paths=chart_paths)
+            # Only pass chart paths that actually exist
+            chart_paths = {"equity_drawdown": equity_path}
+            if os.path.exists(compare_path):
+                chart_paths["strategy_vs_bh"] = compare_path
+            if log_path and os.path.exists(log_path):
+                chart_paths["equity_log_compare"] = log_path
+            if dd_path and os.path.exists(dd_path):
+                chart_paths["drawdown_compare"] = dd_path
+            if gc_path and os.path.exists(gc_path):
+                chart_paths["golden_cross_trades"] = gc_path
+
+
+            evidence = build_evidence_pack(
+                out=out,
+                trades=trade,
+                metrics=metrics,
+                ticker=cfg.ticker,
+                chart_paths=chart_paths,
+            )
+            # Note: your llm_report.py evidence builder currently does not take df.
+            # If you upgrade it to accept df, change this call accordingly.
+
+            # Save evidence pack for auditability / appendix
+            try:
+                save_json(evidence, evi_path)
+            except Exception as e:
+                print(f"WARN: Failed to save evidence pack: {e}")
+                evi_path = None
+
+            # Short trade note
             llm_note = llm_generate_trade_note(evidence, model=cfg.llm_model)
             with open(md_path, "w", encoding="utf-8") as f:
                 f.write(llm_note)
 
+            # Final report (longer)
+            final_report = llm_generate_full_report(evidence, model=cfg.llm_model)
+            with open(final_md_path, "w", encoding="utf-8") as f:
+                f.write(final_report)
+
     artifacts = {
         "equity_drawdown_png": equity_path,
         "strategy_vs_bh_png": compare_path if os.path.exists(compare_path) else None,
+        "equity_log_compare_png": log_path if (log_path and os.path.exists(log_path)) else None,
+        "drawdown_compare_png": dd_path if (dd_path and os.path.exists(dd_path)) else None,
         "metrics_json": met_path,
         "run_config_json": cfg_path,
+        "evidence_json": evi_path if (evi_path and os.path.exists(evi_path)) else None,
         "llm_trade_note_md": md_path if llm_note else None,
-        "equity_log_compare_png": log_path if os.path.exists(log_path) else None,
-        "drawdown_compare_png": dd_path if os.path.exists(dd_path) else None,
+        "llm_final_report_md": final_md_path if final_report else None,
+        "golden_cross_trades_png": gc_path if (gc_path and os.path.exists(gc_path)) else None,
+        "price_ma_macd_png": price_macd_path if (price_macd_path and os.path.exists(price_macd_path)) else None,
+        "price_ma_macd_6m_png": price_macd_6m_path if (price_macd_6m_path and os.path.exists(price_macd_6m_path)) else None,
+
     }
 
     return df, out, trade, metrics, artifacts
@@ -261,7 +378,7 @@ def main():
     parser.add_argument("--interval", type=str, default="1d")
     parser.add_argument("--outdir", type=str, default="outputs")
     parser.add_argument("--no-plot", action="store_true", help="Disable visualisations.")
-    parser.add_argument("--no-llm", action="store_true", help="Disable LLM trade note generation.")
+    parser.add_argument("--no-llm", action="store_true", help="Disable LLM report generation.")
     parser.add_argument("--llm-model", type=str, default="gpt-4.1-mini")
 
     args = parser.parse_args()
@@ -297,6 +414,7 @@ def main():
     for k, v in artifacts.items():
         if v:
             print(f"{k}: {v}")
+
 
 if __name__ == "__main__":
     main()

@@ -65,9 +65,31 @@ In addition to numerical evaluation, the pipeline supports **AI-assisted reporti
 pip install -r requirements.txt
 export OPENAI_API_KEY="YOUR_API_KEY"
 python run_demo.py
+
+
+
+
+
+pip install openai
+python agents/core/connie_technical/run_demo.py
+
+
+nano agents/core/connie_technical/README_connie_tech.md
+
+
+cd /workspaces/IFTE0001-NVIDIA-AI-Agent_Group-B
+python agents/core/connie_technical/run_demo.py
+
+
+## .md --> .pdf
+pandoc outputs/NVDA_final_report_llm.md \
+  -o outputs/NVDA_final_report_llm_v2.pdf \
+  --pdf-engine=xelatex \
+  --wrap=auto \
+  -V fontsize=11pt \
+  -V geometry:margin=1in \
+  -V linestretch=1.15
+## outputs path
+python -m http.server 8000
+
 ```
-
-
-cd connie_technical_agent
-source .venv/bin/activate
-python run_demo.py
