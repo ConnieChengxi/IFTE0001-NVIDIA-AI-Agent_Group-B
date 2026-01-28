@@ -31,7 +31,7 @@ It integrates financial statement analysis, valuation modeling, data visualizati
 - Cash flow quality & efficiency  
 - Growth dynamics  
 
-### Relative Valuation
+### Relative Valuation (Multiples)
 Peer comparison versus ADI, QCOM, TXN using:
 - P/E  
 - EV/EBITDA  
@@ -78,8 +78,8 @@ Create a file named secrets.env:
 
 | Folder | Contents |
 |--------|----------|
-| `outputs/` | Tables (CSV), DCF forecast, WACC, valuation |
-| `outputs/figures/` | Ratio panels and multiples charts |
+| `outputs/` | Three financial statements, ratios(profitability, leverage, growth, efficiency), multiples, DCF forecast, WACC, DCF valuation |
+| `outputs/figures/` | Ratio line chart, multiple bar chart and multiple scatter plot |
 | `outputs/investment_memo.md` | Generated investment memo |
 
 
