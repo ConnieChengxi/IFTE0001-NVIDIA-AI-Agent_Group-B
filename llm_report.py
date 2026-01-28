@@ -1,105 +1,120 @@
 from __future__ import annotations
 
+import textwrap
 from pathlib import Path
 import os
-import textwrap
 
 import pandas as pd
+from openai import OpenAI
 
-from config import Config
-
-
-def df_to_md(df: pd.DataFrame, max_rows: int = 12) -> str:
-    return df.head(max_rows).to_markdown()
+from config import CFG
 
 
-def _build_grounded_prompt(cfg: Config, ratios_df: pd.DataFrame, multiples_df: pd.DataFrame, dcf_out: dict, live_price: float | None) -> str:
-    tbl = dcf_out["forecast_table"][["Revenue (USD bn)", "FCFF (USD bn)"]].copy()
-    wacc = dcf_out["wacc_block"]["wacc"]
-    cagr = dcf_out["cagr_2021_to_base"]
-    intrinsic = dcf_out["intrinsic_value_per_share"]
+def df_to_md(df, title, max_rows=50):
+    if df is None:
+        return f"### {title}\n(N/A)\n"
+    d = df.copy()
+    if d.shape[0] > max_rows:
+        d = d.head(max_rows)
+    return f"### {title}\n{d.to_markdown()}\n"
 
-    upside_str = "N/A"
-    if live_price is not None and live_price > 0 and intrinsic == intrinsic:
-        upside_str = f"{(intrinsic / live_price - 1):.2%}"
+
+def col_trend_summary(table, row_name, label, years=None, pct=True):
+    s = table.loc[row_name].dropna()
+    if years is not None:
+        s = s.loc[[y for y in years if y in s.index]]
+    if s.empty:
+        return f"- {label}: N/A"
+    y0, y1 = int(s.index[0]), int(s.index[-1])
+    v0, v1 = float(s.iloc[0]), float(s.iloc[-1])
+    vmin, ymin = float(s.min()), int(s.idxmin())
+    vmax, ymax = float(s.max()), int(s.idxmax())
+    fmt = (lambda x: f"{x:.2%}") if pct else (lambda x: f"{x:.2f}")
+    return f"- {label}: {fmt(v0)} ({y0}) → {fmt(v1)} ({y1}); min {fmt(vmin)} ({ymin}), max {fmt(vmax)} ({ymax})."
+
+
+def generate_investment_memo(symbol: str, ratio_out: dict, multiples_ttm: pd.DataFrame, dcf_out: dict) -> Path:
+    metrics_table = ratio_out["metrics_table"]
+    leverage_table = ratio_out["leverage_table"]
+    efficiency_table = ratio_out["efficiency_table"]
+    growth_tbl = ratio_out["growth_table"]
+
+    wacc_tbl = dcf_out["wacc_tbl"]
+    fcff_forecast_tbl = dcf_out["fcff_forecast_tbl"]
+    compare_now = dcf_out["compare_now"]
+    valuation = dcf_out["valuation"]
+
+    intrinsic_price = valuation["ImpliedPrice"]
+    market_price_now = valuation["MarketPriceNow"]
+
+    years = [2021, 2022, 2023, 2024, 2025]
+
+    profit_facts = "\n".join([
+        col_trend_summary(metrics_table, "Gross margin", "Gross margin", years, True),
+        col_trend_summary(metrics_table, "Operating margin", "Operating margin", years, True),
+        col_trend_summary(metrics_table, "Net margin", "Net margin", years, True),
+        col_trend_summary(metrics_table, "ROA", "ROA", years, True),
+        col_trend_summary(metrics_table, "ROE", "ROE", years, True),
+    ])
+
+    lev_facts = "\n".join([
+        col_trend_summary(leverage_table, "Debt-to-Equity", "Debt-to-Equity", years, False),
+        col_trend_summary(leverage_table, "Current Ratio", "Current Ratio", years, False),
+        col_trend_summary(leverage_table, "Interest Coverage", "Interest Coverage", years, False),
+    ])
+
+    eff_facts = "\n".join([
+        col_trend_summary(efficiency_table, "Asset Turnover", "Asset Turnover", years, False),
+        col_trend_summary(efficiency_table, "FCF Margin", "FCF Margin", years, True),
+        col_trend_summary(efficiency_table, "CFO / Net Income", "CFO / Net Income", years, False),
+    ])
+
+    ratio_facts_text = f"""
+Profitability facts:
+{profit_facts}
+
+Leverage/Liquidity facts:
+{lev_facts}
+
+Efficiency/Cash quality facts:
+{eff_facts}
+""".strip()
 
     prompt = f"""
-You are a finance analyst. Write a concise NVDA fundamental summary grounded ONLY on the computed outputs below.
-Do not invent numbers. If something is missing, say "not available".
+You are a senior equity research analyst writing an investment memo for {symbol}.
 
-Key computed outputs:
-- Revenue CAGR (2021->{dcf_out['base_year']}): {cagr:.4f}
-- WACC: {wacc:.4f}
-- Terminal g: {cfg.terminal_g:.4f}
-- DCF intrinsic value per share: {intrinsic:.2f}
-- Live market price: {live_price if live_price is not None else 'N/A'}
-- Upside: {upside_str}
+Intrinsic value (USD/share): {intrinsic_price:.2f}
+Market price (USD/share): {market_price_now:.2f}
 
-Ratios (merged statements, recent years):
-{df_to_md(ratios_df[['fiscal_year','gross_margin','operating_margin','net_margin','roa','roe']])}
+=====================
+RATIO TABLE FACTS
+=====================
+{ratio_facts_text}
 
-Peer multiples (NVDA vs peers):
-{df_to_md(multiples_df[['P/E','EV/EBITDA','EV/Sales']])}
+=====================
+MULTIPLES PEER COMPARISON
+=====================
+{multiples_ttm.to_markdown()}
 
+=====================
+DCF INPUTS AND OUTPUTS
+=====================
+WACC: {float(wacc_tbl.loc["WACC","value"]):.4f}
 FCFF forecast:
-{df_to_md(tbl)}
-"""
-    return textwrap.dedent(prompt).strip()
+{fcff_forecast_tbl[["FCFF"]].to_markdown()}
+""".strip()
 
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
-def generate_llm_report(cfg: Config, ratios_df: pd.DataFrame, multiples_df: pd.DataFrame, dcf_out: dict,
-                        live_price: float | None, out_dir: Path) -> Path:
-    """
-    If OPENAI_API_KEY exists and cfg.use_llm=True, call LLM to generate narrative grounded on computed tables.
-    Otherwise, write a deterministic template report.
-    """
-    report_path = out_dir / "nvda_fundamental_report.md"
-    prompt = _build_grounded_prompt(cfg, ratios_df, multiples_df, dcf_out, live_price)
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[{"role": "user", "content": prompt}],
+        temperature=0.3,
+    )
 
-    if cfg.use_llm and os.getenv("OPENAI_API_KEY", "").strip():
-        try:
-            from openai import OpenAI
-            client = OpenAI()
-            resp = client.chat.completions.create(
-                model=cfg.llm_model,
-                messages=[
-                    {"role": "system", "content": "You are a careful analyst. Use only provided numbers."},
-                    {"role": "user", "content": prompt[: cfg.llm_max_chars]},
-                ],
-                temperature=0.2,
-            )
-            text = resp.choices[0].message.content.strip()
-            report_path.write_text(text, encoding="utf-8")
-            return report_path
-        except Exception as e:
-            # fall back to template
-            pass
+    memo_text = response.choices[0].message.content
 
-    # Template fallback (still grounded)
-    intrinsic = dcf_out["intrinsic_value_per_share"]
-    wacc = dcf_out["wacc_block"]["wacc"]
-    cagr = dcf_out["cagr_2021_to_base"]
-    upside = None
-    if live_price is not None and live_price > 0 and intrinsic == intrinsic:
-        upside = intrinsic / live_price - 1
-
-    text = f"""# NVDA Fundamental Agent Report (Grounded)
-
-## Key valuation outputs
-- Revenue CAGR (2021->{dcf_out['base_year']}): {cagr:.4f}
-- WACC: {wacc:.4f}
-- DCF intrinsic value per share: {intrinsic:.2f}
-- Live market price: {live_price if live_price is not None else 'N/A'}
-- Upside: {upside:.2%} if upside is not None else N/A
-
-## Ratios (recent years)
-{df_to_md(ratios_df[['fiscal_year','gross_margin','operating_margin','net_margin','roa','roe']])}
-
-## Peer multiples (NVDA vs peers)
-{df_to_md(multiples_df[['P/E','EV/EBITDA','EV/Sales']])}
-
-## FCFF forecast (DCF)
-{df_to_md(dcf_out['forecast_table'][['Revenue (USD bn)','FCFF (USD bn)','PV(FCFF) (USD bn)']])}
-"""
-    report_path.write_text(text, encoding="utf-8")
-    return report_path
+    CFG.out_dir.mkdir(parents=True, exist_ok=True)
+    memo_path = CFG.out_dir / "investment_memo.md"
+    memo_path.write_text(memo_text, encoding="utf-8")
+    return memo_path
