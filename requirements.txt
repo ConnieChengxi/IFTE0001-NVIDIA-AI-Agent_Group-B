@@ -3,4 +3,7 @@ numpy
 requests
 python-dotenv
 matplotlib
+openpyxl
+yfinance
+tabulate
 openai
