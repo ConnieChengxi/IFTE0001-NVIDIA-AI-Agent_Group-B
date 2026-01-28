@@ -1,94 +1,128 @@
+from __future__ import annotations
+
 import json
-import os
 import time
 from pathlib import Path
-from typing import Any
+from typing import Any, Optional
 
 import requests
 
-from config import Config
-
-AV_BASE = "https://www.alphavantage.co/query"
-
-FUNCTIONS = {
-    "income_statement": "INCOME_STATEMENT",
-    "balance_sheet": "BALANCE_SHEET",
-    "cash_flow": "CASH_FLOW",
-}
+from config import CFG, ensure_dirs
 
 
-def ensure_cache_dir(cache_dir: Path) -> None:
-    cache_dir.mkdir(parents=True, exist_ok=True)
+def save_json(path: Path, data: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(data, indent=2), encoding="utf-8")
 
 
-def _api_key() -> str:
-    key = os.getenv("ALPHAVANTAGE_API_KEY", "").strip()
-    if not key:
-        raise RuntimeError("Missing ALPHAVANTAGE_API_KEY")
-    return key
-
-
-def av_get(function: str, symbol: str | None = None, *, cache_dir: Path, sleep_s: int = 12, **kwargs) -> dict:
+def load_or_fetch_av(
+    cache_path: Path,
+    fetch_fn,
+    min_bytes: int = 200,
+) -> dict:
     """
-    Cache-first Alpha Vantage getter.
-    - If cache exists and looks valid -> return cache
-    - Else call API, cache JSON, then return
+    Generic cache loader:
+    - If cache exists and looks valid -> return it
+    - Else call fetch_fn() -> cache -> return
     """
-    ensure_cache_dir(cache_dir)
-    sym = symbol or "GLOBAL"
-    cache_path = cache_dir / f"{sym}_{function}.json"
-
-    if cache_path.exists():
+    if cache_path.exists() and cache_path.stat().st_size > min_bytes:
         try:
-            return json.loads(cache_path.read_text(encoding="utf-8"))
+            cached = json.loads(cache_path.read_text(encoding="utf-8"))
+            if isinstance(cached, dict) and not any(k in cached for k in ["Error Message", "Note", "Information"]):
+                return cached
         except Exception:
             pass
 
-    params: dict[str, Any] = {"function": function, "apikey": _api_key(), **kwargs}
-    if symbol:
-        params["symbol"] = symbol
-
-    r = requests.get(AV_BASE, params=params, timeout=60)
-    r.raise_for_status()
-    data = r.json()
-
-    # basic validation (like your notebook)
-    if "Error Message" in data:
-        raise RuntimeError(f"Alpha Vantage error: {data['Error Message']}")
-    if "Note" in data:
-        raise RuntimeError(f"Alpha Vantage rate limit: {data['Note']}")
-
-    cache_path.write_text(json.dumps(data, indent=2), encoding="utf-8")
-    time.sleep(sleep_s)
+    data = fetch_fn()
+    try:
+        save_json(cache_path, data)
+    except Exception:
+        pass
     return data
 
 
-def fetch_financial_statements_cached(symbol: str, cfg: Config) -> dict[str, Path]:
+def fetch_av_json(function: str, api_key: str, symbol: Optional[str] = None, **kwargs: Any) -> dict:
+    params = {"function": function, "apikey": api_key}
+    if symbol is not None:
+        params["symbol"] = symbol
+    params.update(kwargs)
+
+    r = requests.get(CFG.av_base, params=params, timeout=60)
+    r.raise_for_status()
+    data = r.json()
+
+    if "Error Message" in data:
+        raise RuntimeError(data["Error Message"])
+    if "Note" in data:
+        raise RuntimeError(data["Note"])
+    if "Information" in data:
+        raise RuntimeError(data["Information"])
+    return data
+
+
+def av_get(
+    function: str,
+    api_key: str,
+    symbol: Optional[str] = None,
+    raw_dir: Path | None = None,
+    sleep_seconds: int = 15,
+    **kwargs: Any,
+) -> dict:
     """
-    Download (or reuse) statement JSONs and return their paths.
+    Cache-first Alpha Vantage getter.
+    IMPORTANT: sleep AFTER each live request to respect free-tier limits.
     """
+    ensure_dirs(CFG)
+    raw_dir = raw_dir or CFG.raw_dir
+    sym = symbol if symbol is not None else "GLOBAL"
+    cache_path = raw_dir / f"{sym}_{function}.json"
+
+    # 1) Try cache first (and only return if it is NOT an error/info payload)
+    if cache_path.exists() and cache_path.stat().st_size > 200:
+        try:
+            cached = json.loads(cache_path.read_text(encoding="utf-8"))
+            if isinstance(cached, dict) and not any(k in cached for k in ["Error Message", "Note", "Information"]):
+                return cached
+        except Exception:
+            pass  # corrupted cache -> go live
+
+    # 2) Live request
+    data = fetch_av_json(function=function, api_key=api_key, symbol=symbol, **kwargs)
+
+    # 3) Cache the successful payload
+    try:
+        save_json(cache_path, data)
+    except Exception:
+        pass
+
+    # 4) Sleep to respect rate limit
+    time.sleep(sleep_seconds)
+    return data
+
+
+
+def fetch_annual_statements(symbol: str, api_key: str) -> dict[str, Path]:
+    """
+    Download (or reuse cached) annual Income/BS/CF jsons.
+    Returns dict of file paths.
+    """
+    ensure_dirs(CFG)
+    functions = {
+        "income_statement": "INCOME_STATEMENT",
+        "balance_sheet": "BALANCE_SHEET",
+        "cash_flow": "CASH_FLOW",
+    }
+
     paths: dict[str, Path] = {}
-    for name, fn in FUNCTIONS.items():
-        p = cfg.cache_dir / f"{symbol}_{name}.json"
-        if not p.exists():
-            data = av_get(fn, symbol, cache_dir=cfg.cache_dir)
-            p.write_text(json.dumps(data, indent=2), encoding="utf-8")
-        paths[name] = p
+    for name, fn in functions.items():
+        out_path = CFG.raw_dir / f"{symbol}_{name}.json"
+        if out_path.exists() and out_path.stat().st_size > 200:
+            paths[name] = out_path
+            continue
+
+        data = av_get(fn, api_key=api_key, symbol=symbol)
+        save_json(out_path, data)
+        paths[name] = out_path
+
     return paths
 
-
-def fetch_overview_cached(symbol: str, cfg: Config) -> dict:
-    return av_get("OVERVIEW", symbol, cache_dir=cfg.cache_dir)
-
-
-def market_price_realtime_av(symbol: str, cfg: Config) -> float | None:
-    """
-    Uses GLOBAL_QUOTE; returns None if missing.
-    """
-    data = av_get("GLOBAL_QUOTE", symbol, cache_dir=cfg.cache_dir)
-    q = data.get("Global Quote", {})
-    price = q.get("05. price") or q.get("05. Price") or q.get("price")
-    try:
-        return float(price)
-    except Exception:
-        return None
