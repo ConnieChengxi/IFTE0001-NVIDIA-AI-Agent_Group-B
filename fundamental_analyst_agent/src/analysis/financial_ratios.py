@@ -1,7 +1,3 @@
-"""
-Financial Ratios Calculator
-"""
-
 from typing import Dict, List, Optional
 from config.settings import (
     PROFITABILITY_BENCHMARKS,
