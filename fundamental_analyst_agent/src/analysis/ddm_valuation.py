@@ -7,7 +7,6 @@ from config.settings import (
 )
 from src.data_collection.yahoo_finance_client import get_risk_free_rate
 
-
 class DDMValuator:
     
     def __init__(self, company_data: Dict, cache_manager=None):
