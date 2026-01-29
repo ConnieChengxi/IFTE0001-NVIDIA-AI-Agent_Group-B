@@ -1,16 +1,3 @@
-"""
-DCF Valuation Model - Multi-Stage Version
-Discounted Cash Flow valuation with company-type specific assumptions.
-
-Enhanced with 3-stage DCF for growth companies:
-- Stage 1: High growth phase (years 1-5)
-- Stage 2: Transition/fade phase (years 6-10)
-- Stage 3: Terminal value at GDP growth rate
-
-This approach addresses the expert feedback that applying terminal growth
-immediately after 5 years is unrealistic for high-growth companies.
-"""
-
 from typing import Dict, List, Optional, Tuple
 from config.settings import (
     RISK_FREE_RATE_FALLBACK,
@@ -22,15 +9,6 @@ from src.data_collection.yahoo_finance_client import get_risk_free_rate
 
 
 class DCFValuator:
-    """
-    Multi-stage DCF valuation model with company-type specific growth assumptions.
-    
-    Supports 4 company types with different stage structures:
-    - Growth: 3-stage model (high growth → fade → terminal)
-    - Balanced: 2-stage model (moderate growth → fade → terminal)
-    - Dividend: 1-stage model (stable growth → terminal) - no fade needed
-    - Cyclical: 1-stage model (normalized growth → terminal) - no fade needed
-    """
     
     
     DCF_PARAMS_BY_TYPE = {
@@ -73,15 +51,6 @@ class DCFValuator:
     }
     
     def __init__(self, company_data: Dict, company_type: str = 'balanced', sector: str = None, cache_manager=None):
-        """
-        Initialize DCF valuator.
-        
-        Args:
-            company_data: Dict with keys: overview, income, balance, cashflow
-            company_type: 'growth', 'balanced', 'dividend', or 'cyclical'
-            sector: Company sector (for future sector-specific adjustments)
-            cache_manager: Optional cache manager for fetching risk-free rate
-        """
         self.overview = company_data.get('overview', {})
         self.income = company_data.get('income', [])
         self.balance = company_data.get('balance', [])
@@ -103,13 +72,11 @@ class DCFValuator:
     
     
     def _get_latest(self, data_list: List[Dict], field: str) -> Optional[float]:
-        """Get latest value for a field."""
         if not data_list:
             return None
         return data_list[0].get(field)
     
     def _get_historical(self, data_list: List[Dict], field: str, years: int = 5) -> List[float]:
-        """Get historical values for a field."""
         values = []
         for i in range(min(years, len(data_list))):
             value = data_list[i].get(field)
@@ -118,11 +85,6 @@ class DCFValuator:
         return values
     
     def _calculate_fcf_history(self) -> List[float]:
-        """
-        Calculate historical Free Cash Flow.
-        FCF = Operating Cash Flow - CapEx
-        Returns list from oldest to newest.
-        """
         ocf_history = self._get_historical(self.cashflow, 'operating_cashflow', years=5)
         capex_history = self._get_historical(self.cashflow, 'capital_expenditures', years=5)
         
@@ -142,11 +104,6 @@ class DCFValuator:
         return fcf_history
     
     def _calculate_cagr(self, values: List[float]) -> float:
-        """
-        Calculate Compound Annual Growth Rate.
-        
-        CAGR = (End Value / Start Value)^(1/years) - 1
-        """
         if not values or len(values) < 2:
             return 0.10
         
@@ -163,12 +120,6 @@ class DCFValuator:
     
     
     def _weighted_recent_growth(self) -> float:
-        """
-        Weight recent years more heavily (for growth companies).
-        
-        Used for companies experiencing acceleration (e.g., NVDA AI boom).
-        Formula: 70% recent growth + 30% historical growth
-        """
         if not self.fcf_history or len(self.fcf_history) < 3:
             return 0.10
         
@@ -187,9 +138,6 @@ class DCFValuator:
         return weighted_growth
     
     def _conservative_growth(self) -> float:
-        """
-        Conservative growth using 25th percentile (for dividend companies).
-        """
         if not self.fcf_history or len(self.fcf_history) < 3:
             return 0.03
         
@@ -209,10 +157,6 @@ class DCFValuator:
         return max(percentile_25, 0.02)
     
     def _normalized_growth(self) -> float:
-        """
-        Normalized growth for cyclical companies.
-        Use median FCF to avoid peak/trough distortions.
-        """
         if not self.fcf_history or len(self.fcf_history) < 3:
             return 0.05
         
@@ -229,15 +173,6 @@ class DCFValuator:
         return self._calculate_cagr(self.fcf_history)
     
     def _calculate_stage1_growth_rate(self) -> float:
-        """
-        Calculate FCF growth rate for Stage 1 based on company type.
-        
-        Applies company-type specific caps to ensure realistic projections:
-        - Growth: max 50%
-        - Balanced: max 20%
-        - Dividend: max 10%
-        - Cyclical: max 15%
-        """
         if not self.fcf_history or len(self.fcf_history) < 2:
             return 0.05
         
@@ -261,18 +196,36 @@ class DCFValuator:
     
     
     def calculate_wacc(self) -> float:
-        """
-        Calculate WACC (Weighted Average Cost of Capital).
+        TAX_RATE = 0.25
         
-        Simplified: WACC = Risk-Free Rate + Beta × Equity Risk Premium
-        
-        Risk-free rate is fetched dynamically from 10-Year Treasury yield.
-        """
         beta = self.overview.get('beta', 1.0)
         if not beta or beta <= 0:
             beta = 1.0
         
-        wacc = self.risk_free_rate + (beta * EQUITY_RISK_PREMIUM)
+        cost_of_equity = self.risk_free_rate + (beta * EQUITY_RISK_PREMIUM)
+        
+        market_cap = self.overview.get('market_cap', 0) or 0
+        long_term_debt = self._get_latest(self.balance, 'long_term_debt') or 0
+        short_term_debt = self._get_latest(self.balance, 'short_term_debt') or 0
+        total_debt = long_term_debt + short_term_debt
+        
+        interest_expense = abs(self._get_latest(self.income, 'interest_expense') or 0)
+        if total_debt > 0 and interest_expense > 0:
+            cost_of_debt = interest_expense / total_debt
+            cost_of_debt = min(cost_of_debt, 0.15)
+        else:
+            cost_of_debt = self.risk_free_rate + 0.02
+        
+        total_value = market_cap + total_debt
+        
+        if total_value > 0:
+            equity_weight = market_cap / total_value
+            debt_weight = total_debt / total_value
+        else:
+            equity_weight = 1.0
+            debt_weight = 0.0
+        
+        wacc = (equity_weight * cost_of_equity) + (debt_weight * cost_of_debt * (1 - TAX_RATE))
         
         wacc = max(0.05, min(wacc, 0.20))
         
@@ -280,15 +233,6 @@ class DCFValuator:
     
     
     def _calculate_fade_schedule(self, start_growth: float, end_growth: float, years: int) -> List[float]:
-        """
-        Calculate linear fade schedule from start_growth to end_growth over N years.
-        
-        Example:
-            start_growth = 0.30 (30%)
-            end_growth = 0.08 (8%)
-            years = 5
-            Returns: [0.256, 0.212, 0.168, 0.124, 0.08]
-        """
         if years <= 0:
             return []
         
@@ -302,19 +246,6 @@ class DCFValuator:
         return fade_rates
     
     def project_fcf_multistage(self) -> Dict:
-        """
-        Project Free Cash Flow using multi-stage model.
-        
-        Returns:
-            Dict containing:
-            - stage1_projections: List of FCF for stage 1
-            - stage2_projections: List of FCF for stage 2 (fade period)
-            - all_projections: Combined list of all projected FCFs
-            - stage1_growth: Growth rate used in stage 1
-            - fade_schedule: List of declining growth rates in stage 2
-            - terminal_growth: Final perpetual growth rate
-            - model_type: '1-stage', '2-stage', or '3-stage'
-        """
         current_ocf = self._get_latest(self.cashflow, 'operating_cashflow')
         current_capex = abs(self._get_latest(self.cashflow, 'capital_expenditures') or 0)
         current_fcf = current_ocf - current_capex if current_ocf else None
@@ -378,12 +309,6 @@ class DCFValuator:
     
     
     def calculate_terminal_value(self, final_fcf: float) -> float:
-        """
-        Calculate Terminal Value using Gordon Growth Model.
-        
-        TV = FCF_next / (WACC - g)
-        where FCF_next = Final FCF × (1 + terminal_growth_rate)
-        """
         wacc = self.calculate_wacc()
         terminal_growth = self.params['terminal_growth']
         
@@ -396,11 +321,6 @@ class DCFValuator:
         return terminal_value
     
     def calculate_enterprise_value_multistage(self, projections: Dict) -> Dict:
-        """
-        Calculate Enterprise Value using multi-stage projections.
-        
-        EV = PV(Stage 1 FCFs) + PV(Stage 2 FCFs) + PV(Terminal Value)
-        """
         wacc = self.calculate_wacc()
         all_projections = projections['all_projections']
         stage1_projections = projections['stage1_projections']
@@ -440,11 +360,6 @@ class DCFValuator:
         }
     
     def calculate_equity_value(self, enterprise_value: float) -> float:
-        """
-        Calculate Equity Value from Enterprise Value.
-        
-        Equity Value = Enterprise Value + Cash - Debt
-        """
         cash = self._get_latest(self.balance, 'cash') or 0
         long_term_debt = self._get_latest(self.balance, 'long_term_debt') or 0
         short_term_debt = self._get_latest(self.balance, 'short_term_debt') or 0
@@ -454,9 +369,6 @@ class DCFValuator:
         return equity_value
     
     def calculate_fair_value_per_share(self) -> Optional[float]:
-        """
-        Calculate fair value per share using multi-stage DCF.
-        """
         projections = self.project_fcf_multistage()
         
         if not projections['all_projections']:
@@ -476,20 +388,11 @@ class DCFValuator:
     
     
     def project_fcf(self) -> Tuple[List[float], float]:
-        """
-        Legacy method for backward compatibility.
-        Returns all projections and stage 1 growth rate.
-        """
         projections = self.project_fcf_multistage()
         return projections['all_projections'], projections['stage1_growth']
     
     
     def get_dcf_summary(self) -> Dict:
-        """
-        Get complete DCF analysis with all assumptions and results.
-        
-        Enhanced to include multi-stage model details.
-        """
         wacc = self.calculate_wacc()
         
         projections = self.project_fcf_multistage()
@@ -573,15 +476,6 @@ class DCFValuator:
     }
     
     def calculate_scenario_fair_value(self, scenario: str) -> Optional[float]:
-        """
-        Calculate fair value for a specific scenario.
-        
-        Args:
-            scenario: 'bear', 'base', or 'bull'
-            
-        Returns:
-            Fair value per share for the scenario
-        """
         if scenario not in self.SCENARIO_PARAMS:
             return None
         
@@ -669,12 +563,6 @@ class DCFValuator:
         return fair_value
     
     def get_scenario_analysis(self) -> Dict:
-        """
-        Get complete scenario analysis with Bear/Base/Bull cases.
-        
-        Returns:
-            Dict with fair values and assumptions for each scenario
-        """
         base_growth = self._calculate_stage1_growth_rate()
         base_wacc = self.calculate_wacc()
         current_price = self.overview.get('price', 0) or 0
