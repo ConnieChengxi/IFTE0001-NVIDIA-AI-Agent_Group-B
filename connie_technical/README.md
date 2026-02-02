@@ -73,7 +73,7 @@ pip install -r requirements.txt
 export OPENAI_API_KEY="YOUR_API_KEY"
 
 # Run the pipeline (ticker is required)
-python run_demo.py --ticker NVDA
+python run_demo.py NVDA
 ```
 
 ### CLI Arguments
