@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Memo: NVDA - NVIDIA Corporation</title>
+    
+        <style>
+            @page { margin: 1cm; }
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                font-size: 10pt;
+                line-height: 1.4;
+                color: #1f2937;
+                margin: 20px;
+                max-width: 1000px;
+            }
+            h1 {
+                font-size: 20pt;
+                font-weight: 700;
+                color: #1e3a8a;
+                margin-bottom: 5px;
+                border-bottom: 3px solid #1e3a8a;
+                padding-bottom: 10px;
+            }
+            h2 {
+                font-size: 14pt;
+                font-weight: 700;
+                color: #1e3a8a;
+                border-bottom: 2px solid #3b82f6;
+                padding-bottom: 5px;
+                margin-top: 30px;
+                margin-bottom: 15px;
+            }
+            h3 {
+                font-size: 11pt;
+                font-weight: 600;
+                color: #374151;
+                margin: 20px 0 10px 0;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+            h4 {
+                font-size: 10pt;
+                font-weight: 600;
+                color: #4b5563;
+                margin: 15px 0 8px 0;
+            }
+            p {
+                margin: 8px 0;
+                text-align: justify;
+                line-height: 1.6;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 12px 0;
+                font-size: 9pt;
+            }
+            th {
+                background: #f3f4f6;
+                padding: 8px 10px;
+                text-align: left;
+                font-weight: 600;
+                color: #374151;
+                border-bottom: 2px solid #d1d5db;
+                font-size: 8pt;
+                text-transform: uppercase;
+                letter-spacing: 0.3px;
+            }
+            td {
+                padding: 6px 10px;
+                border-bottom: 1px solid #f3f4f6;
+            }
+            .text-right { text-align: right; }
+            .text-center { text-align: center; }
+            .highlight-row {
+                background: #fef3c7;
+                font-weight: 600;
+            }
+            .company-row {
+                background: #dbeafe;
+                font-weight: 700;
+            }
+            .section-header {
+                background: #e0e7ff;
+                font-weight: 700;
+                text-transform: uppercase;
+                font-size: 8pt;
+                letter-spacing: 0.5px;
+            }
+            .positive { color: #10b981; font-weight: 600; }
+            .negative { color: #ef4444; font-weight: 600; }
+            .neutral { color: #6b7280; }
+            
+            .rec-box {
+                padding: 20px;
+                margin: 20px 0;
+                border-radius: 4px;
+                text-align: center;
+            }
+            .rec-buy {
+                background: #f0fdf4;
+                border: 3px solid #10b981;
+                color: #065f46;
+            }
+            .rec-hold {
+                background: #fffbeb;
+                border: 3px solid #f59e0b;
+                color: #92400e;
+            }
+            .rec-sell {
+                background: #fef2f2;
+                border: 3px solid #ef4444;
+                color: #991b1b;
+            }
+            .rec-title {
+                font-size: 16pt;
+                font-weight: 700;
+                margin-bottom: 15px;
+            }
+            .rec-metrics {
+                display: flex;
+                justify-content: space-around;
+                margin-top: 10px;
+            }
+            .rec-metric {
+                text-align: center;
+            }
+            .rec-metric-label {
+                font-size: 8pt;
+                color: #6b7280;
+                margin-bottom: 5px;
+            }
+            .rec-metric-value {
+                font-size: 16pt;
+                font-weight: 700;
+            }
+            
+            .valuation-box {
+                padding: 12px;
+                margin: 15px 0;
+                border-radius: 4px;
+                border-left: 4px solid;
+            }
+            .valuation-undervalued {
+                background: #f0fdf4;
+                border-color: #10b981;
+            }
+            .valuation-fair {
+                background: #eff6ff;
+                border-color: #3b82f6;
+            }
+            .valuation-overvalued {
+                background: #fef2f2;
+                border-color: #ef4444;
+            }
+            
+            .benchmark {
+                font-size: 8pt;
+                color: #6b7280;
+                font-style: italic;
+                margin-top: 5px;
+            }
+            
+            .risk-high { color: #ef4444; font-weight: 600; }
+            .risk-medium { color: #f59e0b; font-weight: 600; }
+            .risk-low { color: #10b981; font-weight: 600; }
+            
+            ul {
+                margin: 8px 0;
+                padding-left: 25px;
+            }
+            li {
+                margin: 4px 0;
+            }
+            
+            pre {
+                background: #f9fafb;
+                padding: 10px;
+                border-left: 3px solid #d1d5db;
+                font-size: 8pt;
+                overflow-x: auto;
+            }
+
+            .rating-strong {
+                background-color: #10b981;
+                color: white;
+                padding: 2px 8px;
+                border-radius: 3px;
+                font-size: 0.85em;
+                font-weight: 600;
+            }
+
+            .rating-acceptable {
+                background-color: #f59e0b;
+                color: white;
+                padding: 2px 8px;
+                border-radius: 3px;
+                font-size: 0.85em;
+                font-weight: 600;
+            }
+
+            .rating-weak {
+                background-color: #ef4444;
+                color: white;
+                padding: 2px 8px;
+                border-radius: 3px;
+                font-size: 0.85em;
+                font-weight: 600;
+            }
+
+            /* ========================================
+               PRINT STYLES - Better PDF Output
+               ======================================== */
+            @media print {
+                body {
+                    margin: 0;
+                    padding: 15px;
+                    font-size: 9pt;
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+                
+                /* Preserve table styling */
+                table {
+                    width: 100% !important;
+                    border-collapse: collapse !important;
+                    page-break-inside: avoid;
+                }
+                
+                th {
+                    background-color: #f3f4f6 !important;
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+                
+                tr {
+                    page-break-inside: avoid;
+                }
+                
+                /* Preserve colored backgrounds */
+                .rec-buy, .rec-hold, .rec-sell {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+                
+                .rating-strong, .rating-acceptable, .rating-weak {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+                
+                .positive, .negative {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+                
+                /* Section headers - keep with content */
+                h2, h3 {
+                    page-break-after: avoid;
+                }
+                
+                /* Valuation box */
+                .valuation-box {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                    border-left: 4px solid !important;
+                }
+                
+                .valuation-undervalued {
+                    background-color: #f0fdf4 !important;
+                    border-color: #10b981 !important;
+                }
+                
+                .valuation-fair {
+                    background-color: #eff6ff !important;
+                    border-color: #3b82f6 !important;
+                }
+                
+                .valuation-overvalued {
+                    background-color: #fef2f2 !important;
+                    border-color: #ef4444 !important;
+                }
+                
+                /* Highlighted rows */
+                tr[style*="background-color"] {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+                
+                /* Page breaks */
+                .page-break {
+                    page-break-before: always;
+                }
+                
+                /* Hide non-essential elements */
+                .no-print {
+                    display: none !important;
+                }
+            }
+        </style>
+        
+</head>
+<body>
+    <h1>Investment Memo: NVIDIA Corporation (NVDA)</h1>
+    <p style="font-size: 9pt; color: #6b7280; margin-bottom: 20px;">
+        <strong>Date:</strong> February 01, 2026<br>
+        <strong>Analyst:</strong> Idaliia Gafarova<br>
+        <strong>Classification:</strong> Growth
+    </p>
+    
+    <h2>1. Executive Summary</h2>
+    
+        <h3>Investment Snapshot</h3>
+        <table>
+            <thead>
+                <tr><th>Metric</th><th class="text-right">Value</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Recommendation</td><td class="text-right"><strong>BUY</strong></td></tr>
+                <tr><td>Current Price</td><td class="text-right">$191.13</td></tr>
+                <tr><td>Target Price</td><td class="text-right">$376.72</td></tr>
+                <tr><td>Upside/Downside</td><td class="text-right positive">97.1%</td></tr>
+            </tbody>
+        </table>
+        
+        <h3>Key Metrics</h3>
+        <table>
+            <thead>
+                <tr><th>Metric</th><th class="text-right">Value</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>P/E Ratio</td><td class="text-right">47.7x</td></tr>
+                <tr><td>Profit Margin</td><td class="text-right">55.8%</td></tr>
+                <tr><td>Revenue Growth</td><td class="text-right">114.2%</td></tr>
+                <tr><td>ROE</td><td class="text-right">91.9%</td></tr>
+            </tbody>
+        </table>
+        <h3>Investment Thesis</h3><p>[LLM narrative omitted in this run (disabled for reproducibility).]</p>
+    
+    <h2>2. Company Overview</h2>
+    <p>NVIDIA Corporation (NVDA) is a USA-based company in the SEMICONDUCTORS industry within the TECHNOLOGY sector, listed on NASDAQ with a market capitalization of approximately $4.7T.</p><p>NVIDIA Corporation operates in the SEMICONDUCTORS industry, providing products and services to customers globally. The company maintains operations across multiple geographic markets with headquarters in USA.</p>
+    
+    
+        <h2>3. Financial Analysis</h2>
+        
+        <h3>FINANCIAL RATIOS</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th style="text-align: left;">METRIC</th>
+                    <th>2021</th>
+                    <th>2022</th>
+                    <th>2023</th>
+                    <th>2024</th>
+                    <th>2025</th>
+                    <th>RATING</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+                    <tr class="section-header">
+                        <td colspan="7"><strong>PROFITABILITY</strong></td>
+                    </tr>
+            <tr><td>Gross Margin</td><td>62.3%</td><td>64.9%</td><td>56.9%</td><td>72.7%</td><td>75.0%</td><td><span class="rating-strong">Strong</span></td></tr><tr><td>Operating Margin</td><td>27.5%</td><td>37.8%</td><td>16.5%</td><td>55.9%</td><td>64.6%</td><td><span class="rating-strong">Strong</span></td></tr><tr><td>Net Profit Margin</td><td>26.0%</td><td>36.2%</td><td>16.2%</td><td>48.8%</td><td>55.8%</td><td><span class="rating-strong">Strong</span></td></tr><tr><td>ROE</td><td>25.6%</td><td>36.6%</td><td>19.8%</td><td>69.2%</td><td>91.9%</td><td><span class="rating-strong">Strong</span></td></tr><tr><td>ROA</td><td>15.0%</td><td>22.1%</td><td>10.6%</td><td>45.3%</td><td>65.3%</td><td><span class="rating-strong">Strong</span></td></tr><tr><td>ROIC</td><td>15.2%</td><td>21.1%</td><td>11.0%</td><td>54.3%</td><td>81.7%</td><td><span class="rating-strong">Strong</span></td></tr>
+                    <tr class="section-header">
+                        <td colspan="7"><strong>LEVERAGE</strong></td>
+                    </tr>
+            <tr><td>Debt/Assets</td><td>0.5x</td><td>0.5x</td><td>0.5x</td><td>0.3x</td><td>0.2x</td><td><span class="rating-strong">Strong</span></td></tr><tr><td>Debt/Equity</td><td>0.8x</td><td>0.9x</td><td>1.0x</td><td>0.5x</td><td>0.2x</td><td><span class="rating-strong">Strong</span></td></tr><tr><td>Interest Coverage</td><td>25.0x</td><td>43.1x</td><td>17.0x</td><td>132.6x</td><td>341.2x</td><td><span class="rating-strong">Strong</span></td></tr>
+                    <tr class="section-header">
+                        <td colspan="7"><strong>LIQUIDITY</strong></td>
+                    </tr>
+            <tr><td>Current Ratio</td><td>4.1x</td><td>6.7x</td><td>3.5x</td><td>4.2x</td><td>4.4x</td><td><span class="rating-strong">Strong</span></td></tr><tr><td>Quick Ratio</td><td>3.6x</td><td>6.0x</td><td>2.7x</td><td>3.7x</td><td>3.9x</td><td><span class="rating-strong">Strong</span></td></tr>
+                </tbody>
+            </table>
+        
+            <h3>FINANCIAL HEALTH ASSESSMENT</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">CATEGORY</th>
+                        <th>RATING</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Profitability</td>
+                        <td><strong>Strong</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Leverage</td>
+                        <td><strong>Conservative</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Liquidity</td>
+                        <td><strong>Strong</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <p style="text-align: justify; line-height: 1.6;">
+                Financial analysis unavailable (LLM API key not configured).
+            </p>
+        
+    
+    
+            <h2>4. Valuation</h2>
+            
+            <h3>4.1 INTRINSIC VALUE SUMMARY</h3>
+            
+            <p><strong>Company Type:</strong> Growth</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">METHOD</th>
+                        <th>FAIR VALUE</th>
+                        <th>VS CURRENT ($191.13)</th>
+                        <th>WEIGHT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>DCF</td>
+                        <td>$376.72</td>
+                        <td class="positive">
+                            97.1%
+                        </td>
+                        <td>70.0%</td>
+                    </tr>
+                    <tr>
+                        <td>Multiples</td>
+                        <td>N/A</td>
+                        <td class="negative">
+                            N/A
+                        </td>
+                        <td>30.0%</td>
+                    </tr>
+        
+                    <tr style="background-color: #fef3c7; font-weight: 600;">
+                        <td>Target Price</td>
+                        <td>$376.72</td>
+                        <td class="positive">
+                            97.1%
+                        </td>
+                        <td>100%</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <div style="background-color: #d1fae5; border-left: 4px solid #065f46; padding: 1em; margin: 1em 0;">
+                <p style="margin: 0; color: #065f46; font-weight: 600;">
+                    <strong>Undervalued:</strong> Trading below intrinsic value with +97.1% to target price.
+                </p>
+            </div>
+            
+            <p style="text-align: justify; line-height: 1.6; margin-top: 1.5em;">
+                <strong>💡 Valuation Interpretation</strong><br><br>
+                Our blended valuation approach combines DCF and multiples analysis weighted according to company characteristics.
+            </p>
+            
+            <h3 style="margin-top: 2em;">4.2 KEY VALUATION ASSUMPTIONS</h3>
+        
+            <p><strong>DCF Methodology (Growth Company):</strong></p>
+            <ul style="line-height: 1.8;">
+                <li><strong>Projection Period:</strong> 5 years</li>
+                <li><strong>FCF Growth Rate:</strong> 100.0% 
+                    (Growth Method: Weighted Recent)</li>
+                <li><strong>Terminal Growth:</strong> 4.0%</li>
+                <li><strong>WACC:</strong> 16.9% 
+                    (Beta: 2.31, Risk-Free: 4.2%, 
+                    ERP: 5.5%)</li>
+            </ul>
+            
+            <p><strong>Multiples Approach:</strong></p>
+            <ul style="line-height: 1.8;">
+                <li><strong>Peer Group:</strong> N/A</li>
+                <li><strong>Metrics:</strong> P/E, EV/EBITDA, P/B</li>
+                <li><strong>Note:</strong> Premium/discount to peers reflects growth differential and competitive positioning</li>
+            </ul>
+        
+    
+    
+            <h2>5. Competitive Positioning</h2>
+            
+            <h3>PEER COMPARISON MATRIX</h3>
+            
+            <p><strong>Industry:</strong> SEMICONDUCTORS</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">COMPANY</th>
+                        <th>MARKET CAP</th>
+                        <th>P/E</th>
+                        <th>EV/EBITDA</th>
+                        <th>P/B</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: #eff6ff;">
+                        <td><strong>NVDA</strong></td>
+                        <td>$4.7T</td>
+                        <td>47.7x</td>
+                        <td>54.1x</td>
+                        <td>58.7x</td>
+                    </tr>
+        
+                    <tr style="background-color: #fef3c7; font-weight: 600;">
+                        <td>Peer Average</td>
+                        <td>—</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                        <td>N/A</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <h3 style="margin-top: 2em;">OPERATING METRICS COMPARISON</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">METRIC</th>
+                        <th>NVDA</th>
+                        <th>PEER AVG</th>
+                        <th>DIFFERENTIAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+        
+                    <tr>
+                        <td>Revenue Growth</td>
+                        <td>114.2%</td>
+                        <td>12.0%</td>
+                        <td class="positive">
+                            +102pp
+                        </td>
+                    </tr>
+            
+                    <tr>
+                        <td>Gross Margin</td>
+                        <td>75.0%</td>
+                        <td>55.0%</td>
+                        <td class="positive">
+                            +20pp
+                        </td>
+                    </tr>
+            
+                    <tr>
+                        <td>Operating Margin</td>
+                        <td>64.6%</td>
+                        <td>28.0%</td>
+                        <td class="positive">
+                            +37pp
+                        </td>
+                    </tr>
+            
+                    <tr>
+                        <td>ROE</td>
+                        <td>91.9%</td>
+                        <td>25.0%</td>
+                        <td class="positive">
+                            +67pp
+                        </td>
+                    </tr>
+            
+                </tbody>
+            </table>
+        
+            <p style="text-align: justify; line-height: 1.6; margin-top: 1.5em;">
+                <strong>💡 Competitive Analysis</strong><br><br>
+                The company's valuation reflects its competitive position within the industry peer group.
+            </p>
+        
+    
+    <h2>6. Risk Assessment</h2>
+    
+        <h3>Key Risks</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Severity</th>
+                    <th>Risk Category</th>
+                    <th>Signal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td class="risk-high">High</td>
+                <td>Multiple</td>
+                <td>P/B 58.7x reflects extreme expectations</td>
+            </tr><tr>
+                <td class="risk-medium">Medium</td>
+                <td>Growth</td>
+                <td>Revenue +114.2% may normalize (base effect)</td>
+            </tr><tr>
+                <td class="risk-medium">Medium</td>
+                <td>Volatility</td>
+                <td>Beta 2.31 amplifies market moves</td>
+            </tr><tr>
+                <td class="risk-medium">Medium</td>
+                <td>Competitive</td>
+                <td>Rapid innovation cycle; market share vulnerable</td>
+            </tr>
+            </tbody>
+        </table>
+        <p>[LLM narrative omitted in this run (disabled for reproducibility).]</p>
+    
+    <h2>7. Investment Recommendation</h2>
+    
+        <div class="rec-box rec-buy">
+            <div class="rec-title">INVESTMENT RECOMMENDATION: BUY</div>
+            <div class="rec-metrics">
+                <div class="rec-metric">
+                    <div class="rec-metric-label">Target Price</div>
+                    <div class="rec-metric-value">$376.72</div>
+                </div>
+                <div class="rec-metric">
+                    <div class="rec-metric-label">Current Price</div>
+                    <div class="rec-metric-value">$191.13</div>
+                </div>
+                <div class="rec-metric">
+                    <div class="rec-metric-label">Upside/Downside</div>
+                    <div class="rec-metric-value" style="color: #10b981;">97.1%</div>
+                </div>
+            </div>
+        </div>
+        <p>[LLM narrative omitted in this run (disabled for reproducibility).]</p><p><strong>Valuation Method:</strong> Growth (DCF: 70.0% · Multiples: 30.0% · DDM: 0.0%)</p>
+    
+    
+        <h2>Appendix A: Scoring Methodology</h2>
+        
+        <p>The recommendation is based on valuation upside—the percentage difference between the calculated Target Price and Current Price. The Target Price is a weighted blend of three valuation methods, with weights determined by company classification.</p>
+        
+        <h3>Step 1: Calculate Target Price</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>DCF</strong></td>
+                    <td>Intrinsic value based on projected free cash flows discounted to present value</td>
+                </tr>
+                <tr>
+                    <td><strong>Multiples</strong></td>
+                    <td>Fair value based on P/E, EV/EBITDA, and P/B multiples vs peer companies</td>
+                </tr>
+                <tr>
+                    <td><strong>DDM</strong></td>
+                    <td>Value based on expected dividend stream using Gordon Growth Model</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Valuation Weights by Company Type</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Company Type</th>
+                    <th class="text-center">DCF</th>
+                    <th class="text-center">Multiples</th>
+                    <th class="text-center">DDM</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Growth</td>
+                    <td class="text-center">70%</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">0%</td>
+                </tr>
+                <tr>
+                    <td>Balanced</td>
+                    <td class="text-center">50%</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">20%</td>
+                </tr>
+                <tr>
+                    <td>Dividend</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">20%</td>
+                    <td class="text-center">50%</td>
+                </tr>
+                <tr>
+                    <td>Cyclical</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">60%</td>
+                    <td class="text-center">10%</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Step 2: Calculate Upside</h3>
+        <p><code>Upside = (Target Price - Current Price) / Current Price × 100%</code></p>
+        
+        <h3>Step 3: Gate Checks (Safety Filters)</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Gate</th>
+                    <th class="text-center">Threshold</th>
+                    <th class="text-center">Severity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Interest Coverage</td>
+                    <td class="text-center">≥ 1.5x</td>
+                    <td class="text-center">CRITICAL</td>
+                </tr>
+                <tr>
+                    <td>Current Ratio</td>
+                    <td class="text-center">≥ 0.8x</td>
+                    <td class="text-center">HIGH</td>
+                </tr>
+                <tr>
+                    <td>Debt/Equity</td>
+                    <td class="text-center">≤ 5.0x</td>
+                    <td class="text-center">HIGH</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Step 4: Recommendation Logic</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Condition</th>
+                    <th>Recommendation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Upside &gt; +20% AND no HIGH/CRITICAL gates</td>
+                    <td><strong>BUY</strong></td>
+                </tr>
+                <tr>
+                    <td>Upside &gt; +20% BUT has HIGH gate</td>
+                    <td><strong>HOLD</strong></td>
+                </tr>
+                <tr>
+                    <td>-10% &lt; Upside &lt; +20%</td>
+                    <td><strong>HOLD</strong></td>
+                </tr>
+                <tr>
+                    <td>Upside &lt; -10%</td>
+                    <td><strong>SELL</strong></td>
+                </tr>
+                <tr>
+                    <td>Any CRITICAL gate triggered</td>
+                    <td><strong>SELL</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        
+    
+    
+        <h2>Appendix B: Company Classification Framework</h2>
+        
+        <p>Companies are classified into four types based on dividend yield, revenue growth, and sector. Each type uses different valuation weights optimized for its characteristics.</p>
+        
+        <h3>Classification Criteria & Valuation Weights</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Criteria</th>
+                    <th class="text-center">DCF</th>
+                    <th class="text-center">Multiples</th>
+                    <th class="text-center">DDM</th>
+                    <th>Typical Sectors</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Growth</strong></td>
+                    <td>Dividend &lt;2%, Revenue Growth &gt;15%</td>
+                    <td class="text-center">70%</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">0%</td>
+                    <td>Technology, Biotech, Software, Semiconductors</td>
+                </tr>
+                <tr>
+                    <td><strong>Balanced</strong></td>
+                    <td>Dividend 2-4%, Revenue Growth 10-15%</td>
+                    <td class="text-center">50%</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">20%</td>
+                    <td>Healthcare, Financials, Industrials</td>
+                </tr>
+                <tr>
+                    <td><strong>Dividend</strong></td>
+                    <td>Dividend &gt;4%, Revenue Growth &lt;10%</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">20%</td>
+                    <td class="text-center">50%</td>
+                    <td>Utilities, REITs, Telecom, Consumer Staples</td>
+                </tr>
+                <tr>
+                    <td><strong>Cyclical</strong></td>
+                    <td>Sector-based classification</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">60%</td>
+                    <td class="text-center">10%</td>
+                    <td>Energy, Materials, Chemicals, Automotive</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Classification Logic</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Step</th>
+                    <th>Check</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Sector in [Energy, Materials, Chemicals, Automotive]</td>
+                    <td>→ <strong>CYCLICAL</strong></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Dividend Yield &gt; 4%</td>
+                    <td>→ <strong>DIVIDEND</strong></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Revenue Growth &gt; 15% AND Dividend &lt; 2%</td>
+                    <td>→ <strong>GROWTH</strong></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>All other cases</td>
+                    <td>→ <strong>BALANCED</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Weighting Rationale</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Best For</th>
+                    <th>Limitations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>DCF</strong></td>
+                    <td>Companies with visible, sustainable cash flows</td>
+                    <td>Less reliable for high-growth (forecast uncertainty) and cyclical (volatile earnings)</td>
+                </tr>
+                <tr>
+                    <td><strong>Multiples</strong></td>
+                    <td>Peer benchmarking when sector dynamics drive valuation</td>
+                    <td>Requires comparable peers; can reflect market mispricing</td>
+                </tr>
+                <tr>
+                    <td><strong>DDM</strong></td>
+                    <td>Companies with established, stable dividend policies</td>
+                    <td>Not applicable for non-dividend or variable dividend companies</td>
+                </tr>
+            </tbody>
+        </table>
+        
+    
+    <div style="margin-top: 50px; padding: 20px; background: #f9fafb; border-top: 2px solid #e5e7eb; text-align: center; font-size: 8pt; color: #6b7280;">
+        <p><strong>Disclaimer:</strong> This investment memo was generated by an AI-powered equity research agent for educational purposes. All analysis is based on publicly available data and should not be considered as financial advice. Past performance does not guarantee future results. Please conduct your own due diligence and consult with a qualified financial advisor before making investment decisions.</p>
+    </div>
+</body>
+</html>

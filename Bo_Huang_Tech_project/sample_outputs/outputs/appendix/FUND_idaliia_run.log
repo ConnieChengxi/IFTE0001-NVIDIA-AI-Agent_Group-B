@@ -1,0 +1,149 @@
+
+============================================================
+   FUNDAMENTAL ANALYST AGENT
+   Equity Research Analysis: NVDA
+   2026-02-01 17:27:44
+============================================================
+
+📊 STEP 1: Fetching Company Data
+------------------------------------------------------------
+   Fetching data for NVDA...
+   📦 Cached: OVERVIEW
+   📦 Cached: GLOBAL_QUOTE
+   ✅ Added price from QUOTE: $191.13
+   📦 Cached: INCOME_STATEMENT
+   📦 Cached: BALANCE_SHEET
+   📦 Cached: CASH_FLOW
+   ✅ Company: NVIDIA Corporation
+   ✅ Sector: TECHNOLOGY
+   ✅ Industry: SEMICONDUCTORS
+   ✅ Market Cap: $4,653,442,400,000
+
+📈 STEP 1b: Fetching Forward Estimates (Yahoo Finance)
+------------------------------------------------------------
+   ⚠️  Forward estimates not available
+
+📈 STEP 2: Calculating Financial Ratios
+------------------------------------------------------------
+   ✅ Profitability Ratios:
+      • Gross Margin: 75.0%
+      • Net Margin: 55.8%
+      • ROE: 91.9%
+      • ROA: 65.3%
+
+   ✅ Leverage Ratios:
+      • Debt/Equity: 0.24x
+      • Interest Coverage: 341.2x
+
+   ✅ Liquidity Ratios:
+      • Current Ratio: 4.44x
+      • Quick Ratio: 3.88x
+
+   ✅ Growth Metrics:
+      • Revenue Growth: 114.2%
+      • Earnings Growth: 144.9%
+
+🏷️  STEP 3: Classifying Company Type
+------------------------------------------------------------
+   ✅ Company Type: GROWTH
+   ✅ Reasoning: Classified as GROWTH company due to: high revenue growth (114.2%), low dividend yield (0.0%), and focus on reinvesting for expansion.
+
+💰 STEP 4: Running Valuation Models
+------------------------------------------------------------
+   Current Price: $191.13
+
+   [4a] DCF Valuation...
+      ✅ DCF Fair Value: $376.72
+      • WACC: 16.9%
+      • FCF Growth: 100.0%
+
+   [4b] Selecting Peer Companies...
+
+   Finding peers for NVDA...
+   📦 Cached: OVERVIEW
+   📦 Cached: GLOBAL_QUOTE
+   ✅ Added price from QUOTE: $236.73
+   📦 Cached: OVERVIEW
+   📦 Cached: GLOBAL_QUOTE
+   ✅ Added price from QUOTE: $46.47
+   📦 Cached: OVERVIEW
+   📦 Cached: GLOBAL_QUOTE
+   ✅ Added price from QUOTE: $151.59
+   📦 Cached: OVERVIEW
+   📦 Cached: GLOBAL_QUOTE
+   ✅ Added price from QUOTE: $331.30
+   📦 Cached: OVERVIEW
+   📦 Cached: GLOBAL_QUOTE
+   ✅ Added price from QUOTE: $215.55
+   📦 Cached: OVERVIEW
+   📦 Cached: GLOBAL_QUOTE
+   ✅ Added price from QUOTE: $414.88
+   📦 Cached: OVERVIEW
+   📦 Cached: GLOBAL_QUOTE
+   ✅ Added price from QUOTE: $78.92
+      ❌ Peer Selection Error: '<=' not supported between instances of 'int' and 'str'
+
+   [4c] Fetching Peer Data...
+
+   [4c2] Fetching Peer Forward Estimates...
+
+   [4d] Multiples Valuation...
+      ⚠️  Multiples not calculable
+
+   [4e] DDM Valuation...
+      ⚠️  DDM not applicable: Dividend yield (0.02%) < 1% minimum
+
+🎯 STEP 5: Generating Investment Recommendation
+------------------------------------------------------------
+
+   ✅ RECOMMENDATION: BUY
+   ✅ Target Price: $376.72
+   ✅ Current Price: $191.13
+   ✅ Upside/Downside: +97.1%
+
+   Reasoning: Stock is undervalued with +97.1% upside to fair value of $376.72. Strong fundamentals with manageable risk.
+
+   Valuation Weights (Growth):
+      • DCF: 70%
+      • Multiples: 30%
+      • DDM: 0%
+
+📄 STEP 6: Generating HTML Investment Memo
+------------------------------------------------------------
+
+📄 Generating Investment Memo for NVDA...
+  [1/8] Executive Summary...
+  [2/8] Company Overview...
+  [3/8] Financial Analysis...
+  [4/8] Valuation...
+  [5/8] Competitive Positioning...
+  [6/8] Risk Assessment...
+  [7/8] Investment Recommendation...
+  [8/8] Appendices...
+  ✅ Complete!
+
+   ✅ Investment Memo saved: /Users/celiawong/Desktop/tech_agent_llm_web_final/external/idaliia_fundamental/fundamental_analyst_agent/outputs/NVDA_Investment_Memo.html
+   📄 Open in browser to view/print/save as PDF
+
+   Full path: /Users/celiawong/Desktop/tech_agent_llm_web_final/external/idaliia_fundamental/fundamental_analyst_agent/outputs/NVDA_Investment_Memo.html
+
+============================================================
+   ✅ ANALYSIS COMPLETE!
+============================================================
+
+   Ticker: NVDA
+   Company: NVIDIA Corporation
+   Classification: GROWTH
+   Recommendation: BUY
+   Target Price: $376.72
+   Upside: +97.1%
+
+   Report: /Users/celiawong/Desktop/tech_agent_llm_web_final/external/idaliia_fundamental/fundamental_analyst_agent/outputs/NVDA_Investment_Memo.html
+
+============================================================
+
+
+
+--- STDERR ---
+429 Client Error: Too Many Requests for url: https://query2.finance.yahoo.com/v10/finance/quoteSummary/NVDA?modules=financialData%2CquoteType%2CdefaultKeyStatistics%2CassetProfile%2CsummaryDetail&corsDomain=finance.yahoo.com&formatted=false&symbol=NVDA&crumb=Edge%3A+Too+Many+Requests
+Error fetching Yahoo Finance data for NVDA: Expecting value: line 1 column 1 (char 0)

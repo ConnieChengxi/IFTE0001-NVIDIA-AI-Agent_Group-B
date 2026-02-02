@@ -1,0 +1,700 @@
+{
+  "ticker": "NVDA",
+  "run_params": {
+    "ticker": "NVDA",
+    "years": 10,
+    "interval": "1d",
+    "as_of": "latest",
+    "train_end": "2019-12-31",
+    "val_end": "2022-12-31",
+    "trading_cost": 0.0005,
+    "initial_capital": 1.0,
+    "target_vol": 0.2,
+    "use_patterns": false,
+    "use_patterns_appendix": true,
+    "use_volume_confirm": false,
+    "vol_confirm_window": 20,
+    "vol_confirm_min_ratio": 1.1,
+    "volume_appendix_enabled": true,
+    "no_llm": false,
+    "llm_provider": "openai",
+    "openai_model": "gpt-4o-mini",
+    "export_html": true,
+    "fundamental_mode": "filter",
+    "fundamental_file": "inputs/fundamental_override.json",
+    "fundamental_requested": true,
+    "fundamental_report_path": "external/idaliia_fundamental/fundamental_analyst_agent/README.md",
+    "fundamental_embed_path": "",
+    "fundamental_report_copy_rel": "appendix/FUND_idaliia_report.html",
+    "run_idaliia": true,
+    "fundamental_from_idaliia": true,
+    "fundamental_override_generated_rel": "appendix/FUND_idaliia_override.json",
+    "idaliia_result": {
+      "ok": true,
+      "memo_copy_rel": "appendix/FUND_idaliia_report.html",
+      "log_copy_rel": "appendix/FUND_idaliia_run.log",
+      "recommendation": "BUY",
+      "target_price": null,
+      "upside": null,
+      "generated_at_utc": "2026-02-01T17:27:44.469057+00:00",
+      "error": null
+    },
+    "fundamental_asof_source": "inferred_from_report_mtime",
+    "fundamental_report_exists": true,
+    "fundamental_report_mtime_utc": "2026-01-31T12:05:33+00:00",
+    "sell_leverage_mult": 0.3,
+    "overlay_used_in_backtest": true,
+    "best_params_val": {
+      "ema_fast": 30,
+      "ema_slow": 150,
+      "regime_buffer_pct": 0.01,
+      "vol_window": 20,
+      "enter_score": 2.8,
+      "exit_score": 1.0,
+      "hysteresis_buffer": 1,
+      "regime_penalty": 1
+    },
+    "sensitivity_full": {
+      "note": "Full-sample sensitivity across PARAM_GRID_MAIN (main strategy, patterns off).",
+      "best_by_sharpe": {
+        "params": {
+          "ema_fast": 30,
+          "ema_slow": 150,
+          "regime_buffer_pct": 0.01,
+          "vol_window": 40,
+          "enter_score": 2.8,
+          "exit_score": 1.0,
+          "hysteresis_buffer": 1,
+          "regime_penalty": 1
+        },
+        "params_str": "ema_fast=30, ema_slow=150, regime_buffer_pct=0.01, vol_window=40",
+        "Sharpe": 1.541151731037079,
+        "total_return": 18.984958105943353,
+        "max_drawdown": -0.1884179157010455
+      },
+      "ranges": {
+        "Sharpe_min": 1.3494030332414404,
+        "Sharpe_max": 1.541151731037079,
+        "total_return_min": 13.693537451416795,
+        "total_return_max": 23.878667571210926,
+        "max_drawdown_min": -0.2463346087696131,
+        "max_drawdown_max": -0.17502952690992968
+      },
+      "grid": [
+        {
+          "params_str": "ema_fast=20, ema_slow=100, regime_buffer_pct=0.01, vol_window=10",
+          "Sharpe": 1.3494030332414404,
+          "total_return": 16.431137545564578,
+          "max_drawdown": -0.24429386403265696
+        },
+        {
+          "params_str": "ema_fast=20, ema_slow=100, regime_buffer_pct=0.01, vol_window=40",
+          "Sharpe": 1.4055175556429798,
+          "total_return": 13.693537451416795,
+          "max_drawdown": -0.18841791570104505
+        },
+        {
+          "params_str": "ema_fast=20, ema_slow=100, regime_buffer_pct=0.02, vol_window=10",
+          "Sharpe": 1.3528537570483519,
+          "total_return": 16.37796884506366,
+          "max_drawdown": -0.2463346087696131
+        },
+        {
+          "params_str": "ema_fast=20, ema_slow=100, regime_buffer_pct=0.02, vol_window=40",
+          "Sharpe": 1.4138197547946627,
+          "total_return": 13.74475401233725,
+          "max_drawdown": -0.17502952690992968
+        },
+        {
+          "params_str": "ema_fast=30, ema_slow=150, regime_buffer_pct=0.01, vol_window=10",
+          "Sharpe": 1.4981992118884166,
+          "total_return": 23.878667571210926,
+          "max_drawdown": -0.1776562999327912
+        },
+        {
+          "params_str": "ema_fast=30, ema_slow=150, regime_buffer_pct=0.01, vol_window=40",
+          "Sharpe": 1.541151731037079,
+          "total_return": 18.984958105943353,
+          "max_drawdown": -0.1884179157010455
+        },
+        {
+          "params_str": "ema_fast=50, ema_slow=200, regime_buffer_pct=0.01, vol_window=10",
+          "Sharpe": 1.43051197069921,
+          "total_return": 20.28762868724435,
+          "max_drawdown": -0.20622430490846655
+        },
+        {
+          "params_str": "ema_fast=50, ema_slow=200, regime_buffer_pct=0.01, vol_window=40",
+          "Sharpe": 1.458780754266942,
+          "total_return": 16.039022964041585,
+          "max_drawdown": -0.180859223353788
+        }
+      ]
+    },
+    "signal_snapshot": {
+      "decision_date": "2026-01-30",
+      "prev_date": "2026-01-29",
+      "regime_last": 1,
+      "signal_bin_last": 1,
+      "long_score_last": 4,
+      "req_k_entry_last": 4,
+      "req_k_hold_last": 2,
+      "position_base_prev": 1.0,
+      "position_base_last": 1.0,
+      "position_target_prev": 0.7978632344957984,
+      "position_target_last": 0.7958582689556221,
+      "position_executed_prev": 0.7972503633216599,
+      "position_executed_last": 0.7978632344957984,
+      "recommended_action": "HOLD (Maintain)",
+      "timing_note": "Targets are decision-time; execution occurs on the next bar (1-bar delay in backtest)."
+    },
+    "yfinance_meta": {
+      "source": "yfinance",
+      "ticker": "NVDA",
+      "years": 10,
+      "interval": "1d",
+      "auto_adjust": true,
+      "fetch_date_local": "2026-02-01",
+      "exchange": null,
+      "currency": null,
+      "return_definition": "total_return (auto_adjust=True; close-to-close returns on adjusted close)",
+      "warning_unadjusted_fallback": false,
+      "yfinance_error": "yfinance download returned empty dataframe",
+      "yahoo_chart_error": "Yahoo chart patch returned empty dataframe",
+      "cache_meta": {
+        "schema_version": 3,
+        "ticker": "NVDA",
+        "years": 10,
+        "interval": "1d",
+        "auto_adjust": true,
+        "start_date": "2016-02-01",
+        "end_date": "2026-01-31",
+        "data_source_used": "yfinance",
+        "fetched_utc": "2026-01-31T20:29:42.148331+00:00",
+        "fingerprint_sha1": "a50eed952c299233eaa0234337e30b4ccfd6c426",
+        "exchange": null,
+        "currency": null,
+        "yfinance_error": null,
+        "yahoo_chart_error": null
+      },
+      "cache_hit": true,
+      "data_source_reported": "cache",
+      "start_date": "2016-02-01 00:00:00",
+      "end_date": "2026-01-30 00:00:00",
+      "rows": 2515,
+      "cleaning_timestamp_utc": "2026-02-01 17:27:45.474230+00:00",
+      "max_abs_return": 0.29806692076330865,
+      "warning_spike_detected": false,
+      "missing_business_days_vs_B": 95
+    },
+    "fundamental_snapshot": {
+      "ok": true,
+      "source": "Yahoo Finance snapshot (via Idaliia fundamental module)",
+      "fetched_at_utc": "2026-01-31T15:13:33.612830+00:00",
+      "data": {
+        "forward_pe": 24.93913,
+        "trailing_pe": 47.66334,
+        "forward_eps": 7.66386,
+        "trailing_eps": 4.01,
+        "peg_ratio": null,
+        "target_price_mean": 253.19034,
+        "target_price_high": 352.0,
+        "target_price_low": 140.0,
+        "analyst_count": 58,
+        "recommendation_score": 1.34375,
+        "recommendation": "strong_buy",
+        "price_to_book": 39.06991,
+        "enterprise_to_ebitda": 40.771,
+        "price_to_sales": 24.865837,
+        "current_price": 191.13
+      },
+      "error": null
+    },
+    "fundamental_view": {
+      "rating": "BUY",
+      "as_of": "2026-01-31",
+      "as_of_source": "inferred_from_report_mtime",
+      "source": "Idaliia fundamental_analyst_agent (auto-generated memo)",
+      "notes": null
+    },
+    "repro_cmd": "python run_demo.py --ticker NVDA --years 10 --interval 1d --as_of latest --train_end 2019-12-31 --val_end 2022-12-31 --trading_cost 0.0005 --initial_capital 1.0 --target_vol 0.2 --fundamental_mode filter --fundamental_file inputs/fundamental_override.json --sell_leverage_mult 0.3 --use_patterns_appendix --run_idaliia --fundamental_from_idaliia --yes_openai --openai_model gpt-4o-mini --export_html --out_dir outputs --template_dir templates",
+    "repro_cmd_short": "python run_demo.py --ticker NVDA --years 10 --as_of latest --train_end 2019-12-31 --val_end 2022-12-31 --trading_cost 0.0005 --target_vol 0.2 --fundamental_mode filter --sell_leverage_mult 0.3 --run_idaliia --fundamental_from_idaliia --export_html --yes_openai --openai_model gpt-4o-mini"
+  },
+  "return_definition": "total_return (auto_adjust=True; close-to-close returns on adjusted close)",
+  "strategy_spec_main": {
+    "scope": "Main strategy only (use_patterns=False). Long/flat only; no short selling.",
+    "trend_filter": {
+      "name": "EMA crossover gate",
+      "ema_fast": 30,
+      "ema_slow": 150,
+      "rule": "trend_up = (EMA_fast > EMA_slow)",
+      "weight_in_score": 2
+    },
+    "confirmations": [
+      {
+        "name": "Pullback",
+        "rule": "close < BB_mid * 1.01",
+        "weight_in_score": 1
+      },
+      {
+        "name": "RSI strength",
+        "rule": "RSI(14) > 45",
+        "weight_in_score": 1
+      },
+      {
+        "name": "MACD momentum",
+        "rule": "MACD_hist > 0",
+        "weight_in_score": 1
+      }
+    ],
+    "score": {
+      "rule": "long_score = 2*trend_up + confirm_count (confirm_count is the number of confirmations true)",
+      "range": [
+        0,
+        5
+      ]
+    },
+    "hysteresis_state_machine": {
+      "entry_threshold": 4,
+      "hold_threshold": 2,
+      "when_flat": "enter long if long_score >= entry_threshold",
+      "when_long": "remain long if long_score >= hold_threshold; otherwise exit to flat"
+    },
+    "execution_timing": {
+      "decision_time": "signals/target position are computed on the bar close",
+      "execution": "executed next bar via a 1-bar delay inside run_backtest()"
+    },
+    "regime": {
+      "type": "3-state",
+      "buffer_pct": 0.01,
+      "rule": "regime=1 if close > EMA_slow*(1+buffer); regime=-1 if close < EMA_slow*(1-buffer); else 0"
+    },
+    "base_exposure_mapping": {
+      "bull": "if signal_bin=1 and regime=1 -> 1.0; else 0.0",
+      "neutral": "if signal_bin=1 and regime=0 -> 0.5; else 0.0",
+      "bear": "if regime=-1: only allow 0.25 when signal_bin=1 AND long_score==5; otherwise 0.0"
+    },
+    "risk_management": {
+      "vol_targeting": {
+        "target_vol": 0.2,
+        "vol_window": 20,
+        "note": "position_target = base_position * leverage; leverage ~= target_vol / realized_vol, clipped by leverage caps"
+      },
+      "transaction_cost": {
+        "trading_cost": 0.0005,
+        "model": "strategy_ret = position_exec * ret - trading_cost * turnover"
+      },
+      "fundamental_overlay": {
+        "mode": "filter",
+        "sell_leverage_mult": 0.3,
+        "policy": "risk filter only; does not change entry/exit logic; SELL can cap max leverage"
+      }
+    },
+    "appendix_experiments": {
+      "volume_confirm": "Entry-only relative-volume gate (experimental). Not part of main strategy unless explicitly enabled.",
+      "patterns": "Candlestick/pattern features (experimental). Not part of main strategy unless explicitly enabled."
+    }
+  },
+  "figures_main": [
+    "FULL_annual_return.png",
+    "FULL_drawdown.png",
+    "FULL_equity.png",
+    "FULL_price.png"
+  ],
+  "figures_appendix": [
+    "APPENDIX_annual_return.png",
+    "APPENDIX_drawdown.png",
+    "APPENDIX_equity.png",
+    "APPENDIX_price.png",
+    "FUND_multiples.png",
+    "FUND_targets.png"
+  ],
+  "fundamental_overlay": {
+    "rating": "BUY",
+    "as_of": "2026-01-31",
+    "source": "Idaliia fundamental_analyst_agent (auto-generated memo)",
+    "notes": null
+  },
+  "fundamental_view": {
+    "rating": "BUY",
+    "as_of": "2026-01-31",
+    "source": "Idaliia fundamental_analyst_agent (auto-generated memo)",
+    "notes": null
+  },
+  "outputs": {
+    "main": {
+      "dir": "outputs/main",
+      "figures": [
+        "FULL_annual_return.png",
+        "FULL_drawdown.png",
+        "FULL_equity.png",
+        "FULL_price.png"
+      ],
+      "csv_files": [
+        "FULL_annual_drawdown.csv",
+        "FULL_annual_drawdown_targetvol_0p15.csv",
+        "FULL_annual_returns.csv",
+        "FULL_metrics.csv",
+        "FULL_split_metrics.csv"
+      ],
+      "metrics": [
+        {
+          "name": "Benchmark: Buy & Hold (fair, 1-bar delayed execution)",
+          "equity_end": 267.28632445337473,
+          "total_return": 266.28632445337473,
+          "CAGR": 0.7490305099459298,
+          "Sharpe": 1.3731212072012189,
+          "vol": 0.4978878680013803,
+          "max_drawdown": -0.6633509453825663,
+          "hit_rate": 1.0,
+          "num_trades": 1.0,
+          "avg_holding_days": 3650.0,
+          "exposure": 0.9996022275258551,
+          "turnover_sum": 1.0,
+          "skew": 0.516196615391578,
+          "kurt_excess": 8.028404268316388
+        },
+        {
+          "name": "Strategy: Hybrid Main",
+          "equity_end": 24.54641495617189,
+          "total_return": 23.54641495617189,
+          "CAGR": 0.3773867925542467,
+          "Sharpe": 1.5793403084255304,
+          "vol": 0.2180383037751098,
+          "max_drawdown": -0.1655405531089608,
+          "hit_rate": 0.4285714285714285,
+          "num_trades": 14.0,
+          "avg_holding_days": 202.28571428571428,
+          "exposure": 0.781225139220366,
+          "turnover_sum": 55.472090643299154,
+          "skew": 2.1444522393420686,
+          "kurt_excess": 26.786471615497437
+        }
+      ],
+      "annual_returns": [
+        {
+          "year": 2016,
+          "label": "2016",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 2.676103698416328,
+          "Strategy: Hybrid Main": 1.2721976866483289
+        },
+        {
+          "year": 2017,
+          "label": "2017",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 0.904263288058104,
+          "Strategy: Hybrid Main": 0.3652153041258106
+        },
+        {
+          "year": 2018,
+          "label": "2018",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": -0.3284549729853785,
+          "Strategy: Hybrid Main": 0.0784060870380978
+        },
+        {
+          "year": 2019,
+          "label": "2019",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 0.7340990497541777,
+          "Strategy: Hybrid Main": 0.1818184525525601
+        },
+        {
+          "year": 2020,
+          "label": "2020",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 1.1802414836432051,
+          "Strategy: Hybrid Main": 0.3777030617139174
+        },
+        {
+          "year": 2021,
+          "label": "2021",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 1.2447624479103605,
+          "Strategy: Hybrid Main": 0.6469237118199767
+        },
+        {
+          "year": 2022,
+          "label": "2022",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": -0.5143697823570238,
+          "Strategy: Hybrid Main": -0.1392591537219322
+        },
+        {
+          "year": 2023,
+          "label": "2023",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 2.3591409594613726,
+          "Strategy: Hybrid Main": 0.5925906697567551
+        },
+        {
+          "year": 2024,
+          "label": "2024",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 1.7887410705661342,
+          "Strategy: Hybrid Main": 0.6765896941963643
+        },
+        {
+          "year": 2025,
+          "label": "2025",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 0.3487891209312044,
+          "Strategy: Hybrid Main": 0.1394768818773055
+        },
+        {
+          "year": 2026,
+          "label": "2026",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 0.012073067014078,
+          "Strategy: Hybrid Main": 0.0053022176087462
+        }
+      ]
+    },
+    "appendix": {
+      "dir": "outputs/appendix",
+      "figures": [
+        "APPENDIX_annual_return.png",
+        "APPENDIX_drawdown.png",
+        "APPENDIX_equity.png",
+        "APPENDIX_price.png",
+        "FUND_multiples.png",
+        "FUND_targets.png"
+      ],
+      "csv_files": [
+        "APPENDIX_annual_returns.csv",
+        "APPENDIX_metrics.csv",
+        "FULL_sensitivity.csv"
+      ],
+      "sensitivity": [
+        {
+          "params_str": "ema_fast=20, ema_slow=100, regime_buffer_pct=0.01, vol_window=10",
+          "Sharpe": 1.3494030332414404,
+          "total_return": 16.431137545564578,
+          "max_drawdown": -0.2442938640326569
+        },
+        {
+          "params_str": "ema_fast=20, ema_slow=100, regime_buffer_pct=0.01, vol_window=40",
+          "Sharpe": 1.4055175556429798,
+          "total_return": 13.693537451416796,
+          "max_drawdown": -0.188417915701045
+        },
+        {
+          "params_str": "ema_fast=20, ema_slow=100, regime_buffer_pct=0.02, vol_window=10",
+          "Sharpe": 1.352853757048352,
+          "total_return": 16.37796884506366,
+          "max_drawdown": -0.2463346087696131
+        },
+        {
+          "params_str": "ema_fast=20, ema_slow=100, regime_buffer_pct=0.02, vol_window=40",
+          "Sharpe": 1.4138197547946627,
+          "total_return": 13.74475401233725,
+          "max_drawdown": -0.1750295269099296
+        },
+        {
+          "params_str": "ema_fast=30, ema_slow=150, regime_buffer_pct=0.01, vol_window=10",
+          "Sharpe": 1.4981992118884166,
+          "total_return": 23.87866757121093,
+          "max_drawdown": -0.1776562999327912
+        },
+        {
+          "params_str": "ema_fast=30, ema_slow=150, regime_buffer_pct=0.01, vol_window=40",
+          "Sharpe": 1.541151731037079,
+          "total_return": 18.984958105943353,
+          "max_drawdown": -0.1884179157010455
+        },
+        {
+          "params_str": "ema_fast=50, ema_slow=200, regime_buffer_pct=0.01, vol_window=10",
+          "Sharpe": 1.43051197069921,
+          "total_return": 20.28762868724435,
+          "max_drawdown": -0.2062243049084665
+        },
+        {
+          "params_str": "ema_fast=50, ema_slow=200, regime_buffer_pct=0.01, vol_window=40",
+          "Sharpe": 1.458780754266942,
+          "total_return": 16.039022964041585,
+          "max_drawdown": -0.180859223353788
+        }
+      ],
+      "metrics": [
+        {
+          "name": "Benchmark: Buy & Hold (fair, 1-bar delayed execution)",
+          "equity_end": 267.28632445337473,
+          "total_return": 266.28632445337473,
+          "CAGR": 0.7490305099459298,
+          "Sharpe": 1.3731212072012189,
+          "vol": 0.4978878680013803,
+          "max_drawdown": -0.6633509453825663,
+          "hit_rate": 1.0,
+          "num_trades": 1.0,
+          "avg_holding_days": 3650.0,
+          "exposure": 0.9996022275258551,
+          "turnover_sum": 1.0,
+          "skew": 0.516196615391578,
+          "kurt_excess": 8.028404268316388
+        },
+        {
+          "name": "Strategy: Hybrid Main",
+          "equity_end": 24.54641495617189,
+          "total_return": 23.54641495617189,
+          "CAGR": 0.3773867925542467,
+          "Sharpe": 1.5793403084255304,
+          "vol": 0.2180383037751098,
+          "max_drawdown": -0.1655405531089608,
+          "hit_rate": 0.4285714285714285,
+          "num_trades": 14.0,
+          "avg_holding_days": 202.28571428571428,
+          "exposure": 0.781225139220366,
+          "turnover_sum": 55.472090643299154,
+          "skew": 2.1444522393420686,
+          "kurt_excess": 26.786471615497437
+        },
+        {
+          "name": "Baseline: MA(50/200)",
+          "equity_end": 85.13904176873942,
+          "total_return": 84.13904176873942,
+          "CAGR": 0.5598835365387593,
+          "Sharpe": 1.2851684759323094,
+          "vol": 0.412784150564211,
+          "max_drawdown": -0.375540280150291,
+          "hit_rate": 1.0,
+          "num_trades": 4.0,
+          "avg_holding_days": 674.5,
+          "exposure": 0.7406523468575974,
+          "turnover_sum": 7.0,
+          "skew": 0.4834326759046747,
+          "kurt_excess": 8.733413236179993
+        },
+        {
+          "name": "Appendix: Hybrid Main (volume confirm)",
+          "equity_end": 22.662565775200235,
+          "total_return": 21.662565775200235,
+          "CAGR": 0.3664274884278862,
+          "Sharpe": 1.5491630740956923,
+          "vol": 0.2169622645247323,
+          "max_drawdown": -0.1813167476801402,
+          "hit_rate": 0.4285714285714285,
+          "num_trades": 14.0,
+          "avg_holding_days": 198.3571428571429,
+          "exposure": 0.766109785202864,
+          "turnover_sum": 55.20145951591971,
+          "skew": 2.174296877999381,
+          "kurt_excess": 27.379108362544827
+        },
+        {
+          "name": "Appendix: Hybrid Main (patterns)",
+          "equity_end": 8.463643295718496,
+          "total_return": 7.463643295718496,
+          "CAGR": 0.2382086781767625,
+          "Sharpe": 1.2722438174227202,
+          "vol": 0.1809966251330889,
+          "max_drawdown": -0.2375304828078216,
+          "hit_rate": 0.5483870967741935,
+          "num_trades": 124.0,
+          "avg_holding_days": 13.78225806451613,
+          "exposure": 0.5222752585521082,
+          "turnover_sum": 171.57082947182295,
+          "skew": 2.476661575232966,
+          "kurt_excess": 34.37040561153188
+        }
+      ],
+      "annual_returns": [
+        {
+          "year": 2016,
+          "label": "2016",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 2.676103698416328,
+          "Strategy: Hybrid Main": 1.2721976866483289,
+          "Baseline: MA(50/200)": 0.2145458678919758,
+          "Appendix: Hybrid Main (volume confirm)": 1.1766806686428897,
+          "Appendix: Hybrid Main (patterns)": 0.630343881516608
+        },
+        {
+          "year": 2017,
+          "label": "2017",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 0.904263288058104,
+          "Strategy: Hybrid Main": 0.3652153041258106,
+          "Baseline: MA(50/200)": 0.904263288058101,
+          "Appendix: Hybrid Main (volume confirm)": 0.3652153041258095,
+          "Appendix: Hybrid Main (patterns)": 0.1606560070648783
+        },
+        {
+          "year": 2018,
+          "label": "2018",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": -0.3284549729853785,
+          "Strategy: Hybrid Main": 0.0784060870380978,
+          "Baseline: MA(50/200)": 0.0010861051652661,
+          "Appendix: Hybrid Main (volume confirm)": 0.0784060870380971,
+          "Appendix: Hybrid Main (patterns)": -0.0422446082912827
+        },
+        {
+          "year": 2019,
+          "label": "2019",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 0.7340990497541777,
+          "Strategy: Hybrid Main": 0.1818184525525601,
+          "Baseline: MA(50/200)": 0.3738181883972091,
+          "Appendix: Hybrid Main (volume confirm)": 0.1710712383726149,
+          "Appendix: Hybrid Main (patterns)": 0.0769485155777023
+        },
+        {
+          "year": 2020,
+          "label": "2020",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 1.1802414836432051,
+          "Strategy: Hybrid Main": 0.3777030617139174,
+          "Baseline: MA(50/200)": 1.1802414836432056,
+          "Appendix: Hybrid Main (volume confirm)": 0.3777030617139172,
+          "Appendix: Hybrid Main (patterns)": 0.1717440924999327
+        },
+        {
+          "year": 2021,
+          "label": "2021",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 1.2447624479103605,
+          "Strategy: Hybrid Main": 0.6469237118199767,
+          "Baseline: MA(50/200)": 1.2447624479103636,
+          "Appendix: Hybrid Main (volume confirm)": 0.6469237118199753,
+          "Appendix: Hybrid Main (patterns)": 0.5840139468360368
+        },
+        {
+          "year": 2022,
+          "label": "2022",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": -0.5143697823570238,
+          "Strategy: Hybrid Main": -0.1392591537219322,
+          "Baseline: MA(50/200)": -0.2870450753977386,
+          "Appendix: Hybrid Main (volume confirm)": -0.1555322214148395,
+          "Appendix: Hybrid Main (patterns)": -0.0585179261911166
+        },
+        {
+          "year": 2023,
+          "label": "2023",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 2.3591409594613726,
+          "Strategy: Hybrid Main": 0.5925906697567551,
+          "Baseline: MA(50/200)": 1.5627387065054128,
+          "Appendix: Hybrid Main (volume confirm)": 0.5925906697567547,
+          "Appendix: Hybrid Main (patterns)": 0.2809190097743916
+        },
+        {
+          "year": 2024,
+          "label": "2024",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 1.7887410705661342,
+          "Strategy: Hybrid Main": 0.6765896941963643,
+          "Baseline: MA(50/200)": 1.788741070566131,
+          "Appendix: Hybrid Main (volume confirm)": 0.6765896941963676,
+          "Appendix: Hybrid Main (patterns)": 0.5940484604271705
+        },
+        {
+          "year": 2025,
+          "label": "2025",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 0.3487891209312044,
+          "Strategy: Hybrid Main": 0.1394768818773055,
+          "Baseline: MA(50/200)": 0.0123687850677622,
+          "Appendix: Hybrid Main (volume confirm)": 0.1296260495649861,
+          "Appendix: Hybrid Main (patterns)": 0.1567115766058124
+        },
+        {
+          "year": 2026,
+          "label": "2026",
+          "Benchmark: Buy & Hold (fair, 1-bar delayed execution)": 0.012073067014078,
+          "Strategy: Hybrid Main": 0.0053022176087462,
+          "Baseline: MA(50/200)": 0.0120730670140782,
+          "Appendix: Hybrid Main (volume confirm)": 0.0053022176087462,
+          "Appendix: Hybrid Main (patterns)": 0.0191070277842855
+        }
+      ]
+    }
+  },
+  "instructions": [
+    "Return definition: total_return (auto_adjust=True; close-to-close returns on adjusted close)",
+    "Do not invent numbers. Use only provided metrics/annual returns.",
+    "Reference figures by filename (e.g., FULL_equity.png).",
+    "Explain execution timing: position is decision-time and is shifted inside backtest.",
+    "If fundamental overlay is provided, treat it as a filter/overlay and clearly state whether it was used in backtest."
+  ]
+}
