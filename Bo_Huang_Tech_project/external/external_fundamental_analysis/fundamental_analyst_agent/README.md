@@ -1,4 +1,4 @@
-# Fundamental Analyst Agent
+# External Fundamental Analyst Agent
 
 Automated equity research system for generating investment memos. Built as part of UCL MSc AI coursework.
 
