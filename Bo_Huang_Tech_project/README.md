@@ -103,7 +103,7 @@ Main strategy overview:
 Main strategy signals:
 - **Trend filter**: `EMA_fast > EMA_slow` (trend_up).  
   - EMA windows are selected by grid-search. The default grid includes (20,100), (30,150), (50,200).
-- **Other Indicators** (3 signals):
+- **Other signals**:
   - Pullback: `price < BB_mid * 1.01` (BB window=20, num_std=2)
   - Strength: `RSI(14) > 45`
   - Momentum: `MACD_hist > 0` (12/26/9)
@@ -116,7 +116,7 @@ Main strategy signals:
   - Neutral: half position (0.5)
   - Bear: only strongest signal allowed (score==5 → 0.25), otherwise 0
 - **Vol targeting**: use `target_vol` and `vol_window` to size exposure; cap by max leverage.
-- **Risk filter (fundamental)**: apply a max-leverage cap; when rating=SELL, the cap is scaled by `sell_leverage_mult` (default 0.3 → cap at 30% of normal).
+- **Risk filter (fundamental)**: apply a max-leverage cap; when rating=SELL, the cap is scaled by `sell_leverage_mult` (default 0.3 → cap at  30% of normal).
 
 Appendix experiments:
 - Optional variants (e.g., pattern features, volume confirmation) are experimental and for comparison only.
