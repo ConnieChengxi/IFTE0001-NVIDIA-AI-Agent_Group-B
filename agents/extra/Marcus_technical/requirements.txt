@@ -1,7 +1,0 @@
-## Requirements
-
-numpy
-pandas
-matplotlib
-yfinance
-openai
