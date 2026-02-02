@@ -1,0 +1,727 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>{{ payload.ticker }} Investment Report</title>
+
+  <style>
+    :root{
+      --bg:#ffffff;
+      --ink:#0b1220;
+      --muted:#5b667a;
+      --line:#d9e2ef;
+      --card:#f7f9fc;
+      --accent:#0b2a5b; /* research navy */
+      --accent-soft:#e7eefb;
+      --code:#0b1020;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --serif: "Palatino Linotype", "Book Antiqua", Palatino, "Times New Roman", serif;
+      --sans: "Avenir Next", "Gill Sans", "Trebuchet MS", "Segoe UI", sans-serif;
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--ink);
+      background:var(--bg);
+      line-height:1.55;
+    }
+    .page{
+      max-width:1080px;
+      margin:0 auto;
+      padding:28px 18px 60px;
+    }
+    .masthead{
+      border:1px solid var(--line);
+      border-radius:10px;
+      overflow:hidden;
+      margin-bottom:16px;
+      background:#fff;
+    }
+    .brandbar{
+      background:var(--accent);
+      color:#fff;
+      padding:10px 14px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .brand{
+      font-size:12px;
+      letter-spacing:0.12em;
+      text-transform:uppercase;
+      opacity:0.95;
+    }
+    .brandmeta{
+      font-size:12px;
+      opacity:0.9;
+      white-space:nowrap;
+    }
+    .mastbody{
+      padding:12px 14px 14px;
+    }
+    .report-title{
+      margin:6px 0 2px;
+      font-size:28px;
+      font-family:var(--serif);
+      letter-spacing:0.01em;
+    }
+    .report-subtitle{
+      margin:0;
+      color:var(--muted);
+      font-size:12px;
+    }
+    .report-meta{
+      margin-top:10px;
+      display:flex;
+      gap:20px;
+      font-size:12px;
+      color:var(--muted);
+      flex-wrap:wrap;
+    }
+    .report-meta b{ color:var(--ink); font-weight:600; }
+
+    .layout{
+      display:grid;
+      grid-template-columns: 1.7fr 0.9fr;
+      gap:18px;
+    }
+    @media (max-width: 980px){
+      .layout{ grid-template-columns:1fr; }
+    }
+    .card{
+      border:1px solid var(--line);
+      background:var(--card);
+      border-radius:10px;
+      padding:14px;
+    }
+    .card h3{
+      margin:0 0 10px;
+      font-size:12px;
+      letter-spacing:0.02em;
+      color:#111827;
+      text-transform:uppercase;
+    }
+    .kv{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px 14px;
+      font-size:13px;
+    }
+    .kv .k{ color:var(--muted); }
+    .kv .v{ font-weight:600; color:#111827; }
+    .divider{
+      margin:18px 0;
+      height:1px;
+      background:var(--line);
+    }
+
+    .toolbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin:6px 0 14px;
+      padding:10px 12px;
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:10px;
+    }
+    .tabs{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+    }
+    .btn{
+      appearance:none;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--ink);
+      border-radius:999px;
+      padding:7px 10px;
+      font-size:12px;
+      cursor:pointer;
+      white-space:nowrap;
+    }
+    .btn[aria-pressed="true"]{
+      border-color:var(--accent);
+      background:var(--accent-soft);
+    }
+    .hint{
+      color:var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    .view-panel{ display:none; }
+    .view-panel.is-active{ display:block; }
+    /* Prose styling for markdown-to-HTML output */
+    .prose h1,.prose h2,.prose h3{
+      letter-spacing:-0.01em;
+      margin:18px 0 10px;
+    }
+    .prose h1{ font-size:26px; }
+    .prose h2{ font-size:18px; border-top:1px solid var(--line); padding-top:12px; }
+    .prose h3{ font-size:16px; color:#0b1220; }
+    .prose p{ margin:10px 0; }
+    .prose ul{ margin:10px 0 10px 18px; }
+    .prose li{ margin:6px 0; }
+    .prose blockquote{
+      margin:12px 0;
+      padding:10px 12px;
+      border-left:4px solid var(--accent);
+      background:#ecfeff;
+      border-radius:8px;
+      color:#0b1220;
+    }
+    .prose code{
+      font-family:var(--mono);
+      background:#f3f4f6;
+      padding:2px 6px;
+      border-radius:6px;
+      font-size: 0.95em;
+    }
+    .prose pre{
+      font-family:var(--mono);
+      background:#0b1020;
+      color:#e5e7eb;
+      padding:12px 14px;
+      border-radius:12px;
+      overflow:auto;
+      border:1px solid #111827;
+    }
+    .prose table{
+      width:100%;
+      border-collapse:collapse;
+      margin:12px 0;
+      font-size:13px;
+      background:#fff;
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid var(--line);
+    }
+    .prose th,.prose td{
+      padding:10px 10px;
+      border-bottom:1px solid var(--line);
+      vertical-align:top;
+      text-align:left;
+    }
+    .prose th{
+      background:#f3f4f6;
+      font-weight:700;
+    }
+    .prose tr:last-child td{ border-bottom:none; }
+
+    /* Figure gallery */
+    .section-title{
+      margin:0 0 10px;
+      font-size:16px;
+      letter-spacing:-0.01em;
+    }
+    .figgrid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap:14px;
+    }
+    @media (max-width: 980px){
+      .figgrid{ grid-template-columns:1fr; }
+    }
+    figure{
+      margin:0;
+      border:1px solid var(--line);
+      background:#fff;
+      border-radius:16px;
+      overflow:hidden;
+    }
+    figure img{
+      display:block;
+      width:100%;
+      height:auto;
+    }
+    figcaption{
+      padding:10px 12px;
+      font-size:12px;
+      color:var(--muted);
+      border-top:1px solid var(--line);
+      background:#fafafa;
+    }
+    details{
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:12px 14px;
+      background:#fff;
+    }
+    summary{
+      cursor:pointer;
+      font-weight:700;
+      color:#111827;
+    }
+    .foot{
+      margin-top:22px;
+      color:var(--muted);
+      font-size:11px;
+    }
+
+    /* --- PRINT (A4): minimal print polish (hide UI, avoid splits) --- */
+    @media print{
+      @page { size: A4; margin: 14mm 12mm; }
+      body{ background:#fff; }
+      .page{ max-width:none; padding:0; }
+      .toolbar, #interact-card, details, .hint, .btn { display:none !important; }
+      /* CSS grid pagination is unreliable in print; switch to a simple flow layout. */
+      .layout{ display:block !important; }
+      aside{ margin-top:12px; }
+      .masthead{ break-after: avoid-page; page-break-after: avoid; }
+      .masthead, figure, pre, blockquote { break-inside: avoid; }
+      a{ color:inherit; text-decoration:none; }
+      /* Prevent orphan headings (e.g., APPENDIX) from sitting alone at page bottoms. */
+      .prose h1,.prose h2,.prose h3{ break-after: avoid-page; page-break-after: avoid; }
+      hr{ break-after: avoid-page; page-break-after: avoid; }
+      /* Print figure grids as 2-up, even if inline styles set 1 column. */
+      .figgrid{
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        gap: 10px !important;
+      }
+      /* Images: scale down a bit for print density and to reduce page breaks. */
+      .prose img, figure img{
+        max-width: 100%;
+        height: auto;
+        max-height: 70mm;
+        object-fit: contain;
+      }
+      .prose pre{ overflow: visible; white-space: pre-wrap; word-break: break-word; }
+      .prose table{ font-size:11px; }
+      .prose th,.prose td{ padding:6px 6px; }
+      /* Allow tables to paginate; avoid splitting individual rows where possible. */
+      .prose table{ break-inside:auto; page-break-inside:auto; }
+      .prose thead{ display: table-header-group; }
+      .prose tfoot{ display: table-footer-group; }
+      .prose tr{ break-inside: avoid; page-break-inside: avoid; }
+    }
+
+    .kmetrics{
+      width:100%;
+      border-collapse:collapse;
+      font-size:12px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:10px;
+      overflow:hidden;
+    }
+    .kmetrics th,.kmetrics td{
+      padding:8px 10px;
+      border-bottom:1px solid var(--line);
+      text-align:left;
+      vertical-align:top;
+    }
+    .kmetrics thead th{
+      background:var(--accent-soft);
+      font-weight:700;
+    }
+    .kmetrics tr:last-child td{ border-bottom:none; }
+
+    .page-break{
+      break-before: page;
+      page-break-before: always;
+      height:1px;
+    }
+
+    @media print{
+      body{ background:#fff; }
+      .page{ padding:0; }
+      details{ border:none; padding:0; }
+      summary{ display:none; }
+      .toolbar{ display:none; }
+      /* Avoid duplicated content: the DOM contains 3 panels (main/appendix/all). Print ONLY the full "all" panel. */
+      .view-panel{ display:none !important; }
+      .view-panel[data-panel="all"]{ display:block !important; }
+      .masthead{ border:none; }
+      .brandbar{ border-bottom:2px solid #000; background:#fff; color:#000; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+    <div class="masthead">
+      <div class="brandbar">
+        <div class="brand">Investment Research</div>
+        <div class="brandmeta">Generated report (education-only)</div>
+      </div>
+      <div class="mastbody">
+        <h1 class="report-title">NVIDIA Corporation ({{ payload.ticker }}) — Investment Report</h1>
+        <p class="report-subtitle">Automated technical analysis with explicit backtest assumptions and reproducible outputs.</p>
+        <div class="report-meta">
+          <div><b>Data as-of:</b> {{ summary.as_of_display if summary is defined and summary.as_of_display else (payload.run_params.as_of if payload.run_params is defined else "—") }}</div>
+          <div><b>Analyst:</b> {{ payload.run_params.analyst if payload.run_params is defined and payload.run_params.analyst else "Bo Huang" }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="layout">
+      <div class="card">
+        <h3>Report</h3>
+        <div class="toolbar" id="report-toolbar">
+          <div class="tabs" role="tablist" aria-label="Report views">
+            <button class="btn" type="button" data-view="all" aria-pressed="true">All</button>
+            <button class="btn" type="button" data-view="main" aria-pressed="false">Main</button>
+            <button class="btn" type="button" data-view="appendix" aria-pressed="false">Appendix</button>
+          </div>
+          <div class="hint">Interactive view (display-only; numbers unchanged)</div>
+        </div>
+        <div class="prose">
+          <div class="view-panel" data-panel="main">
+            {{ (main_report_html if main_report_html is defined else report_html) | safe }}
+          </div>
+          <div class="view-panel" data-panel="appendix">
+            {% if appendix_report_html is defined and appendix_report_html %}
+              {{ appendix_report_html | safe }}
+            {% else %}
+              <p>No appendix content available in this run.</p>
+            {% endif %}
+          </div>
+          <div class="view-panel is-active" data-panel="all">
+            {{ report_html | safe }}
+          </div>
+        </div>
+      </div>
+
+	      <aside class="sidebar">
+	        <div class="card">
+	          <h3>Snapshot</h3>
+	          <div class="kv">
+	            <div class="k">Ticker</div><div class="v">{{ summary.ticker or "—" }}</div>
+	            <div class="k">Exchange</div><div class="v">{{ summary.exchange or "—" }}</div>
+	            <div class="k">Currency</div><div class="v">{{ summary.currency or "—" }}</div>
+	            <div class="k">Data as‑of</div><div class="v">{{ (summary.as_of_display if summary is defined and summary.as_of_display else summary.as_of) or "—" }}</div>
+	            <div class="k">Data source</div><div class="v">{{ summary.data_source_used or "—" }}</div>
+	            <div class="k">Stance</div><div class="v">{{ summary.stance or "—" }}</div>
+	          </div>
+	          {% if summary.data_source_used and summary.data_source_used|lower == "stooq" %}
+	            <p class="subtitle" style="margin:10px 0 0;">
+	              <b>Note:</b> Yahoo Finance (yfinance) failed in this run; Stooq fallback uses unadjusted prices.
+	            </p>
+	            {% if summary.yfinance_error %}
+	              <p class="subtitle" style="margin:6px 0 0;"><b>Yahoo error:</b> {{ summary.yfinance_error }}</p>
+	            {% endif %}
+	            {% if summary.yahoo_chart_error %}
+	              <p class="subtitle" style="margin:6px 0 0;"><b>Yahoo chart error:</b> {{ summary.yahoo_chart_error }}</p>
+	            {% endif %}
+	          {% endif %}
+	          {% if summary.exchange_currency_inferred %}
+	            <p class="subtitle" style="margin:10px 0 0;">Exchange/currency inferred for display (upstream metadata unavailable).</p>
+	          {% elif (not summary.exchange) or (not summary.currency) %}
+	            <p class="subtitle" style="margin:10px 0 0;">Exchange/currency not available for this run.</p>
+	          {% endif %}
+	        </div>
+
+        <div class="divider"></div>
+
+        <div class="card">
+          <h3>Disclaimer</h3>
+          <p class="subtitle" style="margin:0;">
+            For educational purposes only; not investment advice.
+          </p>
+          {% if summary.disclaimer is defined and summary.disclaimer.llm_provider %}
+            <p class="subtitle" style="margin:8px 0 0;">
+              <b>LLM narrative:</b>
+              {% if summary.disclaimer.llm_commercial %}commercial API{% else %}local model{% endif %}
+              ({{ summary.disclaimer.llm_provider }}{% if summary.disclaimer.llm_model %} / {{ summary.disclaimer.llm_model }}{% endif %}).
+            </p>
+          {% endif %}
+          <p class="subtitle" style="margin:8px 0 0;">
+            Figures and metrics come from deterministic code outputs; past performance does not guarantee future results.
+          </p>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card">
+          <h3>Key Metrics</h3>
+          <table class="kmetrics" aria-label="Key metrics table">
+            <thead>
+              <tr>
+                <th>Metric</th>
+                <th>Main</th>
+                <th>Benchmark</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>CAGR</td><td>{{ summary.main.cagr }}</td><td>{{ summary.benchmark.cagr }}</td></tr>
+              <tr><td>Sharpe</td><td>{{ summary.main.sharpe }}</td><td>{{ summary.benchmark.sharpe }}</td></tr>
+              <tr><td>Max Drawdown</td><td>{{ summary.main.max_drawdown }}</td><td>{{ summary.benchmark.max_drawdown }}</td></tr>
+              <tr><td>Hit Rate</td><td>{{ summary.main.hit_rate }}</td><td>{{ summary.benchmark.hit_rate }}</td></tr>
+              <tr><td>Turnover</td><td>{{ summary.main.turnover_sum }}</td><td>{{ summary.benchmark.turnover_sum }}</td></tr>
+              <tr><td>Exposure</td><td>{{ summary.main.exposure }}</td><td>{{ summary.benchmark.exposure }}</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card">
+          <h3>Fundamental (External)</h3>
+          <p class="subtitle" style="margin:0 0 10px;">
+            Used as a risk filter / exposure cap only (not an alpha signal).
+          </p>
+          <div class="kv">
+            <div class="k">Mode</div><div class="v">{{ summary.fundamental.mode or "—" }}</div>
+            <div class="k">Rating</div><div class="v">{{ summary.fundamental.rating or "—" }}</div>
+            <div class="k">As-of</div><div class="v">{{ summary.fundamental.as_of or "—" }}</div>
+            <div class="k">Applied in backtest</div><div class="v">{{ "Yes" if summary.fundamental.overlay_used_in_backtest else "No" }}</div>
+            <div class="k">Binding cap</div><div class="v">{{ "Yes (SELL cap active)" if summary.fundamental.binding else "No (non-binding)" }}</div>
+            <div class="k">SELL cap multiplier</div><div class="v">{{ summary.fundamental.sell_leverage_mult if summary.fundamental.sell_leverage_mult is not none else "—" }}</div>
+          </div>
+          {% if summary.idaliia %}
+            <p class="subtitle" style="margin:10px 0 0;">
+              <b>Idaliia module:</b>
+              {{ "Generated" if summary.idaliia.ok else "Failed" }}
+              {% if summary.idaliia.generated_at_utc %} ({{ summary.idaliia.generated_at_utc }}){% endif %}
+            </p>
+            {% if summary.idaliia.recommendation %}
+              <p class="subtitle" style="margin:6px 0 0;">
+                <b>Recommendation:</b> {{ summary.idaliia.recommendation }}
+                {% if summary.idaliia.target_price is not none %} • <b>Target:</b> ${{ "%.2f"|format(summary.idaliia.target_price) }}{% endif %}
+                {% if summary.idaliia.upside is not none %} • <b>Upside:</b> {{ "%.1f"|format(summary.idaliia.upside*100) }}%{% endif %}
+              </p>
+            {% endif %}
+            {% if summary.idaliia.log_copy_rel %}
+              <p class="subtitle" style="margin:6px 0 0;">
+                <a href="{{ summary.idaliia.log_copy_rel }}" target="_blank" rel="noopener">View Idaliia run log</a>
+              </p>
+            {% endif %}
+            {% if (not summary.idaliia.ok) and summary.idaliia.error %}
+              <p class="subtitle" style="margin:6px 0 0;"><b>Error:</b> {{ summary.idaliia.error }}</p>
+            {% endif %}
+          {% endif %}
+          {% if summary.fundamental.source %}
+            <p class="subtitle" style="margin:10px 0 0;"><b>Source:</b> {{ summary.fundamental.source }}</p>
+          {% endif %}
+          {% if summary.fundamental.report_copy_rel %}
+            <p class="subtitle" style="margin:10px 0 0;">
+              <b>Idaliia memo:</b>
+              <a href="{{ summary.fundamental.report_copy_rel }}" target="_blank" rel="noopener">Open (appendix)</a>
+            </p>
+            {% if summary.fundamental.report_copy_rel.endswith(".html") %}
+              <details style="margin-top:10px;">
+                <summary class="subtitle">Preview (embedded)</summary>
+                <div style="margin-top:10px;">
+                  <iframe
+                    title="Idaliia fundamental memo"
+                    src="{{ summary.fundamental.report_copy_rel }}"
+                    style="width:100%; height:360px; border:1px solid var(--line); border-radius:10px; background:#fff;"
+                  ></iframe>
+                </div>
+                <p class="subtitle" style="margin:10px 0 0;">
+                  External content shown for context; see the memo for assumptions and data sources.
+                </p>
+              </details>
+            {% endif %}
+          {% endif %}
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card">
+          <h3>Fundamental Snapshot (Context)</h3>
+          <p class="subtitle" style="margin:0 0 10px;">
+            Point-in-time valuation and vendor-reported consensus metrics (not a time series). Display for context only;
+            technical signals are generated solely from the technical strategy.
+          </p>
+          {% if summary.fundamental_snapshot %}
+            <div class="kv">
+              <div class="k">Current price</div><div class="v">{{ summary.fundamental_snapshot.current_price }}</div>
+              <div class="k">Target (Low / Mean / High)</div>
+              <div class="v">{{ summary.fundamental_snapshot.target_price_low }} / {{ summary.fundamental_snapshot.target_price_mean }} / {{ summary.fundamental_snapshot.target_price_high }}</div>
+              <div class="k">Forward P/E</div><div class="v">{{ summary.fundamental_snapshot.forward_pe }}</div>
+              <div class="k">Trailing P/E</div><div class="v">{{ summary.fundamental_snapshot.trailing_pe }}</div>
+              <div class="k">P/S (TTM)</div><div class="v">{{ summary.fundamental_snapshot.price_to_sales }}</div>
+              <div class="k">P/B</div><div class="v">{{ summary.fundamental_snapshot.price_to_book }}</div>
+              <div class="k">EV/EBITDA</div><div class="v">{{ summary.fundamental_snapshot.enterprise_to_ebitda }}</div>
+              <div class="k">Analysts (count)</div><div class="v">{{ summary.fundamental_snapshot.analyst_count }}</div>
+              <div class="k">Consensus</div><div class="v">{{ summary.fundamental_snapshot.recommendation }} ({{ summary.fundamental_snapshot.recommendation_score }})</div>
+            </div>
+            <p class="subtitle" style="margin:10px 0 0;">
+              Analyst count reflects the number of opinions included in the vendor's consensus snapshot at fetch time and may change over time.
+            </p>
+            {% if summary.fundamental_snapshot.source %}
+              <p class="subtitle" style="margin:10px 0 0;"><b>Source:</b> {{ summary.fundamental_snapshot.source }}</p>
+            {% endif %}
+            {% if summary.fundamental_snapshot.fetched_at_utc %}
+              <p class="subtitle" style="margin:6px 0 0;"><b>Fetched:</b> {{ summary.fundamental_snapshot.fetched_at_utc }}</p>
+            {% endif %}
+            {% if key_fund_figures %}
+              <div class="figgrid" style="grid-template-columns:1fr; gap:10px; margin-top:12px;">
+                {% for f in key_fund_figures %}
+                <figure>
+                  <img src="{{ f.data_uri }}" alt="{{ f.name }}" />
+                  <figcaption><b>FUND</b> — {{ f.name }}</figcaption>
+                </figure>
+                {% endfor %}
+              </div>
+            {% endif %}
+          {% else %}
+            <p class="subtitle" style="margin:0;">
+              Not available in this run.
+            </p>
+            {% if summary.fundamental_snapshot_status and summary.fundamental_snapshot_status.error %}
+              <p class="subtitle" style="margin:10px 0 0;">
+                <b>Note:</b> External data fetch failed (display-only). {{ summary.fundamental_snapshot_status.error }}
+              </p>
+            {% endif %}
+          {% endif %}
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card">
+          <h3>Key Charts (Main)</h3>
+          <p class="subtitle" style="margin:0 0 10px;">Price / equity / drawdown / annual returns (rebased where applicable).</p>
+          <div class="figgrid" style="grid-template-columns:1fr; gap:10px;">
+            {% for f in key_main_figures %}
+            <figure>
+              <img src="{{ f.data_uri }}" alt="{{ f.name }}" />
+              <figcaption><b>MAIN</b> — {{ f.name }}</figcaption>
+            </figure>
+            {% endfor %}
+          </div>
+        </div>
+ 
+        <div class="divider"></div>
+
+        <div class="card" id="interact-card">
+          <h3>Explore</h3>
+          <div class="kv" style="grid-template-columns:1fr;">
+            <div class="k">Strategy comparison</div>
+            <div class="v" id="strategy-chips" style="font-weight:400;"></div>
+            <div class="k">Navigation</div>
+            <div class="v" style="font-weight:400;">Use the View tabs to switch between Main / Appendix / All.</div>
+          </div>
+          <p class="subtitle" style="margin:10px 0 0;">These controls only change what is shown; they do not recompute results.</p>
+        </div>
+      </aside>
+    </div>
+
+    <div class="divider"></div>
+
+    <details>
+      <summary>All Figures (supplementary)</summary>
+      <p class="subtitle" style="margin:10px 0 14px;">
+        Supplementary diagnostics and experiments (not discussed in the main recommendation).
+      </p>
+      <div class="figgrid">
+        {% for f in main_figures %}
+        <figure>
+          <img src="{{ f.data_uri }}" alt="{{ f.name }}" />
+          <figcaption><b>MAIN</b> — {{ f.name }}</figcaption>
+        </figure>
+        {% endfor %}
+        {% for f in appendix_figures %}
+        <figure>
+          <img src="{{ f.data_uri }}" alt="{{ f.name }}" />
+          <figcaption><b>APPENDIX</b> — {{ f.name }}</figcaption>
+        </figure>
+        {% endfor %}
+      </div>
+    </details>
+
+    <div class="foot">
+      Generated automatically. Review assumptions and limitations before acting on recommendations.
+    </div>
+
+  </div>
+
+  <script>
+    (function () {
+      function setView(view) {
+        var panels = document.querySelectorAll('.view-panel');
+        panels.forEach(function (p) {
+          var isActive = p.getAttribute('data-panel') === view;
+          p.classList.toggle('is-active', isActive);
+        });
+        var btns = document.querySelectorAll('#report-toolbar [data-view]');
+        btns.forEach(function (b) {
+          b.setAttribute('aria-pressed', b.getAttribute('data-view') === view ? 'true' : 'false');
+        });
+        try { localStorage.setItem('report_view', view); } catch (e) {}
+      }
+
+      var saved = null;
+      try { saved = localStorage.getItem('report_view'); } catch (e) {}
+      if (saved) setView(saved);
+      if (!saved) setView('all');
+
+      document.querySelectorAll('#report-toolbar [data-view]').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          setView(btn.getAttribute('data-view'));
+        });
+      });
+
+      // Strategy comparison table column filter (Appendix B).
+      function initStrategyChips() {
+        var table = document.querySelector('table.strategy-compare');
+        var mount = document.getElementById('strategy-chips');
+        if (!table || !mount) return;
+
+        // markdown2 tables may not have <thead>; fall back to the first row.
+        var headerRow = table.querySelector('thead tr') || table.querySelector('tr');
+        if (!headerRow) return;
+        var ths = headerRow.querySelectorAll('th');
+        if (!ths || ths.length === 0) return;
+
+        function mkBtn(label, key) {
+          var b = document.createElement('button');
+          b.className = 'btn';
+          b.type = 'button';
+          b.textContent = label;
+          b.setAttribute('data-colkey', key);
+          b.setAttribute('aria-pressed', key === 'all' ? 'true' : 'false');
+          return b;
+        }
+
+        // Column 0 is Metric; others are strategies.
+        var cols = [{ key: 'all', label: 'All' }];
+        for (var i = 1; i < ths.length; i++) {
+          cols.push({ key: String(i), label: ths[i].textContent.trim() || ('Col ' + i) });
+        }
+
+        mount.innerHTML = '';
+        cols.forEach(function (c) {
+          mount.appendChild(mkBtn(c.label, c.key));
+        });
+
+        function setCols(key) {
+          var rows = table.querySelectorAll('tr');
+          rows.forEach(function (row) {
+            var cells = row.children;
+            for (var i = 0; i < cells.length; i++) {
+              if (i === 0) { cells[i].style.display = ''; continue; }
+              cells[i].style.display = (key === 'all' || key === String(i)) ? '' : 'none';
+            }
+          });
+          mount.querySelectorAll('button').forEach(function (b) {
+            b.setAttribute('aria-pressed', b.getAttribute('data-colkey') === key ? 'true' : 'false');
+          });
+        }
+
+        mount.querySelectorAll('button').forEach(function (b) {
+          b.addEventListener('click', function () { setCols(b.getAttribute('data-colkey')); });
+        });
+      }
+
+      // Sensitivity analysis table: toggle + sort.
+      function initSensitivity() {
+        var table = document.querySelector('table.sensitivity-table');
+        // Sensitivity controls removed (kept page clean and reliable).
+        return;
+      }
+
+      initStrategyChips();
+      initSensitivity();
+    })();
+  </script>
+</body>
+</html>

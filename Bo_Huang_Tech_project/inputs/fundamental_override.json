@@ -1,0 +1,8 @@
+{
+  "rating": "HOLD",
+  "as_of": null,
+  "source": "Idaliia fundamental report (manual override)",
+  "notes": [
+    "Set rating to BUY/HOLD/SELL based on Idaliia report output."
+  ]
+}

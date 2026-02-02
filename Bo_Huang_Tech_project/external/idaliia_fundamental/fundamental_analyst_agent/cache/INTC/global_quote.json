@@ -1,0 +1,19 @@
+{
+  "cached_at": 1769959998.993155,
+  "symbol": "INTC",
+  "function": "GLOBAL_QUOTE",
+  "data": {
+    "Global Quote": {
+      "01. symbol": "INTC",
+      "02. open": "48.9750",
+      "03. high": "49.5777",
+      "04. low": "45.9600",
+      "05. price": "46.4700",
+      "06. volume": "114920097",
+      "07. latest trading day": "2026-01-30",
+      "08. previous close": "48.6600",
+      "09. change": "-2.1900",
+      "10. change percent": "-4.5006%"
+    }
+  }
+}

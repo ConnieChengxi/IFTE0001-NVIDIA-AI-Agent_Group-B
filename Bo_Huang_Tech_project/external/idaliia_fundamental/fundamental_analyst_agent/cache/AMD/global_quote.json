@@ -1,0 +1,19 @@
+{
+  "cached_at": 1769959974.990604,
+  "symbol": "AMD",
+  "function": "GLOBAL_QUOTE",
+  "data": {
+    "Global Quote": {
+      "01. symbol": "AMD",
+      "02. open": "236.9300",
+      "03. high": "245.2400",
+      "04. low": "234.5500",
+      "05. price": "236.7300",
+      "06. volume": "40035670",
+      "07. latest trading day": "2026-01-30",
+      "08. previous close": "252.1800",
+      "09. change": "-15.4500",
+      "10. change percent": "-6.1266%"
+    }
+  }
+}

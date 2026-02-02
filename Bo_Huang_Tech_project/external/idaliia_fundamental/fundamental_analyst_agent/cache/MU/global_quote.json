@@ -1,0 +1,19 @@
+{
+  "cached_at": 1769960095.028765,
+  "symbol": "MU",
+  "function": "GLOBAL_QUOTE",
+  "data": {
+    "Global Quote": {
+      "01. symbol": "MU",
+      "02. open": "446.4650",
+      "03. high": "455.5000",
+      "04. low": "407.1300",
+      "05. price": "414.8800",
+      "06. volume": "51022881",
+      "07. latest trading day": "2026-01-30",
+      "08. previous close": "435.7900",
+      "09. change": "-20.9100",
+      "10. change percent": "-4.7982%"
+    }
+  }
+}

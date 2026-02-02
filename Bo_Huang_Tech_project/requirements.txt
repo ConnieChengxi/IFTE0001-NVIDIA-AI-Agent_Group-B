@@ -1,0 +1,11 @@
+numpy
+pandas
+matplotlib
+yfinance==0.2.66
+requests
+urllib3<2
+
+streamlit
+markdown2
+jinja2
+openai

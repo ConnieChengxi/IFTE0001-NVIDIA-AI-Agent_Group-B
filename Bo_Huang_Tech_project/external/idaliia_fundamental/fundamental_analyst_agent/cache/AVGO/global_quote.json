@@ -1,0 +1,19 @@
+{
+  "cached_at": 1769960047.0676649,
+  "symbol": "AVGO",
+  "function": "GLOBAL_QUOTE",
+  "data": {
+    "Global Quote": {
+      "01. symbol": "AVGO",
+      "02. open": "332.4400",
+      "03. high": "338.2000",
+      "04. low": "328.3300",
+      "05. price": "331.3000",
+      "06. volume": "28313039",
+      "07. latest trading day": "2026-01-30",
+      "08. previous close": "330.7300",
+      "09. change": "0.5700",
+      "10. change percent": "0.1723%"
+    }
+  }
+}

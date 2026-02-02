@@ -1,0 +1,19 @@
+{
+  "cached_at": 1769959914.959069,
+  "symbol": "NVDA",
+  "function": "GLOBAL_QUOTE",
+  "data": {
+    "Global Quote": {
+      "01. symbol": "NVDA",
+      "02. open": "191.2100",
+      "03. high": "194.4900",
+      "04. low": "189.4700",
+      "05. price": "191.1300",
+      "06. volume": "179489463",
+      "07. latest trading day": "2026-01-30",
+      "08. previous close": "192.5100",
+      "09. change": "-1.3800",
+      "10. change percent": "-0.7168%"
+    }
+  }
+}

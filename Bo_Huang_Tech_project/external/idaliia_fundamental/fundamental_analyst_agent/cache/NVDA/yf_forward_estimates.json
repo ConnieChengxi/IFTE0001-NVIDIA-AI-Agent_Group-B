@@ -1,0 +1,22 @@
+{
+  "cached_at": 1769872246.3412979,
+  "symbol": "NVDA",
+  "function": "yf_forward_estimates",
+  "data": {
+    "forward_pe": 24.93913,
+    "trailing_pe": 47.66334,
+    "forward_eps": 7.66386,
+    "trailing_eps": 4.01,
+    "peg_ratio": null,
+    "target_price_mean": 253.19034,
+    "target_price_high": 352.0,
+    "target_price_low": 140.0,
+    "analyst_count": 58,
+    "recommendation_score": 1.34375,
+    "recommendation": "strong_buy",
+    "price_to_book": 39.06991,
+    "enterprise_to_ebitda": 40.771,
+    "price_to_sales": 24.865837,
+    "current_price": 191.13
+  }
+}

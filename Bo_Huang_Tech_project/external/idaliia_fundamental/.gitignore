@@ -1,0 +1,25 @@
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# VS Code
+.vscode/
+
+# Data & outputs
+data/
+outputs/
+results/
+plots/
+*.csv
+*.parquet
+
+# OS
+.DS_Store
+
+
+__pycache__/
+*.pyc
