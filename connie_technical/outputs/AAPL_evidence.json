@@ -1,0 +1,190 @@
+{
+  "ticker": "AAPL",
+  "backtest_window": {
+    "start": "2016-11-14",
+    "end": "2026-02-02"
+  },
+  "metrics": {
+    "row": 2316,
+    "cost_bps": 10.0,
+    "initial_equity": 1.0,
+    "final_equity": 4.724612200859092,
+    "CAGR": 0.18406795999378645,
+    "Sharpe": 1.5237790997302998,
+    "MaxDrawdown": -0.10672823686092969,
+    "HitRate": 0.19343696027633853,
+    "NumTradesApprox": 112,
+    "NumTrades": 19,
+    "EquityColumn": "equity",
+    "EquityStart": 1.0,
+    "EquityEnd": 4.72,
+    "EquityMultiple": 4.724612200859092,
+    "BuyHoldMultiple": 10.813633927594282,
+    "BuyHoldMaxDrawdown": -38.52
+  },
+  "latest_state": {
+    "date": "2026-02-02 00:00:00",
+    "close": 263.4700012207031,
+    "ma20": 257.2724975585937,
+    "ma50": 268.21579833984373,
+    "ma200": 236.688662109375,
+    "rsi_14": 54.44751774783531,
+    "macd": -2.7035653175579455,
+    "macd_signal": -4.131572070180673,
+    "regime_bullish": true
+  },
+  "trade_highlights": [
+    {
+      "entry_date": "2022-05-04",
+      "exit_date": "2022-05-05",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": -0.05571617774625526
+    },
+    {
+      "entry_date": "2020-03-31",
+      "exit_date": "2020-04-01",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": -0.0526170515589941
+    },
+    {
+      "entry_date": "2016-12-13",
+      "exit_date": "2017-06-13",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": 0.2833859424298577
+    },
+    {
+      "entry_date": "2020-04-07",
+      "exit_date": "2020-09-09",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": 0.817055759482608
+    }
+  ],
+  "all_trades": [
+    {
+      "entry_date": "2016-12-13",
+      "exit_date": "2017-06-13",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": 0.2833859424298577
+    },
+    {
+      "entry_date": "2018-02-07",
+      "exit_date": "2018-02-08",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": -0.027516525127730174
+    },
+    {
+      "entry_date": "2018-02-13",
+      "exit_date": "2018-03-22",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": 0.02744302831822476
+    },
+    {
+      "entry_date": "2018-05-02",
+      "exit_date": "2018-06-25",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": 0.035694105700954104
+    },
+    {
+      "entry_date": "2019-03-22",
+      "exit_date": "2019-03-25",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": -0.012091330549869661
+    },
+    {
+      "entry_date": "2019-04-01",
+      "exit_date": "2019-05-13",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": -0.02512421482128646
+    },
+    {
+      "entry_date": "2019-06-10",
+      "exit_date": "2019-08-06",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": 0.022951506941460087
+    },
+    {
+      "entry_date": "2020-03-31",
+      "exit_date": "2020-04-01",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": -0.0526170515589941
+    },
+    {
+      "entry_date": "2020-04-07",
+      "exit_date": "2020-09-09",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": 0.817055759482608
+    },
+    {
+      "entry_date": "2021-06-07",
+      "exit_date": "2021-09-21",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": 0.14094407847196755
+    },
+    {
+      "entry_date": "2022-03-16",
+      "exit_date": "2022-04-12",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": 0.050567185662696135
+    },
+    {
+      "entry_date": "2022-05-04",
+      "exit_date": "2022-05-05",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": -0.05571617774625526
+    },
+    {
+      "entry_date": "2022-08-01",
+      "exit_date": "2022-08-30",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": -0.014731283126677375
+    },
+    {
+      "entry_date": "2023-02-03",
+      "exit_date": "2023-02-24",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": -0.04897076431084679
+    },
+    {
+      "entry_date": "2023-02-28",
+      "exit_date": "2023-03-01",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": -0.014245752528979083
+    },
+    {
+      "entry_date": "2023-03-06",
+      "exit_date": "2023-08-07",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": 0.16425518883782586
+    },
+    {
+      "entry_date": "2023-11-01",
+      "exit_date": "2024-01-03",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": 0.06048579169102064
+    },
+    {
+      "entry_date": "2024-05-06",
+      "exit_date": "2024-08-06",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": 0.14199026598793285
+    },
+    {
+      "entry_date": "2025-08-11",
+      "exit_date": "2026-01-02",
+      "trade_metric_name": "trade_return",
+      "trade_metric_value": 0.19408723206438272
+    }
+  ],
+  "assumptions": {
+    "strategy_type": "long/flat",
+    "signal_execution": "entry/exit signals shifted by 1 day to avoid look-ahead bias",
+    "transaction_cost_model": "cost_bps applied per turnover (position change)"
+  },
+  "charts": {
+    "equity_drawdown": "outputs/AAPL_equity_drawdown.png",
+    "golden_cross_trades": "outputs/AAPL_golden_cross_trades.png",
+    "price_ma_macd_6m": "outputs/AAPL_price_ma_macd_6m.png",
+    "equity_log_compare": "outputs/AAPL_equity_log_compare.png",
+    "drawdown_compare": "outputs/AAPL_drawdown_compare.png"
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "row": 2316,
+  "cost_bps": 10.0,
+  "initial_equity": 1.0,
+  "final_equity": 7.364174547092748,
+  "CAGR": 0.2426541879659292,
+  "Sharpe": 1.4332748916837525,
+  "MaxDrawdown": -0.14391476339912335,
+  "HitRate": 0.17271157167530224,
+  "NumTradesApprox": 228,
+  "NumTrades": 13,
+  "EquityColumn": "equity",
+  "EquityStart": 1.0,
+  "EquityEnd": 7.36,
+  "EquityMultiple": 7.364174547092748,
+  "BuyHoldMultiple": 91.8813314295975,
+  "BuyHoldMaxDrawdown": -66.34
+}
