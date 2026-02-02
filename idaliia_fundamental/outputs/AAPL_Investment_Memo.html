@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Memo: AAPL - Apple Inc</title>
+    
+        <style>
+            @page { margin: 1cm; }
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+                font-size: 10pt;
+                line-height: 1.4;
+                color: #1f2937;
+                margin: 20px;
+                max-width: 1000px;
+            }
+            h1 {
+                font-size: 20pt;
+                font-weight: 700;
+                color: #111827;
+                margin-bottom: 5px;
+                border-bottom: 3px solid #2563eb;
+                padding-bottom: 10px;
+            }
+            h2 {
+                font-size: 14pt;
+                font-weight: 700;
+                color: #1e40af;
+                border-bottom: 2px solid #93c5fd;
+                padding-bottom: 5px;
+                margin-top: 20px;
+                margin-bottom: 10px;
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+            h3 {
+                font-size: 11pt;
+                font-weight: 600;
+                color: #374151;
+                margin: 20px 0 10px 0;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+            h4 {
+                font-size: 10pt;
+                font-weight: 600;
+                color: #4b5563;
+                margin: 15px 0 8px 0;
+                page-break-after: avoid;
+                break-after: avoid;
+            }
+            p {
+                margin: 8px 0;
+                text-align: justify;
+                line-height: 1.6;
+                orphans: 3;
+                widows: 3;
+            }
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin: 12px 0;
+                font-size: 9pt;
+            }
+            tr {
+                page-break-inside: avoid;
+                break-inside: avoid;
+            }
+            h2 + p, h2 + table, h3 + p, h3 + table {
+                page-break-before: avoid;
+                break-before: avoid;
+            }
+            th {
+                background: #f3f4f6;
+                padding: 8px 10px;
+                text-align: left;
+                font-weight: 600;
+                color: #374151;
+                border-bottom: 2px solid #d1d5db;
+                font-size: 8pt;
+                text-transform: uppercase;
+                letter-spacing: 0.3px;
+            }
+            td {
+                padding: 6px 10px;
+                border-bottom: 1px solid #e5e7eb;
+            }
+            .text-right { text-align: right; }
+            .text-center { text-align: center; }
+            .highlight-row {
+                background: #fef3c7;
+                font-weight: 600;
+            }
+            .company-row {
+                background: #eff6ff;
+                font-weight: 700;
+            }
+            .section-header {
+                background: #e5e7eb;
+                font-weight: 700;
+                text-transform: uppercase;
+                font-size: 8pt;
+                letter-spacing: 0.5px;
+            }
+            .positive { color: #059669; }
+            .negative { color: #dc2626; }
+            .neutral { color: #6b7280; }
+            
+            .rec-box {
+                padding: 20px;
+                margin: 20px 0;
+                border-radius: 4px;
+                text-align: center;
+            }
+            .rec-buy {
+                background: #d1fae5;
+                border: 3px solid #059669;
+                color: #065f46;
+            }
+            .rec-hold {
+                background: #fef3c7;
+                border: 3px solid #d97706;
+                color: #92400e;
+            }
+            .rec-sell {
+                background: #fee2e2;
+                border: 3px solid #dc2626;
+                color: #991b1b;
+            }
+            .rec-title {
+                font-size: 16pt;
+                font-weight: 700;
+                margin-bottom: 15px;
+            }
+            .rec-metrics {
+                display: flex;
+                justify-content: space-around;
+                margin-top: 10px;
+            }
+            .rec-metric {
+                text-align: center;
+            }
+            .rec-metric-label {
+                font-size: 8pt;
+                color: #6b7280;
+                margin-bottom: 5px;
+            }
+            .rec-metric-value {
+                font-size: 16pt;
+                font-weight: 700;
+            }
+            
+            .valuation-box {
+                padding: 12px;
+                margin: 15px 0;
+                border-radius: 4px;
+                border-left: 4px solid;
+            }
+            .valuation-undervalued {
+                background: #d1fae5;
+                border-color: #059669;
+            }
+            .valuation-fair {
+                background: #fef3c7;
+                border-color: #d97706;
+            }
+            .valuation-overvalued {
+                background: #fee2e2;
+                border-color: #dc2626;
+            }
+            
+            .benchmark {
+                font-size: 8pt;
+                color: #6b7280;
+                font-style: italic;
+                margin-top: 5px;
+            }
+            
+            .risk-high { color: #dc2626; }
+            .risk-medium { color: #d97706; }
+            .risk-low { color: #059669; }
+            
+            ul {
+                margin: 8px 0;
+                padding-left: 25px;
+            }
+            li {
+                margin: 4px 0;
+            }
+            
+            pre {
+                background: #f9fafb;
+                padding: 10px;
+                border-left: 3px solid #d1d5db;
+                font-size: 8pt;
+                overflow-x: auto;
+            }
+
+            .rating-strong {
+                background-color: #059669;
+                color: white;
+                padding: 2px 8px;
+                border-radius: 3px;
+                font-size: 0.85em;
+                font-weight: 600;
+            }
+
+            .rating-acceptable {
+                background-color: #d97706;
+                color: white;
+                padding: 2px 8px;
+                border-radius: 3px;
+                font-size: 0.85em;
+                font-weight: 600;
+            }
+
+            .rating-weak {
+                background-color: #dc2626;
+                color: white;
+                padding: 2px 8px;
+                border-radius: 3px;
+                font-size: 0.85em;
+                font-weight: 600;
+            }
+
+            @media print {
+                body {
+                    margin: 0;
+                    padding: 15px;
+                    font-size: 9pt;
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+                
+                table {
+                    width: 100% !important;
+                    border-collapse: collapse !important;
+                }
+
+                th {
+                    background-color: #f3f4f6 !important;
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+
+                tr {
+                    page-break-inside: avoid !important;
+                    break-inside: avoid !important;
+                }
+
+                .rec-buy, .rec-hold, .rec-sell {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+
+                .rating-strong, .rating-acceptable, .rating-weak {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+
+                .positive, .negative {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+
+                h2, h3, h4 {
+                    page-break-after: avoid !important;
+                    break-after: avoid !important;
+                }
+
+                h2 + p, h2 + table, h3 + p, h3 + table, h4 + p, h4 + table {
+                    page-break-before: avoid !important;
+                    break-before: avoid !important;
+                }
+
+                .valuation-box {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                    border-left: 4px solid !important;
+                }
+                
+                .valuation-undervalued {
+                    background-color: #d1fae5 !important;
+                    border-color: #059669 !important;
+                }
+                
+                .valuation-fair {
+                    background-color: #fef3c7 !important;
+                    border-color: #d97706 !important;
+                }
+                
+                .valuation-overvalued {
+                    background-color: #fee2e2 !important;
+                    border-color: #dc2626 !important;
+                }
+                
+                tr[style*="background-color"] {
+                    -webkit-print-color-adjust: exact !important;
+                    print-color-adjust: exact !important;
+                }
+                
+                .page-break {
+                    page-break-before: always;
+                }
+                
+                .no-print {
+                    display: none !important;
+                }
+            }
+        </style>
+        
+</head>
+<body>
+    <h1>Investment Memo: Apple Inc (AAPL)</h1>
+    <p style="font-size: 9pt; color: #6b7280; margin-bottom: 20px;">
+        <strong>Date:</strong> February 02, 2026<br>
+        <strong>Analyst:</strong> Idaliia Gafarova
+    </p>
+    
+    <h2>1. Executive Summary</h2>
+    
+        <h3>Investment Snapshot</h3>
+        <table>
+            <thead>
+                <tr><th>Metric</th><th class="text-right">Value</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Recommendation</td><td class="text-right"><strong>SELL</strong></td></tr>
+                <tr><td>Current Price</td><td class="text-right">$259.48</td></tr>
+                <tr><td>12-Month Target Price</td><td class="text-right">$90.09</td></tr>
+                <tr><td>Upside/Downside</td><td class="text-right negative">-65.3%</td></tr>
+            </tbody>
+        </table>
+        
+        <h3>Key Metrics</h3>
+        <table>
+            <thead>
+                <tr><th>Metric</th><th class="text-right">Value</th></tr>
+            </thead>
+            <tbody>
+                <tr><td>Forward P/E</td><td class="text-right">28.0x</td></tr>
+                <tr><td>Profit Margin</td><td class="text-right">26.9%</td></tr>
+                <tr><td>Revenue Growth</td><td class="text-right">6.4%</td></tr>
+                <tr><td>ROE</td><td class="text-right">151.9%</td></tr>
+            </tbody>
+        </table>
+        <h3>Investment Thesis</h3><p>Apple Inc is rated SELL with a 12-month target of $90.09 (vs $259.48 current; -65.3% downside). The analysis indicates that the company's current valuation appears stretched relative to its fundamentals, with a forward P/E of 28.0x, significantly above its historical average. Despite a solid revenue growth of 6.4% and an impressive ROE of 151.9%, the stock trades at a premium, which may not be justified given the moderate growth prospects and increasing competition in the technology sector.
+
+The primary risk to this investment thesis is Apple's robust net margin of 26.9%, which could potentially support a higher valuation if sustained. However, the company faces increasing regulatory scrutiny and competitive pressures, which could erode these margins over time. Given these considerations, the SELL rating appears appropriate as the stock's current valuation does not adequately reflect these risks and the potential for margin contraction.</p>
+    
+    <h2>2. Company Overview</h2>
+    <p>Apple Inc (AAPL) is a USA-based company in the CONSUMER ELECTRONICS industry within the TECHNOLOGY sector, listed on NASDAQ with a market capitalization of approximately $3.8T.</p><p>Apple Inc operates as a consumer electronics company, generating revenue primarily through the sale of hardware products, software, and related services. The company's key offerings include the iPhone, iPad, Mac, Apple Watch, and services such as the App Store, Apple Music, and iCloud. Apple maintains a competitive position in the market through its strong brand recognition, innovative product design, and integrated ecosystem of hardware, software, and services. Headquartered in Cupertino, California, Apple has a global presence with significant markets in the Americas, Europe, Greater China, Japan, and the rest of the Asia Pacific.</p>
+    
+    
+        <h2>3. Financial Analysis</h2>
+        
+        <h3>3.1 FINANCIAL RATIOS</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th style="text-align: left;">METRIC</th>
+                    <th>2021</th>
+                    <th>2022</th>
+                    <th>2023</th>
+                    <th>2024</th>
+                    <th>2025</th>
+                    <th>RATING</th>
+                </tr>
+            </thead>
+            <tbody>
+        
+                    <tr class="section-header">
+                        <td colspan="7"><strong>PROFITABILITY</strong></td>
+                    </tr>
+            <tr><td>Gross Margin</td><td>41.8%</td><td>43.3%</td><td>44.1%</td><td>46.2%</td><td>46.9%</td><td><span class="rating-acceptable">Acceptable</span></td></tr><tr><td>Operating Margin</td><td>30.6%</td><td>30.3%</td><td>29.8%</td><td>31.5%</td><td>31.9%</td><td><span class="rating-strong">Strong</span></td></tr><tr><td>Net Profit Margin</td><td>25.9%</td><td>25.3%</td><td>25.3%</td><td>24.0%</td><td>26.9%</td><td><span class="rating-strong">Strong</span></td></tr><tr><td>ROE</td><td>150.1%</td><td>197.0%</td><td>156.1%</td><td>164.6%</td><td>151.9%</td><td><span class="rating-strong">Strong</span></td></tr><tr><td>ROA</td><td>27.0%</td><td>28.3%</td><td>27.5%</td><td>25.7%</td><td>31.2%</td><td><span class="rating-strong">Strong</span></td></tr><tr><td>ROIC</td><td>37.0%</td><td>40.5%</td><td>40.7%</td><td>40.3%</td><td>46.3%</td><td><span class="rating-strong">Strong</span></td></tr>
+                    <tr class="section-header">
+                        <td colspan="7"><strong>LEVERAGE</strong></td>
+                    </tr>
+            <tr><td>Debt/Assets</td><td>0.7x</td><td>0.6x</td><td>0.6x</td><td>0.6x</td><td>0.6x</td><td><span class="rating-weak">Weak</span></td></tr><tr><td>Debt/Equity</td><td>3.7x</td><td>4.3x</td><td>3.3x</td><td>3.6x</td><td>2.7x</td><td><span class="rating-weak">Weak</span></td></tr><tr><td>Interest Coverage</td><td>42.3x</td><td>40.7x</td><td>29.1x</td><td>N/A</td><td>N/A</td><td><span class="rating-n/a">N/A</span></td></tr>
+                    <tr class="section-header">
+                        <td colspan="7"><strong>LIQUIDITY</strong></td>
+                    </tr>
+            <tr><td>Current Ratio</td><td>1.1x</td><td>0.9x</td><td>1.0x</td><td>0.9x</td><td>0.9x</td><td><span class="rating-weak">Weak</span></td></tr><tr><td>Quick Ratio</td><td>1.0x</td><td>0.8x</td><td>0.9x</td><td>0.8x</td><td>0.9x</td><td><span class="rating-weak">Weak</span></td></tr>
+                </tbody>
+            </table>
+        
+            <h3>3.2 FINANCIAL HEALTH ASSESSMENT</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">CATEGORY</th>
+                        <th>RATING</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Profitability</td>
+                        <td><strong>Strong</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Leverage</td>
+                        <td><strong>Weak</strong></td>
+                    </tr>
+                    <tr>
+                        <td>Liquidity</td>
+                        <td><strong>Weak</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3>3.3 DUPONT ANALYSIS</h3>
+
+            <p><strong>ROE Decomposition:</strong> 151.9% = 26.9% × 1.16x × 4.87x</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Component</th>
+                        <th>Formula</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Net Profit Margin</strong></td>
+                        <td>Net Income / Revenue</td>
+                        <td class="text-right">26.9%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Asset Turnover</strong></td>
+                        <td>Revenue / Assets</td>
+                        <td class="text-right">1.16x</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Equity Multiplier</strong></td>
+                        <td>Assets / Equity</td>
+                        <td class="text-right">4.87x</td>
+                    </tr>
+                    <tr class="highlight-row">
+                        <td><strong>ROE</strong></td>
+                        <td>Margin × Turnover × Multiplier</td>
+                        <td class="text-right"><strong>151.9%</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <p style="margin-top: 0.5em; font-size: 9pt; color: #374151;">
+                The primary driver of Apple Inc's impressive ROE of 151.9% is its high leverage of 4.87x, which significantly amplifies the company's net income relative to its equity, despite a relatively modest turnover of 1.
+            </p>
+        
+            <p style="text-align: justify; line-height: 1.6;">
+                Apple Inc. (AAPL) exhibits robust profitability metrics with a Gross Margin of 46.9% and a Net Margin of 26.9%, indicating efficient cost management and strong pricing power. The company's high Return on Equity (ROE) of 151.9% and Return on Assets (ROA) of 31.2% underscore its ability to generate substantial profits from its equity and assets. However, AAPL's leverage position is relatively high, with a Debt/Equity ratio of 2.7x and Debt/Assets ratio of 0.6x, suggesting a considerable level of financial risk. Liquidity appears to be slightly constrained, as evidenced by a Current Ratio and Quick Ratio of 0.9x, both below the ideal benchmark of 1.0x. Despite moderate revenue growth of 6.4%, the overall financial health of AAPL is strong, albeit with some financial risk due to its leverage position and marginal liquidity constraints.
+            </p>
+        
+    
+    
+            <h2>4. Valuation</h2>
+            
+            <h3>4.1 INTRINSIC VALUE SUMMARY</h3>
+            
+            <p><strong>Company Type:</strong> Balanced</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">METHOD</th>
+                        <th>FAIR VALUE</th>
+                        <th>VS CURRENT ($259.48)</th>
+                        <th>WEIGHT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>DCF</td>
+                        <td>$108.43</td>
+                        <td class="negative">
+                            -58.2%
+                        </td>
+                        <td>50.0%</td>
+                    </tr>
+                    <tr>
+                        <td>Multiples</td>
+                        <td>$111.34</td>
+                        <td class="negative">
+                            -57.1%
+                        </td>
+                        <td>30.0%</td>
+                    </tr>
+        
+                    <tr>
+                        <td>DDM</td>
+                        <td>$12.33</td>
+                        <td class="negative">
+                            -95.2%
+                        </td>
+                        <td>20.0%</td>
+                    </tr>
+            
+                    <tr style="background-color: #fef3c7; font-weight: 600;">
+                        <td>12-Month Target Price</td>
+                        <td>$90.09</td>
+                        <td class="negative">
+                            -65.3%
+                        </td>
+                        <td>100%</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <div style="background-color: #fee2e2; border-left: 4px solid #991b1b; padding: 1em; margin: 1em 0;">
+                <p style="margin: 0; color: #991b1b; font-weight: 600;">
+                    <strong>Overvalued:</strong> Current price stretched relative to fundamentals (-65.3% to target).
+                </p>
+            </div>
+            
+            <p style="text-align: justify; line-height: 1.6; margin-top: 1.5em;">
+                <strong>Valuation Interpretation</strong><br><br>
+                The valuation conclusion for AAPL suggests a significant downside of 65.3%, with a target price of $90.09, compared to the current price of $259.48. The blended fair value, derived from a weighted average of DCF and multiples, stands at $108.43 (50% weight) and $111.34 (30% weight) respectively. These weights are chosen to reflect AAPL's balanced company type, which requires a diversified valuation approach. The key driver in this valuation is the weighted average cost of capital (WACC) at 10.0%, which significantly influences the DCF valuation. The lack of a specific FCF growth rate further adds to the uncertainty.
+            </p>
+            
+            <h3 style="margin-top: 2em;">4.2 KEY VALUATION ASSUMPTIONS</h3>
+        
+            <p><strong>DCF Methodology (Balanced Company) - 3-STAGE MODEL:</strong></p>
+            <ul style="line-height: 1.8;">
+                <li>Stage 1 (High Growth): 5 years at 7.5% growth</li>
+                <li>Stage 2 (Fade Period): 3 years, declining to 4.0%</li>
+                <li>Terminal Growth: 2.5%</li>
+                <li>Total Projection Period: 8 years</li>
+                <li>WACC: 10.0% (Cost of Equity: 10.3%, Beta: 1.09)</li>
+            </ul>
+
+            <p><strong>Multiples Approach (PEG-Adjusted):</strong></p>
+            <ul style="line-height: 1.8;">
+                <li>Peer Group: GOOGL, MSFT, AMZN</li>
+                <li>Metrics: PEG, P/B, EV/EBITDA</li>
+                <li>Company Revenue CAGR: 3.3%</li>
+                <li>Peer Revenue CAGR: 14.9%</li>
+                <li>Peer Avg PEG: 1.87x</li>
+                <li>Method: PEG-adjusted</li>
+            </ul>
+        
+            <h3 style="margin-top: 2em;">4.3 SCENARIO ANALYSIS</h3>
+            
+            <p>Target price sensitivity (weighted: DCF 50%, Multiples 30%):</p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Scenario</th>
+                        <th class="text-center">DCF</th>
+                        <th class="text-center">Multiples</th>
+                        <th class="text-center">Target Price</th>
+                        <th class="text-center">vs Current</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: #fef2f2;">
+                        <td><strong>Bear Case</strong></td>
+                        <td class="text-center">$84.47</td>
+                        <td class="text-center">$111.34</td>
+                        <td class="text-center"><strong>$77.75</strong></td>
+                        <td class="text-center" class="negative">-70.0%</td>
+                    </tr>
+                    <tr style="background: #f0fdf4;">
+                        <td><strong>Base Case</strong></td>
+                        <td class="text-center">$108.08</td>
+                        <td class="text-center">$111.34</td>
+                        <td class="text-center"><strong>$89.91</strong></td>
+                        <td class="text-center" class="negative">-65.4%</td>
+                    </tr>
+                    <tr style="background: #eff6ff;">
+                        <td><strong>Bull Case</strong></td>
+                        <td class="text-center">$140.64</td>
+                        <td class="text-center">$111.34</td>
+                        <td class="text-center"><strong>$106.67</strong></td>
+                        <td class="text-center" class="negative">-58.9%</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <p style="font-size: 9pt; color: #6b7280; margin-top: 0.5em;">
+                Current Price: $259.48 | Multiples value fixed across scenarios
+            </p>
+            
+            <p style="margin-top: 1em; padding: 10px; background: #f9fafb; border-left: 4px solid #6b7280;">
+                <strong>Scenario Assumptions:</strong><br>
+                <span style="font-size: 9pt;">
+                • <strong>Bear:</strong> FCF/Dividend growth at 75% of base, discount rate +1.0%<br>
+                • <strong>Base:</strong> Current growth trajectory and risk profile<br>
+                • <strong>Bull:</strong> FCF/Dividend growth at 125% of base, discount rate -1.0%
+                </span>
+            </p>
+        
+    
+    
+            <h2>5. Competitive Positioning</h2>
+
+            <h3>5.1 PEER COMPARISON MATRIX</h3>
+
+            <p><strong>Industry:</strong> CONSUMER ELECTRONICS</p>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">COMPANY</th>
+                        <th>MARKET CAP</th>
+                        <th>PEG</th>
+                        <th>EV/EBITDA</th>
+                        <th>P/B</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background-color: #eff6ff;">
+                        <td><strong>AAPL</strong></td>
+                        <td>$3.8T</td>
+                        <td>N/A</td>
+                        <td>27.6x</td>
+                        <td>51.7x</td>
+                    </tr>
+        
+                    <tr>
+                        <td>GOOGL</td>
+                        <td>$4.1T</td>
+                        <td>1.7x</td>
+                        <td>30.3x</td>
+                        <td>12.6x</td>
+                    </tr>
+                
+                    <tr>
+                        <td>MSFT</td>
+                        <td>$3.2T</td>
+                        <td>1.7x</td>
+                        <td>20.4x</td>
+                        <td>9.3x</td>
+                    </tr>
+                
+                    <tr>
+                        <td>AMZN</td>
+                        <td>$2.6T</td>
+                        <td>2.3x</td>
+                        <td>21.5x</td>
+                        <td>8.9x</td>
+                    </tr>
+                
+                    <tr style="background-color: #fef3c7; font-weight: 600;">
+                        <td>Peer Average</td>
+                        <td>$3.3T</td>
+                        <td>1.9x</td>
+                        <td>24.1x</td>
+                        <td>10.3x</td>
+                    </tr>
+                </tbody>
+            </table>
+        
+            <h3 style="margin-top: 2em;">5.2 OPERATING METRICS COMPARISON</h3>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">METRIC</th>
+                        <th>{self.ticker}</th>
+                        <th>PEER AVG</th>
+                        <th>DIFFERENTIAL</th>
+                    </tr>
+                </thead>
+                <tbody>
+        
+                    <tr>
+                        <td>Revenue Growth</td>
+                        <td>6.4%</td>
+                        <td>12.0%</td>
+                        <td class="negative">
+                            -6pp
+                        </td>
+                    </tr>
+            
+                    <tr>
+                        <td>Gross Margin</td>
+                        <td>46.9%</td>
+                        <td>55.0%</td>
+                        <td class="negative">
+                            -8pp
+                        </td>
+                    </tr>
+            
+                    <tr>
+                        <td>Operating Margin</td>
+                        <td>31.9%</td>
+                        <td>28.0%</td>
+                        <td class="positive">
+                            +4pp
+                        </td>
+                    </tr>
+            
+                    <tr>
+                        <td>ROE</td>
+                        <td>151.9%</td>
+                        <td>25.0%</td>
+                        <td class="positive">
+                            +127pp
+                        </td>
+                    </tr>
+            
+                </tbody>
+            </table>
+        
+            <p style="text-align: justify; line-height: 1.6; margin-top: 1.5em;">
+                <strong>Competitive Analysis</strong><br><br>
+                Apple Inc. (AAPL) trades at a slight premium to its peers, with a P/E ratio of 28.0x and an EV/EBITDA of 27.6x, approximately 1% higher than the peer group average. This premium appears justified given AAPL's robust financial performance. The company has demonstrated superior revenue growth of 6.4%, significantly higher gross margin at 46.9%, and an impressive operating margin of 31.9%. Furthermore, AAPL's ROE of 151.9% vastly outperforms its competitors, highlighting its efficient use of shareholder equity. However, concerns remain around the company's dependency on iPhone sales, which make up a substantial portion of its revenue. Any slowdown in this segment could impact future earnings. Therefore, while AAPL's premium is supported by its current performance, investors should closely monitor the company's product diversification efforts.
+            </p>
+        
+    
+    <h2>6. Risk Assessment</h2>
+    
+        <h3>6.1 KEY RISKS</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Severity</th>
+                    <th>Risk Category</th>
+                    <th>Signal</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td class="risk-high">High</td>
+                <td>Valuation</td>
+                <td>Target $90.09 (-65.3% downside)</td>
+            </tr><tr>
+                <td class="risk-high">High</td>
+                <td>Multiple</td>
+                <td>P/B 51.7x reflects extreme expectations</td>
+            </tr><tr>
+                <td class="risk-medium">Medium</td>
+                <td>Competitive</td>
+                <td>Rapid innovation cycle; market share vulnerable</td>
+            </tr>
+            </tbody>
+        </table>
+        <p>The primary risk for AAPL is its high valuation, with a target price of $90.09, indicating a potential downside of 65.3%. This is further exacerbated by the company's high multiple, with a P/B of 51.7x, reflecting extreme market expectations. Additional considerations include the medium competitive risk posed by the rapid innovation cycle in the technology sector, which leaves AAPL's market share vulnerable. While the company's robust financial health and strong brand equity may serve as potential risk mitigants, the overall risk profile reflects a high level of market and competitive risk. This necessitates a cautious approach towards investment in AAPL at current valuations.</p>
+    
+    <h2>7. Investment Recommendation</h2>
+    
+        <div class="rec-box rec-sell">
+            <div class="rec-title">INVESTMENT RECOMMENDATION: SELL</div>
+            <div class="rec-metrics">
+                <div class="rec-metric">
+                    <div class="rec-metric-label">12-Month Target</div>
+                    <div class="rec-metric-value">$90.09</div>
+                </div>
+                <div class="rec-metric">
+                    <div class="rec-metric-label">Current Price</div>
+                    <div class="rec-metric-value">$259.48</div>
+                </div>
+                <div class="rec-metric">
+                    <div class="rec-metric-label">Upside/Downside</div>
+                    <div class="rec-metric-value" style="color: #ef4444;">-65.3%</div>
+                </div>
+            </div>
+        </div>
+        <p>Based on the valuation analysis, AAPL is rated SELL with a 12-month target of $90.09, representing a -65.3% downside from the current price of $259.48. The analysis indicates that the stock is significantly overvalued relative to the balanced-weighted fair value estimate. Despite the absence of key risk flags, the current price level appears unsustainable given the company's fundamentals and the broader market conditions.
+
+The key catalyst to monitor is the performance of the company's core products, particularly the iPhone, which has been facing declining sales. Any further slowdown in sales or loss of market share could exert additional downward pressure on the stock price. Given these factors, the SELL rating appears appropriate. Investors should consider reducing their exposure to AAPL at current price levels.</p><p><strong>Valuation Method:</strong> Balanced (DCF: 50.0% · Multiples: 30.0% · DDM: 20.0%)</p>
+    
+    
+        <h2>Appendix A: Scoring Methodology</h2>
+        
+        <p>The recommendation is based on valuation upside—the percentage difference between the calculated Target Price and Current Price. The Target Price is a weighted blend of three valuation methods, with weights determined by company classification.</p>
+        
+        <h3>Step 1: Calculate Target Price</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>DCF</strong></td>
+                    <td>Intrinsic value based on projected free cash flows discounted to present value</td>
+                </tr>
+                <tr>
+                    <td><strong>Multiples</strong></td>
+                    <td>Fair value based on P/E, EV/EBITDA, and P/B multiples vs peer companies</td>
+                </tr>
+                <tr>
+                    <td><strong>DDM</strong></td>
+                    <td>Value based on expected dividend stream using Gordon Growth Model</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Valuation Weights by Company Type</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Company Type</th>
+                    <th class="text-center">DCF</th>
+                    <th class="text-center">Multiples</th>
+                    <th class="text-center">DDM</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Growth</td>
+                    <td class="text-center">70%</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">0%</td>
+                </tr>
+                <tr>
+                    <td>Balanced</td>
+                    <td class="text-center">50%</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">20%</td>
+                </tr>
+                <tr>
+                    <td>Dividend</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">20%</td>
+                    <td class="text-center">50%</td>
+                </tr>
+                <tr>
+                    <td>Cyclical</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">60%</td>
+                    <td class="text-center">10%</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Step 2: Calculate Upside</h3>
+        <p><code>Upside = (Target Price - Current Price) / Current Price × 100%</code></p>
+        
+        <h3>Step 3: Gate Checks (Safety Filters)</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Gate</th>
+                    <th class="text-center">Threshold</th>
+                    <th class="text-center">Severity</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Interest Coverage</td>
+                    <td class="text-center">≥ 1.5x</td>
+                    <td class="text-center">CRITICAL</td>
+                </tr>
+                <tr>
+                    <td>Current Ratio</td>
+                    <td class="text-center">≥ 0.8x</td>
+                    <td class="text-center">HIGH</td>
+                </tr>
+                <tr>
+                    <td>Debt/Equity</td>
+                    <td class="text-center">≤ 5.0x</td>
+                    <td class="text-center">HIGH</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Step 4: Recommendation Logic</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Condition</th>
+                    <th>Recommendation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Upside &gt; +20% AND no HIGH/CRITICAL gates</td>
+                    <td><strong>BUY</strong></td>
+                </tr>
+                <tr>
+                    <td>Upside &gt; +20% BUT has HIGH gate</td>
+                    <td><strong>HOLD</strong></td>
+                </tr>
+                <tr>
+                    <td>-10% &lt; Upside &lt; +20%</td>
+                    <td><strong>HOLD</strong></td>
+                </tr>
+                <tr>
+                    <td>Upside &lt; -10%</td>
+                    <td><strong>SELL</strong></td>
+                </tr>
+                <tr>
+                    <td>Any CRITICAL gate triggered</td>
+                    <td><strong>SELL</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        
+
+    
+        <h2>Appendix B: Company Classification Framework</h2>
+        
+        <p>Companies are classified into four types based on dividend yield, revenue growth, and sector. Each type uses different valuation weights optimized for its characteristics.</p>
+        
+        <h3>Classification Criteria & Valuation Weights</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Type</th>
+                    <th>Criteria</th>
+                    <th class="text-center">DCF</th>
+                    <th class="text-center">Multiples</th>
+                    <th class="text-center">DDM</th>
+                    <th>Typical Sectors</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Growth</strong></td>
+                    <td>Dividend &lt;2%, Revenue Growth &gt;15%</td>
+                    <td class="text-center">70%</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">0%</td>
+                    <td>Technology, Biotech, Software, Semiconductors</td>
+                </tr>
+                <tr>
+                    <td><strong>Balanced</strong></td>
+                    <td>Dividend 2-4%, Revenue Growth 10-15%</td>
+                    <td class="text-center">50%</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">20%</td>
+                    <td>Healthcare, Financials, Industrials</td>
+                </tr>
+                <tr>
+                    <td><strong>Dividend</strong></td>
+                    <td>Dividend &gt;4%, Revenue Growth &lt;10%</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">20%</td>
+                    <td class="text-center">50%</td>
+                    <td>Utilities, REITs, Telecom, Consumer Staples</td>
+                </tr>
+                <tr>
+                    <td><strong>Cyclical</strong></td>
+                    <td>Sector-based classification</td>
+                    <td class="text-center">30%</td>
+                    <td class="text-center">60%</td>
+                    <td class="text-center">10%</td>
+                    <td>Energy, Materials, Chemicals, Automotive</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Classification Logic</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Step</th>
+                    <th>Check</th>
+                    <th>Result</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Sector in [Energy, Materials, Chemicals, Automotive]</td>
+                    <td>→ <strong>CYCLICAL</strong></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Dividend Yield &gt; 4%</td>
+                    <td>→ <strong>DIVIDEND</strong></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Revenue Growth &gt; 15% AND Dividend &lt; 2%</td>
+                    <td>→ <strong>GROWTH</strong></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>All other cases</td>
+                    <td>→ <strong>BALANCED</strong></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <h3>Weighting Rationale</h3>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Method</th>
+                    <th>Best For</th>
+                    <th>Limitations</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>DCF</strong></td>
+                    <td>Companies with visible, sustainable cash flows</td>
+                    <td>Less reliable for high-growth (forecast uncertainty) and cyclical (volatile earnings)</td>
+                </tr>
+                <tr>
+                    <td><strong>Multiples</strong></td>
+                    <td>Peer benchmarking when sector dynamics drive valuation</td>
+                    <td>Requires comparable peers; can reflect market mispricing</td>
+                </tr>
+                <tr>
+                    <td><strong>DDM</strong></td>
+                    <td>Companies with established, stable dividend policies</td>
+                    <td>Not applicable for non-dividend or variable dividend companies</td>
+                </tr>
+            </tbody>
+        </table>
+        
+
+    
+        <h2>Appendix C: Model Limitations</h2>
+
+        <p style="margin-bottom: 10px;">This analysis has inherent limitations that users should consider:</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>Limitation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>DCF Model</strong></td>
+                    <td>Highly sensitive to growth rate assumptions; small changes significantly impact fair value</td>
+                </tr>
+                <tr>
+                    <td><strong>Industry Metrics</strong></td>
+                    <td>No sector-specific KPIs (ARR for SaaS, NIM for banks, same-store sales for retail)</td>
+                </tr>
+                <tr>
+                    <td><strong>Peer Selection</strong></td>
+                    <td>Based on market cap similarity, not business model or competitive positioning</td>
+                </tr>
+                <tr>
+                    <td><strong>One-Time Items</strong></td>
+                    <td>No adjustment for restructuring charges, asset impairments, or non-recurring gains</td>
+                </tr>
+                <tr>
+                    <td><strong>Data Source</strong></td>
+                    <td>Alpha Vantage free tier limited to 25 requests/day; some data may be delayed</td>
+                </tr>
+                <tr>
+                    <td><strong>Beta</strong></td>
+                    <td>Static beta from provider; not calculated from historical returns regression</td>
+                </tr>
+                <tr>
+                    <td><strong>Qualitative Factors</strong></td>
+                    <td>No assessment of management quality, competitive moat, or ESG considerations</td>
+                </tr>
+                <tr>
+                    <td><strong>Earnings Quality</strong></td>
+                    <td>No accruals analysis, cash conversion check, or revenue recognition review</td>
+                </tr>
+            </tbody>
+        </table>
+        
+
+    <div style="margin-top: 50px; padding: 20px; background: #f9fafb; border-top: 2px solid #e5e7eb; text-align: center; font-size: 8pt; color: #6b7280;">
+        <p><strong>Disclaimer:</strong> This investment memo was generated by an AI-powered equity research agent for educational purposes. All analysis is based on publicly available data and should not be considered as financial advice. Past performance does not guarantee future results. Please conduct your own due diligence and consult with a qualified financial advisor before making investment decisions.</p>
+    </div>
+</body>
+</html>
