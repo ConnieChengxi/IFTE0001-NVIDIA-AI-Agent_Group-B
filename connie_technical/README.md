@@ -66,6 +66,10 @@ In addition to numerical evaluation, the pipeline supports **AI-assisted reporti
 ## How to Run
 
 ```bash
+# Clone the repository
+git clone <repository-url>
+cd connie_technical
+
 # Install dependencies
 pip install -r requirements.txt
 
@@ -73,7 +77,7 @@ pip install -r requirements.txt
 export OPENAI_API_KEY="YOUR_API_KEY"
 
 # Run the pipeline (ticker is required)
-python run_demo.py --ticker NVDA
+python run_demo.py NVDA
 ```
 
 ### CLI Arguments
