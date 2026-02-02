@@ -19,7 +19,7 @@ class FundamentalSnapshot:
 def fetch_idaliia_yahoo_snapshot(ticker: str) -> FundamentalSnapshot | None:
     """
     Fetch a small set of valuation / analyst consensus fields using the Idaliia fundamental module
-    (external/idaliia_fundamental/.../yahoo_finance_client.py).
+    (external/external_fundamental_analysis/.../yahoo_finance_client.py).
 
     Best-effort:
       - Returns None on failure (caller should degrade gracefully).

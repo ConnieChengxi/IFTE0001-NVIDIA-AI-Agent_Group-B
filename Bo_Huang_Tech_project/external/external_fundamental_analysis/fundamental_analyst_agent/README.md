@@ -8,30 +8,6 @@ This project automates fundamental analysis of publicly traded companies. It pul
 
 The system classifies companies (Growth/Dividend/Balanced/Cyclical) and applies appropriate valuation methods. LLM integration provides narrative analysis throughout the report.
 
-## What It Does
-
-**Data Collection**
-- Fetches income statements, balance sheets, cash flows from Alpha Vantage
-- Caches responses locally to respect API rate limits
-- Normalizes field names across different API versions
-
-**Valuation**
-- DCF with company-type specific growth assumptions
-- Peer multiples (P/E, EV/EBITDA, P/B)
-- Dividend discount model for income stocks
-- Blended target price weighted by company type
-
-**Analysis**
-- 5-year financial ratio trends
-- Leverage and liquidity assessment
-- Competitive positioning vs peers
-- Risk identification and scoring
-
-**Output**
-- 7-8 page HTML investment memo
-- BUY/HOLD/SELL recommendation
-- LLM-generated narratives for thesis, risks, and analysis
-
 ## Installation
 
 ```bash

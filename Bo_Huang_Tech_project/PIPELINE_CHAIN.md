@@ -26,7 +26,7 @@ This document lists the *actual* execution chain for generating the NVDA report 
 - `tech_agent/fundamental_metrics.py`: fetches a Yahoo snapshot via Idaliia's module (best-effort, cached to `data_cache/fundamentals/`).
 - `tech_agent/idaliia_bridge.py` (optional): runs Idaliia's memo generator as a subprocess.
 - External package used:
-  - `external/idaliia_fundamental/fundamental_analyst_agent/` (this is the only Idaliia external component used).
+  - `external/external_fundamental_analysis/fundamental_analyst_agent/` (this is the only Idaliia external component used).
 
 ## 7) Report generation
 - `tech_agent/report_payload.py`: builds the JSON payload (`outputs/report_inputs.json`).

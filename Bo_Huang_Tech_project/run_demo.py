@@ -111,7 +111,7 @@ def parse_args() -> argparse.Namespace:
     p.add_argument(
         "--fundamental_report_path",
         type=str,
-        default="external/idaliia_fundamental/fundamental_analyst_agent/README.md",
+        default="external/external_fundamental_analysis/fundamental_analyst_agent/README.md",
         help=(
             "Path to the external fundamental report/file used for as_of inference. "
             "If fundamental_override.json omits as_of, we infer publication date from this file's mtime."
