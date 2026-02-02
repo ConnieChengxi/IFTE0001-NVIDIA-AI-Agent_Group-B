@@ -1,0 +1,10 @@
+{
+  "ticker": "NVDA",
+  "period": "10y",
+  "interval": "1d",
+  "auto_adjust": true,
+  "outdir": "outputs",
+  "plot": true,
+  "llm": true,
+  "llm_model": "gpt-4o-mini"
+}
