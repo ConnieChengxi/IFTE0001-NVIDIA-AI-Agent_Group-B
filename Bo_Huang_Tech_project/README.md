@@ -1,4 +1,5 @@
 # NVDA Technical Analyst Agent
+author：BO HUANG
 
 ## 1) Project Goal & Output Files
 This project builds a reproducible technical-analysis backtesting and reporting pipeline for NVDA.
@@ -20,14 +21,34 @@ High-level pipeline:
 4. Write figures, tables, and report inputs to `outputs/`.
 5. (Optional) call OpenAI to draft the narrative and export HTML.
 
-Code layout (simplified):
-- `run_demo.py`: main entrypoint and CLI
-- `tech_agent/`: data, indicators, signal generation, backtest, report assembly
-- `templates/`: report templates
-- `webapp.py`: Streamlit app entrypoint
-- `inputs/`: configuration inputs (e.g., fundamental override JSON)
-- `external/`: external fundamental module/report artifacts (if you run this module, install its own `requirements.txt` in that folder)
-- `sample_outputs/`: pre-generated sample report (HTML/MD) for reference
+Appendix (what it contains and why):
+- **Sensitivity analysis table**: parameter robustness checks (reported as a table only).
+- **MA-only baseline**: a simple moving-average crossover benchmark to contextualize the main strategy.
+- **Relative volume confirmation experiment**: an experimental variant that adds a relative-volume (RVOL) confirmation filter; compared against the main strategy and Buy & Hold.
+- **Pattern-enabled experiment**: an experimental variant (candlestick/pattern features) compared against the main strategy and Buy & Hold.
+- **Fundamental overlay detail**: documented as a short paragraph in the main report and a fuller discussion in **Appendix C** (risk filter only; not an alpha signal).
+
+In this coursework, the **main report focuses only on Buy & Hold vs the main strategy**. All additional variants and robustness checks are placed in the Appendix to keep the main narrative concise and reproducible.
+
+Code layout (framework)
+
+project_root/
+├─ run_demo.py        Main entrypoint and CLI
+├─ tech_agent/        Core library
+│  ├─ data.py         Data ingestion, caching, standardisation
+│  ├─ indicators.py   Technical indicators (EMA, RSI, MACD, Bollinger)
+│  ├─ signals.py      Signal scoring, regime, position mapping
+│  ├─ engines.py      Risk management wrapper (vol targeting, caps) and orchestration
+│  ├─ backtest.py     Execution delay (shift), trading costs, performance metrics
+│  ├─ visualization.py Figures and tables (main and appendix)
+│  ├─ llm_provider.py LLM narrative generation (OpenAI)
+│  └─ html_report.py  HTML rendering from template + payload
+├─ templates/         HTML template(s) used for the report
+├─ webapp.py          Streamlit web app entrypoint
+├─ inputs/            Configuration inputs (e.g., fundamental override JSON)
+├─ external/          External fundamental module and its artifacts
+├─ data_cache/        Cached market data  
+└─ sample_outputs/    Generated artifacts from a run
 
 ## 3) Environment Requirements
 - Python 3.10+
@@ -100,8 +121,7 @@ Benchmark:
   then fall back to the most recent local Yahoo cache (if available), and only then fall back to Stooq.
   Stooq prices are **unadjusted**, so returns differ from adjusted-close results if the Stooq fallback is used.
 
-## 9) Included Sample HTML Report (Reference)
-This repo includes a pre-generated example report:
+## 9) Included HTML Report
 - HTML: `sample_outputs/outputs/NVDA_investment_report.html`
 - Markdown: `sample_outputs/outputs/NVDA_investment_report.md`
 - Deterministic inputs: `sample_outputs/outputs/report_inputs.json`
