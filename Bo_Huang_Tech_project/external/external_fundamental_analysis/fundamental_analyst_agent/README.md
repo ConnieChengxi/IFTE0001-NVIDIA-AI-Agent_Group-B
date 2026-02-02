@@ -111,17 +111,6 @@ Valuation gets overridden by critical risks:
 - Current ratio <0.8x → downgrade recommendation
 - D/E >5.0x → risk flag
 
-## Investment Memo Contents
-
-1. **Executive Summary** - Recommendation, target price, investment thesis
-2. **Company Overview** - Business description and sector context
-3. **Financial Analysis** - 5-year ratios, profitability/leverage/liquidity trends
-4. **Valuation** - DCF assumptions, multiples analysis, blended target
-5. **Competitive Positioning** - Peer comparison and operating metrics
-6. **Risk Assessment** - Identified risks by severity
-7. **Recommendation** - Final rating with rationale
-8. **Appendices** - Methodology and classification framework
-
 ## Limitations
 
 **Data Quality & Coverage**
@@ -192,18 +181,6 @@ This is coursework for UCL MSc AI. The goal was to build an agentic system that:
 
 It's not meant for actual investment decisions. Just demonstrating how AI can augment traditional equity research workflows.
 
-## Future Work
-
-Some potential improvements:
-- Multiple data sources (Yahoo Finance, SEC EDGAR filings)
-- Monte Carlo DCF simulation for uncertainty quantification
-- Time series forecasting for revenue/margins
-- Batch portfolio analysis
-- PDF export with formatting preservation
-- Web interface for non-technical users
-- Integration with broker APIs for live prices
-- Support for international equities
-
 ## Technical Notes
 
 **Why HTML not PDF?**  
@@ -221,12 +198,6 @@ The classification logic is transparent and deterministic. For a student project
 - See `requirements.txt` for packages
 - Alpha Vantage API key (free tier sufficient for testing)
 - OpenAI API key (pay-per-use)
-
-## Author
-
-Idaliia Gafarova  
-UCL MSc Artificial Intelligence  
-2025-2026
 
 ## Disclaimer
 
