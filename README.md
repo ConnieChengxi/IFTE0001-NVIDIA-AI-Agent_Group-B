@@ -13,7 +13,7 @@ cp .env.example .env
 # Edit .env: add ALPHA_VANTAGE_API_KEY (required), OPENAI_API_KEY (optional)
 
 # Run
-python run_analysis.py NVDA
+python run_demo.py NVDA
 ```
 
 ## How It Works
@@ -40,7 +40,7 @@ python run_analysis.py NVDA
 
 ```
 Hybrid/
-├── run_analysis.py              # Entry point
+├── run_demo.py              # Entry point
 ├── .env                         # API keys (not in git)
 ├── hybrid_controller/           # Orchestrator + report generation
 ├── idaliia_fundamental/         # DCF, multiples, DDM valuation
