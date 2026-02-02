@@ -26,7 +26,7 @@ python run_demo.py NVDA
 │   │   ├── alpha_vantage_client.py   # Financial statements
 │   │   ├── yahoo_finance_client.py   # Forward estimates, risk-free rate
 │   │   ├── peer_selector.py          # Comparable companies
-│   │   └── cache_manager.py          # 24h cache
+│   │   └── cache_manager.py          # cache
 │   ├── analysis/
 │   │   ├── company_classifier.py     # Growth/Balanced/Dividend/Cyclical
 │   │   ├── financial_ratios.py       # 15 ratios + DuPont
