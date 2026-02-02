@@ -19,7 +19,7 @@ pip install -r requirements.txt
 
 # Configure API keys
 cp .env.example .env
-# Edit .env: add ALPHA_VANTAGE_API_KEY (required), OPENAI_API_KEY (optional)
+# Edit .env: add ALPHA_VANTAGE_API_KEY, OPENAI_API_KEY
 
 # Run analysis
 python run_demo.py NVDA
