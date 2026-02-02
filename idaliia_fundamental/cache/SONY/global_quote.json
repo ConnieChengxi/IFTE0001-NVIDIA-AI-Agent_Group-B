@@ -1,0 +1,19 @@
+{
+  "cached_at": 1769986126.672999,
+  "symbol": "SONY",
+  "function": "GLOBAL_QUOTE",
+  "data": {
+    "Global Quote": {
+      "01. symbol": "SONY",
+      "02. open": "22.4100",
+      "03. high": "22.4350",
+      "04. low": "21.8000",
+      "05. price": "22.1000",
+      "06. volume": "10641387",
+      "07. latest trading day": "2026-01-30",
+      "08. previous close": "22.2900",
+      "09. change": "-0.1900",
+      "10. change percent": "-0.8524%"
+    }
+  }
+}

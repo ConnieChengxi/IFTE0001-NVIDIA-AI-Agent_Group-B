@@ -1,0 +1,22 @@
+{
+  "cached_at": 1769985983.4338088,
+  "symbol": "AAPL",
+  "function": "yf_forward_estimates",
+  "data": {
+    "forward_pe": 27.95913,
+    "trailing_pe": 32.8872,
+    "forward_eps": 9.28069,
+    "trailing_eps": 7.89,
+    "peg_ratio": null,
+    "target_price_mean": 290.89624,
+    "target_price_high": 350.0,
+    "target_price_low": 205.0,
+    "analyst_count": 40,
+    "recommendation_score": 2.0,
+    "recommendation": "buy",
+    "price_to_book": 43.26109,
+    "enterprise_to_ebitda": 25.069,
+    "price_to_sales": 8.754979,
+    "current_price": 259.48
+  }
+}

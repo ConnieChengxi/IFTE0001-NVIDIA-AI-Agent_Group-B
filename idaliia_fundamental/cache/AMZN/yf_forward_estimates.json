@@ -1,0 +1,22 @@
+{
+  "cached_at": 1769990303.962868,
+  "symbol": "AMZN",
+  "function": "yf_forward_estimates",
+  "data": {
+    "forward_pe": 30.438826,
+    "trailing_pe": 34.136948,
+    "forward_eps": 7.86167,
+    "trailing_eps": 7.01,
+    "peg_ratio": null,
+    "target_price_mean": 296.28824,
+    "target_price_high": 360.0,
+    "target_price_low": 230.0,
+    "analyst_count": 62,
+    "recommendation_score": 1.34328,
+    "recommendation": "strong_buy",
+    "price_to_book": 6.918784,
+    "enterprise_to_ebitda": 18.786,
+    "price_to_sales": 3.7003582,
+    "current_price": 239.3
+  }
+}

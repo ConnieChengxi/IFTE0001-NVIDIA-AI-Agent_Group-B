@@ -1,0 +1,19 @@
+{
+  "cached_at": 1769986068.4613671,
+  "symbol": "MSFT",
+  "function": "GLOBAL_QUOTE",
+  "data": {
+    "Global Quote": {
+      "01. symbol": "MSFT",
+      "02. open": "439.1700",
+      "03. high": "439.6000",
+      "04. low": "426.4500",
+      "05. price": "430.2900",
+      "06. volume": "58566819",
+      "07. latest trading day": "2026-01-30",
+      "08. previous close": "433.5000",
+      "09. change": "-3.2100",
+      "10. change percent": "-0.7405%"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "cached_at": 1770025534.394468,
+  "symbol": "INTC",
+  "function": "yf_forward_estimates",
+  "data": {
+    "forward_pe": 46.742508,
+    "trailing_pe": null,
+    "forward_eps": 0.99417,
+    "trailing_eps": -0.06,
+    "peg_ratio": null,
+    "target_price_mean": 46.97125,
+    "target_price_high": 71.5,
+    "target_price_low": 20.4,
+    "analyst_count": 40,
+    "recommendation_score": 2.80851,
+    "recommendation": "hold",
+    "price_to_book": 2.0306764,
+    "enterprise_to_ebitda": 20.097,
+    "price_to_sales": 4.3919168,
+    "current_price": 46.47
+  }
+}

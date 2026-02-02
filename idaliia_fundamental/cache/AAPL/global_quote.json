@@ -1,0 +1,19 @@
+{
+  "cached_at": 1769985947.4543428,
+  "symbol": "AAPL",
+  "function": "GLOBAL_QUOTE",
+  "data": {
+    "Global Quote": {
+      "01. symbol": "AAPL",
+      "02. open": "255.1650",
+      "03. high": "261.8999",
+      "04. low": "252.1800",
+      "05. price": "259.4800",
+      "06. volume": "92443408",
+      "07. latest trading day": "2026-01-30",
+      "08. previous close": "258.2800",
+      "09. change": "1.2000",
+      "10. change percent": "0.4646%"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "cached_at": 1769986163.669609,
+  "symbol": "MSFT",
+  "function": "yf_forward_estimates",
+  "data": {
+    "forward_pe": 22.760778,
+    "trailing_pe": 26.960527,
+    "forward_eps": 18.90489,
+    "trailing_eps": 15.96,
+    "peg_ratio": null,
+    "target_price_mean": 599.58057,
+    "target_price_high": 730.0,
+    "target_price_low": 450.0,
+    "analyst_count": 53,
+    "recommendation_score": 1.22807,
+    "recommendation": "strong_buy",
+    "price_to_book": 8.178086,
+    "enterprise_to_ebitda": 18.424,
+    "price_to_sales": 10.460444,
+    "current_price": 430.29
+  }
+}

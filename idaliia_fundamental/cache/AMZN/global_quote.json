@@ -1,0 +1,19 @@
+{
+  "cached_at": 1770045018.865141,
+  "symbol": "AMZN",
+  "function": "GLOBAL_QUOTE",
+  "data": {
+    "Global Quote": {
+      "01. symbol": "AMZN",
+      "02. open": "239.8900",
+      "03. high": "243.3150",
+      "04. low": "237.6400",
+      "05. price": "239.3000",
+      "06. volume": "46585024",
+      "07. latest trading day": "2026-01-30",
+      "08. previous close": "241.7300",
+      "09. change": "-2.4300",
+      "10. change percent": "-1.0053%"
+    }
+  }
+}

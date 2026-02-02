@@ -1,0 +1,22 @@
+{
+  "cached_at": 1770042885.3678432,
+  "symbol": "AMD",
+  "function": "yf_forward_estimates",
+  "data": {
+    "forward_pe": 36.456913,
+    "trailing_pe": 125.46875,
+    "forward_eps": 6.6078,
+    "trailing_eps": 1.92,
+    "peg_ratio": null,
+    "target_price_mean": 289.22803,
+    "target_price_high": 380.0,
+    "target_price_low": 210.0,
+    "analyst_count": 46,
+    "recommendation_score": 1.54717,
+    "recommendation": "buy",
+    "price_to_book": 6.451526,
+    "enterprise_to_ebitda": 63.104,
+    "price_to_sales": 12.245768,
+    "current_price": 240.9
+  }
+}

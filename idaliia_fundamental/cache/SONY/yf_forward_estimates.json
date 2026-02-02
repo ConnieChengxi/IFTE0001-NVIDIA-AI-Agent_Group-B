@@ -1,0 +1,22 @@
+{
+  "cached_at": 1769986163.8445609,
+  "symbol": "SONY",
+  "function": "yf_forward_estimates",
+  "data": {
+    "forward_pe": 18.571428,
+    "trailing_pe": 17.0,
+    "forward_eps": 1.19,
+    "trailing_eps": 1.3,
+    "peg_ratio": null,
+    "target_price_mean": 32.45833,
+    "target_price_high": 34.0,
+    "target_price_low": 30.0,
+    "analyst_count": 4,
+    "recommendation_score": 1.25,
+    "recommendation": "strong_buy",
+    "price_to_book": 2.630966,
+    "enterprise_to_ebitda": 0.285,
+    "price_to_sales": 0.010095818,
+    "current_price": 22.1
+  }
+}

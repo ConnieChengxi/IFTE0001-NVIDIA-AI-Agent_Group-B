@@ -1,0 +1,22 @@
+{
+  "cached_at": 1769986163.479622,
+  "symbol": "GOOGL",
+  "function": "yf_forward_estimates",
+  "data": {
+    "forward_pe": 30.008339,
+    "trailing_pe": 33.45529,
+    "forward_eps": 11.2713,
+    "trailing_eps": 10.11,
+    "peg_ratio": null,
+    "target_price_mean": 344.46594,
+    "target_price_high": 432.0,
+    "target_price_low": 185.0,
+    "analyst_count": 54,
+    "recommendation_score": 1.41791,
+    "recommendation": "strong_buy",
+    "price_to_book": 10.558892,
+    "enterprise_to_ebitda": 27.721,
+    "price_to_sales": 10.627689,
+    "current_price": 338.233
+  }
+}
