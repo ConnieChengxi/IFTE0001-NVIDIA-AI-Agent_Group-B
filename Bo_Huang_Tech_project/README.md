@@ -32,6 +32,7 @@ In this coursework, the **main report focuses only on Buy & Hold vs the main str
 
 Code layout (framework)
 
+```
 project_root/
 ├─ run_demo.py        Main entrypoint and CLI
 ├─ tech_agent/        Core library
@@ -49,6 +50,7 @@ project_root/
 ├─ external/          External fundamental module and its artifacts
 ├─ data_cache/        Cached market data  
 └─ sample_outputs/    Generated artifacts from a run
+```
 
 ## 3) Environment Requirements
 - Python 3.10+
