@@ -1,0 +1,372 @@
+{
+  "meta": {
+    "ticker": "NVDA",
+    "company_name": "NVIDIA Corporation",
+    "sector": "TECHNOLOGY",
+    "industry": "SEMICONDUCTORS",
+    "analysis_date": "2026-02-02",
+    "market_cap": 4653442400000.0
+  },
+  "gates": {
+    "gate1": {
+      "name": "Fundamental",
+      "status": "PASS",
+      "reason": "BUY recommendation, +34.5% upside to $257.10"
+    },
+    "gate2": {
+      "name": "Technical",
+      "status": "PASS",
+      "reason": "Bullish regime: Close $189.02 > MA200 $168.13"
+    }
+  },
+  "action": "TRADE",
+  "fundamental": {
+    "meta": {
+      "ticker": "NVDA",
+      "company_name": "NVIDIA Corporation",
+      "sector": "TECHNOLOGY",
+      "industry": "SEMICONDUCTORS",
+      "analysis_date": "2026-02-02",
+      "market_cap": 4653442400000.0
+    },
+    "recommendation": {
+      "action": "BUY",
+      "fair_value": 257.10231402224395,
+      "current_price": 191.13,
+      "upside_downside": 0.3451698530960286,
+      "reasoning": "Stock is undervalued with +34.5% upside to fair value of $257.10. Strong fundamentals with manageable risk."
+    },
+    "classification": {
+      "company_type": "growth",
+      "reasoning": "Classified as GROWTH company due to: high revenue growth (114.2%), low dividend yield (0.0%), and focus on reinvesting for expansion."
+    },
+    "valuation": {
+      "dcf": {
+        "fair_value": 262.2406667841935,
+        "wacc": 0.16914887834699868,
+        "terminal_growth": 0.025,
+        "stage1_growth": 0.6
+      },
+      "multiples": {
+        "fair_value": 245.1128242443617,
+        "pe": 24.435469,
+        "peg": 0.36331619551951266,
+        "pb": 58.661520037313906,
+        "ev_ebitda": 54.141500168336485,
+        "peer_averages": {
+          "peg": 1.150013059921049,
+          "pe": 35.362857999999996,
+          "pb": 9.349574241154786,
+          "ev_ebitda": 49.78218245200093
+        }
+      },
+      "ddm": {
+        "applicable": false,
+        "fair_value": null,
+        "dividend_yield": null
+      },
+      "weights": {
+        "dcf": 0.7,
+        "multiples": 0.3,
+        "ddm": 0.0
+      }
+    },
+    "ratios": {
+      "gross_margin": 0.7498869705816992,
+      "operating_margin": 0.6457849605738063,
+      "net_margin": 0.5584802715771244,
+      "roe": 0.9187288060811577,
+      "roa": 0.6530407433625147,
+      "roic": 0.8169600830855226,
+      "debt_to_equity": 0.23614910434026246,
+      "debt_to_assets": 0.1678569188448132,
+      "interest_coverage": 341.1862348178138,
+      "current_ratio": 4.439851498864077,
+      "quick_ratio": 3.8813099130049316,
+      "revenue_growth": 1.1420340763599357,
+      "earnings_growth": 1.4489247311827957,
+      "free_cash_flow": 60853000000.0,
+      "asset_turnover": 1.169317479234057,
+      "equity_multiplier": 1.4068476054811099
+    },
+    "historical_ratios": [
+      {
+        "year": "2021",
+        "profitability": {
+          "gross_margin": 0.623448275862069,
+          "operating_margin": 0.2754422788605697,
+          "net_margin": 0.25979010494752625,
+          "roe": 0.2564375776949032,
+          "roa": 0.1504636865687194
+        },
+        "leverage": {
+          "debt_to_equity": 0.802758539039839,
+          "debt_to_assets": 0.47101524782049947,
+          "interest_coverage": 24.96195652173913
+        },
+        "liquidity": {
+          "current_ratio": 4.090445859872611,
+          "quick_ratio": 3.6252229299363057
+        }
+      },
+      {
+        "year": "2022",
+        "profitability": {
+          "gross_margin": 0.6492903321691313,
+          "operating_margin": 0.3781303410864234,
+          "net_margin": 0.3623393029649996,
+          "roe": 0.3664512250112731,
+          "roa": 0.22069839545567702
+        },
+        "leverage": {
+          "debt_to_equity": 0.8504809860213438,
+          "debt_to_assets": 0.5122094733745219,
+          "interest_coverage": 43.1228813559322
+        },
+        "liquidity": {
+          "current_ratio": 6.650288350634371,
+          "quick_ratio": 6.049365628604383
+        }
+      },
+      {
+        "year": "2023",
+        "profitability": {
+          "gross_margin": 0.5692889449099132,
+          "operating_margin": 0.16471416919997034,
+          "net_margin": 0.16193371394676356,
+          "roe": 0.19763811592235644,
+          "roa": 0.10606575688407557
+        },
+        "leverage": {
+          "debt_to_equity": 0.9754309759739378,
+          "debt_to_assets": 0.5234811325336312,
+          "interest_coverage": 16.958015267175572
+        },
+        "liquidity": {
+          "current_ratio": 3.515617857687033,
+          "quick_ratio": 2.7295444156635686
+        }
+      },
+      {
+        "year": "2024",
+        "profitability": {
+          "gross_margin": 0.7271757329043695,
+          "operating_margin": 0.5593217556876006,
+          "net_margin": 0.4884934834706674,
+          "roe": 0.6924472986178976,
+          "roa": 0.4527750730282376
+        },
+        "leverage": {
+          "debt_to_equity": 0.4540695239424822,
+          "debt_to_assets": 0.29690542843232715,
+          "interest_coverage": 132.5875486381323
+        },
+        "liquidity": {
+          "current_ratio": 4.171291505973097,
+          "quick_ratio": 3.6744426676700215
+        }
+      },
+      {
+        "year": "2025",
+        "profitability": {
+          "gross_margin": 0.7498869705816992,
+          "operating_margin": 0.6457849605738063,
+          "net_margin": 0.5584802715771244,
+          "roe": 0.9187288060811577,
+          "roa": 0.6530407433625147
+        },
+        "leverage": {
+          "debt_to_equity": 0.23614910434026246,
+          "debt_to_assets": 0.1678569188448132,
+          "interest_coverage": 341.1862348178138
+        },
+        "liquidity": {
+          "current_ratio": 4.439851498864077,
+          "quick_ratio": 3.8813099130049316
+        }
+      }
+    ],
+    "risk_factors": {
+      "solvency_risk": false,
+      "liquidity_risk": false,
+      "leverage_risk": false,
+      "has_risk_flags": false
+    },
+    "peers": [
+      "AVGO",
+      "AMD",
+      "INTC"
+    ],
+    "forward_estimates": {
+      "forward_pe": 24.435469,
+      "trailing_pe": 46.468983,
+      "forward_eps": 7.66386,
+      "trailing_eps": 4.03,
+      "peg_ratio": null,
+      "target_price_mean": 253.62138,
+      "target_price_high": 352.0,
+      "target_price_low": 140.0,
+      "analyst_count": 58,
+      "recommendation_score": 1.34375,
+      "recommendation": "strong_buy",
+      "price_to_book": 38.280865,
+      "enterprise_to_ebitda": 40.771,
+      "price_to_sales": 24.395529,
+      "current_price": 187.515
+    }
+  },
+  "technical": {
+    "ticker": "NVDA",
+    "backtest_window": {
+      "start": "2016-11-14",
+      "end": "2026-02-02"
+    },
+    "metrics": {
+      "row": 2316,
+      "cost_bps": 10.0,
+      "initial_equity": 1.0,
+      "final_equity": 7.36416773940099,
+      "CAGR": 0.2426540629721896,
+      "Sharpe": 1.4332740376286008,
+      "MaxDrawdown": -0.14391434408530135,
+      "HitRate": 0.17271157167530224,
+      "NumTradesApprox": 228,
+      "NumTrades": 13,
+      "EquityColumn": "equity",
+      "EquityStart": 1.0,
+      "EquityEnd": 7.36,
+      "EquityMultiple": 7.36416773940099,
+      "BuyHoldMultiple": 91.90322059373473,
+      "BuyHoldMaxDrawdown": -66.34
+    },
+    "latest_state": {
+      "date": "2026-02-02 00:00:00",
+      "close": 189.02000427246094,
+      "ma20": 186.73050079345703,
+      "ma50": 183.96839141845703,
+      "ma200": 168.12739986419678,
+      "rsi_14": 55.54951826428199,
+      "macd": 1.4807578296250767,
+      "macd_signal": 0.9335846153367809,
+      "regime_bullish": true
+    },
+    "trade_highlights": [
+      {
+        "entry_date": "2022-01-31",
+        "exit_date": "2022-02-23",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": -0.08572246274378559
+      },
+      {
+        "entry_date": "2025-02-06",
+        "exit_date": "2025-02-27",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": -0.06628849678212212
+      },
+      {
+        "entry_date": "2023-01-17",
+        "exit_date": "2023-08-14",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": 1.47231689238125
+      },
+      {
+        "entry_date": "2020-03-18",
+        "exit_date": "2020-09-09",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": 1.5095370810752433
+      }
+    ],
+    "all_trades": [
+      {
+        "entry_date": "2016-11-15",
+        "exit_date": "2017-02-24",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": 0.1804169861897411
+      },
+      {
+        "entry_date": "2019-07-23",
+        "exit_date": "2019-08-01",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": -0.06114063738512476
+      },
+      {
+        "entry_date": "2019-08-20",
+        "exit_date": "2020-02-26",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": 0.5971441062293157
+      },
+      {
+        "entry_date": "2020-03-18",
+        "exit_date": "2020-09-09",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": 1.5095370810752433
+      },
+      {
+        "entry_date": "2021-03-10",
+        "exit_date": "2021-05-05",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": 0.15962559605721416
+      },
+      {
+        "entry_date": "2022-01-31",
+        "exit_date": "2022-02-23",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": -0.08572246274378559
+      },
+      {
+        "entry_date": "2022-02-25",
+        "exit_date": "2022-03-04",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": -0.05038265563429478
+      },
+      {
+        "entry_date": "2022-03-17",
+        "exit_date": "2022-04-07",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": -0.022530899296399842
+      },
+      {
+        "entry_date": "2022-12-13",
+        "exit_date": "2022-12-15",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": -0.06197470191355747
+      },
+      {
+        "entry_date": "2023-01-17",
+        "exit_date": "2023-08-14",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": 1.47231689238125
+      },
+      {
+        "entry_date": "2025-01-29",
+        "exit_date": "2025-01-31",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": -0.02934511398854922
+      },
+      {
+        "entry_date": "2025-02-06",
+        "exit_date": "2025-02-27",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": -0.06628849678212212
+      },
+      {
+        "entry_date": "2025-05-14",
+        "exit_date": "2025-12-11",
+        "trade_metric_name": "trade_return",
+        "trade_metric_value": 0.337098016786588
+      }
+    ],
+    "assumptions": {
+      "strategy_type": "long/flat",
+      "signal_execution": "entry/exit signals shifted by 1 day to avoid look-ahead bias",
+      "transaction_cost_model": "cost_bps applied per turnover (position change)"
+    },
+    "charts": {
+      "equity_drawdown": "outputs/NVDA_equity_drawdown.png",
+      "golden_cross_trades": "outputs/NVDA_golden_cross_trades.png",
+      "price_ma_macd_6m": "outputs/NVDA_price_ma_macd_6m.png",
+      "equity_log_compare": "outputs/NVDA_equity_log_compare.png",
+      "drawdown_compare": "outputs/NVDA_drawdown_compare.png"
+    }
+  }
+}
