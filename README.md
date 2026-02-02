@@ -1,7 +1,7 @@
 # IFTE0001-NVIDIA-AI-Agent_Group-B#
 # Bo Huang — Submission Location 
 
-This branch contains multiple teammates’ folders. 
+This branch may contain multiple teammates’ folders. 
 
 **My submission is located here:**
 - **Project folder:** [`Bo_Huang_Tech_project/`](./Bo_Huang_Tech_project)
