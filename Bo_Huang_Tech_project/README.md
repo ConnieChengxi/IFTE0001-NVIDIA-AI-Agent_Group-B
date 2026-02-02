@@ -86,7 +86,7 @@ Reproducible mode (pinned as-of date):
 python run_demo.py --ticker NVDA --as_of 2026-01-31 --years 10 --yes_openai --openai_model gpt-4o-mini --export_html
 ```
 
-## 6) Data Processing & Main Strategy (High-Level)
+## 6) Data Processing & Main Strategy
 Data processing:
 - Fetch OHLCV from Yahoo Finance.
 - Clean, align, and standardize the data.
@@ -94,7 +94,7 @@ Data processing:
 - Apply multiple preprocessing steps to ensure consistent inputs for signals and backtests.
 - Split data into train/validation/test by date.
 
-Main strategy (high-level):
+Main strategy:
 - Score-based signal framework built from multiple technical factors.
 - Risk management includes volatility targeting and regime controls.
 - Fundamental inputs are an explicit risk filter embedded in the strategy (used to cap exposure), not an alpha source.
