@@ -66,6 +66,10 @@ In addition to numerical evaluation, the pipeline supports **AI-assisted reporti
 ## How to Run
 
 ```bash
+# Clone the repository
+git clone <repository-url>
+cd connie_technical
+
 # Install dependencies
 pip install -r requirements.txt
 
