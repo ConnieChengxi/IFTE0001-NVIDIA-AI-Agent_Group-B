@@ -1,17 +1,36 @@
 # Fundamental Analyst Agent
 
-Automated equity research tool that generates investment memos with BUY/HOLD/SELL recommendations.
+Automated equity research tool that generates investment memos with **BUY/HOLD/SELL** recommendations.
 
-## Setup
+## Features
+
+- **Multi-method valuation**: DCF, Multiples, DDM
+- **Company classification**: Growth / Balanced / Dividend / Cyclical companies
+- **Scenario analysis**: Bear / Base / Bull cases
+- **Financial ratios**: 15+ metrics including DuPont decomposition
+- **Risk gates**: Auto-downgrade on leverage or liquidity concerns
+- **Peer comparison**: Automated comparable company selection
+- **Report generation**: HTML & PDF investment memos
+
+## Quick Start
+
+**Requirements:** Python 3.9+
 
 ```bash
+# 1. Clone and install
 git clone <repository-url>
 cd idaliia_fundamental
 pip install -r requirements.txt
-cp .env.example .env 
-# Add your API keys to .env
+
+# 2. Configure API keys
+cp .env.example .env
+# Edit .env and add your Alpha Vantage key
+
+# 3. Run analysis
 python run_demo.py NVDA
 ```
+
+Output: `outputs/NVDA_Investment_Memo.html`
 
 **API Keys:**
 - Alpha Vantage (required): https://www.alphavantage.co/support/#api-key
@@ -26,7 +45,7 @@ python run_demo.py NVDA
 │   │   ├── alpha_vantage_client.py   # Financial statements
 │   │   ├── yahoo_finance_client.py   # Forward estimates, risk-free rate
 │   │   ├── peer_selector.py          # Comparable companies
-│   │   └── cache_manager.py          # cache
+│   │   └── cache_manager.py          # 24h cache
 │   ├── analysis/
 │   │   ├── company_classifier.py     # Growth/Balanced/Dividend/Cyclical
 │   │   ├── financial_ratios.py       # 15 ratios + DuPont
