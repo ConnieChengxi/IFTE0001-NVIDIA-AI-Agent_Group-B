@@ -28,7 +28,6 @@ Code layout (simplified):
 - `inputs/`: configuration inputs (e.g., fundamental override JSON)
 - `external/`: external fundamental module/report artifacts (if you run this module, install its own `requirements.txt` in that folder)
 - `data_cache/`: cached market data
-- `outputs/`: generated artifacts from a run
 - `sample_outputs/`: pre-generated sample report (HTML/MD) for reference
 
 ## 3) Environment Requirements
