@@ -1,0 +1,19 @@
+{
+  "cached_at": 1769986006.381817,
+  "symbol": "GOOGL",
+  "function": "GLOBAL_QUOTE",
+  "data": {
+    "Global Quote": {
+      "01. symbol": "GOOGL",
+      "02. open": "340.0000",
+      "03. high": "340.0000",
+      "04. low": "332.2850",
+      "05. price": "338.0000",
+      "06. volume": "31023954",
+      "07. latest trading day": "2026-01-30",
+      "08. previous close": "338.2500",
+      "09. change": "-0.2500",
+      "10. change percent": "-0.0739%"
+    }
+  }
+}

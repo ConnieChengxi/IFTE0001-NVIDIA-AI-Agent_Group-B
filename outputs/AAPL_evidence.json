@@ -1,0 +1,195 @@
+{
+  "meta": {
+    "ticker": "AAPL",
+    "company_name": "Apple Inc",
+    "sector": "TECHNOLOGY",
+    "industry": "CONSUMER ELECTRONICS",
+    "analysis_date": "2026-02-02",
+    "market_cap": 3813817975000.0
+  },
+  "recommendation": {
+    "action": "SELL",
+    "fair_value": 90.08517854450812,
+    "current_price": 259.48,
+    "upside_downside": -0.6528241924444731,
+    "reasoning": "Stock is overvalued with -65.3% downside to fair value of $90.09. Consider taking profits."
+  },
+  "classification": {
+    "company_type": "balanced",
+    "reasoning": "Classified as BALANCED company due to: moderate revenue growth (6.4%), some dividend payments (0.4%), and mix of growth and income characteristics."
+  },
+  "valuation": {
+    "dcf": {
+      "fair_value": 108.43054298622529,
+      "wacc": 0.0998360274013663,
+      "terminal_growth": 0.025,
+      "stage1_growth": 0.075
+    },
+    "multiples": {
+      "fair_value": 111.34452232741243,
+      "pe": 27.95913,
+      "peg": null,
+      "pb": 51.724709085484115,
+      "ev_ebitda": 27.57029485484016,
+      "peer_averages": {
+        "peg": 1.874746922153942,
+        "pe": 27.735981,
+        "pb": 10.280440396958067,
+        "ev_ebitda": 24.076215068516433
+      }
+    },
+    "ddm": {
+      "applicable": true,
+      "fair_value": 12.332751765858736,
+      "dividend_yield": 0.004
+    },
+    "weights": {
+      "dcf": 0.5,
+      "multiples": 0.3,
+      "ddm": 0.2
+    }
+  },
+  "ratios": {
+    "gross_margin": 0.4690516410716045,
+    "operating_margin": 0.3189366615324358,
+    "net_margin": 0.2691506412181824,
+    "roe": 1.5191298333175105,
+    "roa": 0.3117962593356549,
+    "roic": 0.4632149208055912,
+    "debt_to_equity": 2.7344065750749325,
+    "debt_to_assets": 0.5612276995109133,
+    "interest_coverage": null,
+    "current_ratio": 0.8932929222186667,
+    "quick_ratio": 0.858770399261008,
+    "revenue_growth": 0.0642551178283274,
+    "earnings_growth": 0.19495177946573355,
+    "free_cash_flow": 98767000000.0,
+    "asset_turnover": 1.1584451663368045,
+    "equity_multiplier": 4.8721874872852045
+  },
+  "historical_ratios": [
+    {
+      "year": "2021",
+      "profitability": {
+        "gross_margin": 0.4177935962516778,
+        "operating_margin": 0.305759437095597,
+        "net_margin": 0.2588179335569424,
+        "roe": 1.5007132667617689,
+        "roa": 0.26974205275183616
+      },
+      "leverage": {
+        "debt_to_equity": 3.7062133460136315,
+        "debt_to_assets": 0.6661642953601404,
+        "interest_coverage": 42.288090737240076
+      },
+      "liquidity": {
+        "current_ratio": 1.0745531195957954,
+        "quick_ratio": 1.0221149018576519
+      }
+    },
+    {
+      "year": "2022",
+      "profitability": {
+        "gross_margin": 0.43309630561360085,
+        "operating_margin": 0.30288744395528594,
+        "net_margin": 0.2530964070519973,
+        "roe": 1.9695887275023682,
+        "roa": 0.2829244092925685
+      },
+      "leverage": {
+        "debt_to_equity": 4.338490685191032,
+        "debt_to_assets": 0.6232087426117277,
+        "interest_coverage": 40.74957352439441
+      },
+      "liquidity": {
+        "current_ratio": 0.8793560286267226,
+        "quick_ratio": 0.8472353911496149
+      }
+    },
+    {
+      "year": "2023",
+      "profitability": {
+        "gross_margin": 0.4413112957720756,
+        "operating_margin": 0.2982141226502472,
+        "net_margin": 0.2530623426432028,
+        "roe": 1.5607601454639075,
+        "roa": 0.27509834563776475
+      },
+      "leverage": {
+        "debt_to_equity": 3.334534805136292,
+        "debt_to_assets": 0.5877424606404733,
+        "interest_coverage": 29.062039155860667
+      },
+      "liquidity": {
+        "current_ratio": 0.9880116717592975,
+        "quick_ratio": 0.9444421504665951
+      }
+    },
+    {
+      "year": "2024",
+      "profitability": {
+        "gross_margin": 0.4620634981523393,
+        "operating_margin": 0.31510222870075566,
+        "net_margin": 0.23971255769943867,
+        "roe": 1.6459350307287095,
+        "roa": 0.25682503150857583
+      },
+      "leverage": {
+        "debt_to_equity": 3.5962949956101844,
+        "debt_to_assets": 0.5611512959614225,
+        "interest_coverage": null
+      },
+      "liquidity": {
+        "current_ratio": 0.8673125765340832,
+        "quick_ratio": 0.8260068483831466
+      }
+    },
+    {
+      "year": "2025",
+      "profitability": {
+        "gross_margin": 0.4690516410716045,
+        "operating_margin": 0.3189366615324358,
+        "net_margin": 0.2691506412181824,
+        "roe": 1.5191298333175105,
+        "roa": 0.3117962593356549
+      },
+      "leverage": {
+        "debt_to_equity": 2.7344065750749325,
+        "debt_to_assets": 0.5612276995109133,
+        "interest_coverage": null
+      },
+      "liquidity": {
+        "current_ratio": 0.8932929222186667,
+        "quick_ratio": 0.858770399261008
+      }
+    }
+  ],
+  "risk_factors": {
+    "solvency_risk": false,
+    "liquidity_risk": false,
+    "leverage_risk": false,
+    "has_risk_flags": false
+  },
+  "peers": [
+    "GOOGL",
+    "MSFT",
+    "AMZN"
+  ],
+  "forward_estimates": {
+    "forward_pe": 27.95913,
+    "trailing_pe": 32.8872,
+    "forward_eps": 9.28069,
+    "trailing_eps": 7.89,
+    "peg_ratio": null,
+    "target_price_mean": 290.89624,
+    "target_price_high": 350.0,
+    "target_price_low": 205.0,
+    "analyst_count": 40,
+    "recommendation_score": 2.0,
+    "recommendation": "buy",
+    "price_to_book": 43.26109,
+    "enterprise_to_ebitda": 25.069,
+    "price_to_sales": 8.754979,
+    "current_price": 259.48
+  }
+}
