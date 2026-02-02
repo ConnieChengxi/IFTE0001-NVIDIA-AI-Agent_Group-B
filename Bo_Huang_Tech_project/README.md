@@ -94,11 +94,29 @@ Data processing:
 - Apply multiple preprocessing steps to ensure consistent inputs for signals and backtests.
 - Split data into train/validation/test by date.
 
-Main strategy:
+Main strategy overview:
 - Score-based signal framework built from multiple technical factors.
 - Risk management includes volatility targeting and regime controls.
 - Fundamental inputs are an explicit risk filter embedded in the strategy (used to cap exposure), not an alpha source.
 - Long/flat only (no short selling).
+
+Main strategy signals:
+- **Trend filter**: `EMA_fast > EMA_slow` (trend_up).  
+  - EMA windows are selected by grid-search. The default grid includes (20,100), (30,150), (50,200).
+- **Other Indicators** (3 signals):
+  - Pullback: `price < BB_mid * 1.01` (BB window=20, num_std=2)
+  - Strength: `RSI(14) > 45`
+  - Momentum: `MACD_hist > 0` (12/26/9)
+- **Score**: `score = 2*trend_up + (pullback + strength + macd)` → range 0–5.
+- **Entry/hold rules**:
+  - Entry if `score >= 4`
+  - Hold if `score >= 2`
+- **Regime (3-state)**: based on price vs `EMA_slow` with a buffer:
+  - Bull: full position (1.0)
+  - Neutral: half position (0.5)
+  - Bear: only strongest signal allowed (score==5 → 0.25), otherwise 0
+- **Vol targeting**: use `target_vol` and `vol_window` to size exposure; cap by max leverage.
+- **Risk filter (fundamental)**: apply max leverage cap (SELL reduces cap via `sell_leverage_mult`).
 
 Appendix experiments:
 - Optional variants (e.g., pattern features, volume confirmation) are experimental and for comparison only.
