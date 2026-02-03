@@ -56,12 +56,14 @@ project_root/
 - Python 3.10+
 - `yfinance==0.2.66` (lower versions may fail to fetch data)
 
-## 4) API Key Configuration (.env)
-If you enable LLM reporting, put your key in `.env` (do not commit it):
+## 4) Environment Variables (.env) & API Keys
+This project requires API keys via a `.env` file in the **project root** (do not commit it).
+
+**`.env.example`**
+```env
+ALPHA_VANTAGE_API_KEY=your_alpha_vantage_key_here  # Required for external fundamental analysis
+OPENAI_API_KEY= your_real_key_here  # LLM reporting
 ```
-OPENAI_API_KEY=your_real_key_here
-```
-The runner auto-loads `.env` on startup.
 
 ## 5) How to Run
 Create and activate venv:
