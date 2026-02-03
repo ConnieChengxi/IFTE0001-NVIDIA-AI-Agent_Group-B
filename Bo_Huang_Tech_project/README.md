@@ -135,7 +135,7 @@ Execution timing (anti look-ahead):
 - Returns are close-to-close and use adjusted close prices.
 
 Benchmark:
-- Benchmark is a fair Buy & Hold implemented using the same return and cost model, using the same execution convention.
+- Benchmark is a fair Buy & Hold baseline (buy once at the beginning and hold until the end, with no further trading).
 
 ## 8) Notes on Data Sources
 - Primary: Yahoo Finance via yfinance. `auto_adjust=True` is used by default.
