@@ -118,7 +118,7 @@ Main strategy signals:
   - Neutral: half position (0.5)
   - Bear: only strongest signal allowed (score==5 → 0.25), otherwise 0
 - **Vol targeting**: use `target_vol` and `vol_window` to size exposure; cap by max leverage.
-- **Risk filter (fundamental)**: apply a max-leverage cap; when fundamental analysis is SELL, the cap is scaled by `sell_leverage_mult` (default 0.3 → cap at  30% of normal).
+- **Risk filter (fundamental)**: apply a max-leverage cap; when fundamental analysis is SELL, the cap is scaled by `sell_leverage_mult`.
 
 Appendix experiments:
 - Optional variants (e.g., pattern features, volume confirmation) are experimental and for comparison only.
