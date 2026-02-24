@@ -1,0 +1,9 @@
+# Streamlit UI dependencies
+# Install:  pip install -r ui/requirements.txt
+#
+# Note: The orchestrator's dependencies (pandas, numpy, yfinance,
+# matplotlib, openai, playwright, etc.) must also be installed.
+# See the root requirements.txt.
+
+streamlit>=1.30.0,<2.0
+python-dotenv>=1.0.0,<2.0
